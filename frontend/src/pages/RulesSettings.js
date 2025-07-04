@@ -10,8 +10,8 @@ const RulesSettings = () => {
   
   const handleResetQuests = () => {
     if (window.confirm('Are you sure you want to reset all quests? This action cannot be undone.')) {
-      localStorage.removeItem('rpgLogState');
-      window.location.reload();
+      localStorage.removeItem('questLogState');
+      dispatch({ type: 'RESET_ALL' });
       toast({
         title: "Reset Complete",
         description: "All quests and progress have been reset."
@@ -30,14 +30,14 @@ const RulesSettings = () => {
         </CardHeader>
         <CardContent>
           <p className="text-gray-600">
-            Learn how the RPG Log system works and customize your experience.
+            Learn how the Quest Log system works and customize your experience.
           </p>
         </CardContent>
       </Card>
       
       <Card>
         <CardHeader>
-          <CardTitle>🎮 How RPG Log Works</CardTitle>
+          <CardTitle>🎮 How Quest Log Works</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-6">
@@ -75,8 +75,20 @@ const RulesSettings = () => {
               <ul className="space-y-2 text-gray-600 ml-4">
                 <li>• Earn XP by completing quests</li>
                 <li>• Spend XP on rewards like gaming time, treats, or personal credits</li>
+                <li>• Create custom rewards with your own XP costs</li>
                 <li>• Balance earning and spending to maintain motivation</li>
                 <li>• Higher-ranked quests give more XP for bigger rewards</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-2">🏆 Level System</h3>
+              <ul className="space-y-2 text-gray-600 ml-4">
+                <li>• Your level is based on total XP earned (not current XP)</li>
+                <li>• Each level has a name and XP requirement</li>
+                <li>• Customize level names and requirements in Level Settings</li>
+                <li>• Progress bars show your advancement to the next level</li>
+                <li>• Levels provide long-term motivation for consistent quest completion</li>
               </ul>
             </div>
           </div>
@@ -104,6 +116,26 @@ const RulesSettings = () => {
       
       <Card>
         <CardHeader>
+          <CardTitle>🎨 Custom Rewards</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4 text-gray-600">
+            <p>
+              Create personalized rewards that motivate you:
+            </p>
+            <ul className="space-y-2 ml-4">
+              <li>• Set your own XP costs based on what feels fair</li>
+              <li>• Add emojis to make rewards visually appealing</li>
+              <li>• Include notes to remind yourself what the reward includes</li>
+              <li>• Edit or delete rewards anytime to keep them relevant</li>
+              <li>• Balance small daily rewards with bigger milestone rewards</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardHeader>
           <CardTitle>💡 Tips for Success</CardTitle>
         </CardHeader>
         <CardContent>
@@ -111,7 +143,8 @@ const RulesSettings = () => {
             <li>• Start with Common quests to build momentum</li>
             <li>• Use Epic and Legendary ranks for important goals</li>
             <li>• Set realistic due dates to avoid too many overdue quests</li>
-            <li>• Balance work tasks with personal rewards</li>
+            <li>• Create custom rewards that truly motivate you</li>
+            <li>• Customize your level system to match your goals</li>
             <li>• Review your progress weekly to stay motivated</li>
             <li>• Don't be afraid to adjust quest ranks based on actual difficulty</li>
           </ul>
