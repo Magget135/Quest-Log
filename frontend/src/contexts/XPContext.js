@@ -11,36 +11,6 @@ const initialState = {
   levels: mockLevels
 };
 
-// Helper function to get current level
-const getCurrentLevel = (totalEarned, levels) => {
-  const sortedLevels = [...levels].sort((a, b) => b.xpRequired - a.xpRequired);
-  const currentLevel = sortedLevels.find(level => totalEarned >= level.xpRequired);
-  return currentLevel || levels[0];
-};
-
-// Helper function to get next level
-const getNextLevel = (totalEarned, levels) => {
-  const sortedLevels = [...levels].sort((a, b) => a.xpRequired - b.xpRequired);
-  const nextLevel = sortedLevels.find(level => totalEarned < level.xpRequired);
-  return nextLevel || null;
-};
-
-// Helper function to get level progress
-const getLevelProgress = (totalEarned, levels) => {
-  const currentLevel = getCurrentLevel(totalEarned, levels);
-  const nextLevel = getNextLevel(totalEarned, levels);
-  
-  if (!nextLevel) {
-    return { progress: 100, progressXP: 0, totalXPForNext: 0 };
-  }
-  
-  const progressXP = totalEarned - currentLevel.xpRequired;
-  const totalXPForNext = nextLevel.xpRequired - currentLevel.xpRequired;
-  const progress = (progressXP / totalXPForNext) * 100;
-  
-  return { progress, progressXP, totalXPForNext };
-};
-
 function xpReducer(state, action) {
   switch (action.type) {
     case 'ADD_QUEST':
@@ -132,6 +102,34 @@ function xpReducer(state, action) {
   }
 }
 
+// Helper functions for level system
+const getCurrentLevel = (totalEarned, levels) => {
+  const sortedLevels = [...levels].sort((a, b) => b.xpRequired - a.xpRequired);
+  const currentLevel = sortedLevels.find(level => totalEarned >= level.xpRequired);
+  return currentLevel || levels[0];
+};
+
+const getNextLevel = (totalEarned, levels) => {
+  const sortedLevels = [...levels].sort((a, b) => a.xpRequired - b.xpRequired);
+  const nextLevel = sortedLevels.find(level => totalEarned < level.xpRequired);
+  return nextLevel || null;
+};
+
+const getLevelProgress = (totalEarned, levels) => {
+  const currentLevel = getCurrentLevel(totalEarned, levels);
+  const nextLevel = getNextLevel(totalEarned, levels);
+  
+  if (!nextLevel) {
+    return { progress: 100, progressXP: 0, totalXPForNext: 0 };
+  }
+  
+  const progressXP = totalEarned - currentLevel.xpRequired;
+  const totalXPForNext = nextLevel.xpRequired - currentLevel.xpRequired;
+  const progress = (progressXP / totalXPForNext) * 100;
+  
+  return { progress, progressXP, totalXPForNext };
+};
+
 export function XPProvider({ children }) {
   const [state, dispatch] = useReducer(xpReducer, initialState);
   
@@ -146,29 +144,25 @@ export function XPProvider({ children }) {
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState);
-        // Dispatch actions to load each part of the state
-        if (parsed.xp) state.xp = parsed.xp;
-        if (parsed.quests) state.quests = parsed.quests;
-        if (parsed.completedQuests) state.completedQuests = parsed.completedQuests;
-        if (parsed.rewards) state.rewards = parsed.rewards;
-        if (parsed.levels) state.levels = parsed.levels;
+        // Just log for now, don't try to restore state on initial load
+        console.log('Saved state found:', parsed);
       } catch (error) {
         console.error('Error loading saved state:', error);
       }
     }
   }, []);
   
-  // Helper functions for level system
-  const getCurrentLevel = () => getCurrentLevel(state.xp.totalEarned, state.levels);
-  const getNextLevel = () => getNextLevel(state.xp.totalEarned, state.levels);
-  const getLevelProgress = () => getLevelProgress(state.xp.totalEarned, state.levels);
+  // Create helper functions that use current state
+  const getCurrentLevelFromState = () => getCurrentLevel(state.xp.totalEarned, state.levels);
+  const getNextLevelFromState = () => getNextLevel(state.xp.totalEarned, state.levels);
+  const getLevelProgressFromState = () => getLevelProgress(state.xp.totalEarned, state.levels);
   
   const contextValue = {
     state,
     dispatch,
-    getCurrentLevel,
-    getNextLevel,
-    getLevelProgress
+    getCurrentLevel: getCurrentLevelFromState,
+    getNextLevel: getNextLevelFromState,
+    getLevelProgress: getLevelProgressFromState
   };
   
   return (
