@@ -1,4 +1,4 @@
-// Mock data for RPG Log app
+// Mock data for Quest Log app
 export const mockQuests = [
   {
     id: '1',
@@ -71,25 +71,52 @@ export const mockRewards = [
     id: '1',
     name: '1 Hour Gaming',
     cost: 100,
-    emoji: '🎮'
+    emoji: '🎮',
+    isCustom: false,
+    note: 'Enjoy your favorite game'
   },
   {
     id: '2',
     name: '$1 Credit',
     cost: 25,
-    emoji: '💰'
+    emoji: '💰',
+    isCustom: false,
+    note: 'Small spending money'
   },
   {
     id: '3',
-    name: 'Movie',
+    name: 'Movie Night',
     cost: 100,
-    emoji: '🍿'
+    emoji: '🍿',
+    isCustom: false,
+    note: 'Watch a movie with snacks'
   },
   {
     id: '4',
-    name: 'Scrolling',
-    cost: 100,
-    emoji: '📱'
+    name: 'Social Media',
+    cost: 50,
+    emoji: '📱',
+    isCustom: false,
+    note: '30 minutes of scrolling'
+  }
+];
+
+export const mockCustomRewards = [
+  {
+    id: '5',
+    name: 'Ice Cream',
+    cost: 75,
+    emoji: '🍦',
+    isCustom: true,
+    note: 'Treat yourself to your favorite flavor'
+  },
+  {
+    id: '6',
+    name: 'New Book',
+    cost: 200,
+    emoji: '📚',
+    isCustom: true,
+    note: 'Buy that book you\'ve been wanting'
   }
 ];
 
@@ -129,6 +156,15 @@ export const mockXPData = {
   totalSpent: 550,
   completedQuests: 12
 };
+
+export const mockLevels = [
+  { id: 1, name: 'Novice', xpRequired: 0, color: 'bg-gray-100 text-gray-800' },
+  { id: 2, name: 'Apprentice', xpRequired: 250, color: 'bg-green-100 text-green-800' },
+  { id: 3, name: 'Hero', xpRequired: 500, color: 'bg-blue-100 text-blue-800' },
+  { id: 4, name: 'Champion', xpRequired: 1000, color: 'bg-purple-100 text-purple-800' },
+  { id: 5, name: 'Legend', xpRequired: 2000, color: 'bg-yellow-100 text-yellow-800' },
+  { id: 6, name: 'Master', xpRequired: 4000, color: 'bg-red-100 text-red-800' }
+];
 
 export const questRanks = [
   { value: 'Common', label: 'Common', color: 'bg-gray-100 text-gray-800' },

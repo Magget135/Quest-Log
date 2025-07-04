@@ -6,11 +6,12 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Progress } from '../components/ui/progress';
 import { useToast } from '../hooks/use-toast';
 import { questRanks, questStatuses } from '../data/mock';
 
 const Dashboard = () => {
-  const { state, dispatch } = useXP();
+  const { state, dispatch, getCurrentLevel, getNextLevel, getLevelProgress } = useXP();
   const { toast } = useToast();
   const [newQuest, setNewQuest] = useState({
     name: '',
@@ -22,6 +23,10 @@ const Dashboard = () => {
   });
   
   const [selectedReward, setSelectedReward] = useState('');
+  
+  const currentLevel = getCurrentLevel();
+  const nextLevel = getNextLevel();
+  const levelProgress = getLevelProgress();
   
   const getDateStatus = (dueDate) => {
     const today = new Date().toISOString().split('T')[0];
@@ -89,7 +94,7 @@ const Dashboard = () => {
     });
     
     toast({
-      title: "Quest Added! 🗡️",
+      title: "Quest Added! 📜",
       description: `"${newQuest.name}" has been added to your quest log.`
     });
   };
@@ -127,31 +132,59 @@ const Dashboard = () => {
   
   return (
     <div className="space-y-6">
-      {/* XP Summary */}
+      {/* Level & XP Summary */}
       <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <span>⭐</span>
-            <span>XP Summary</span>
+            <span>🏆</span>
+            <span>Level & XP Summary</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600">{state.xp.currentXP}</div>
-              <div className="text-sm text-gray-600">Current XP</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Level Info */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Badge className={`${currentLevel.color} text-lg px-3 py-1`}>
+                  🏆 {currentLevel.name}
+                </Badge>
+                <span className="text-sm text-gray-600">
+                  Level {currentLevel.id}
+                </span>
+              </div>
+              
+              {nextLevel && (
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progress to {nextLevel.name}</span>
+                    <span>{levelProgress.progressXP}/{levelProgress.totalXPForNext} XP</span>
+                  </div>
+                  <Progress value={levelProgress.progress} className="h-3" />
+                  <div className="text-xs text-gray-500">
+                    {Math.round(levelProgress.progress)}% complete
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{state.xp.totalEarned}</div>
-              <div className="text-sm text-gray-600">Total Earned</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-red-600">{state.xp.totalSpent}</div>
-              <div className="text-sm text-gray-600">Total Spent</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{state.xp.completedQuests}</div>
-              <div className="text-sm text-gray-600">Completed</div>
+            
+            {/* XP Stats */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-yellow-600">{state.xp.currentXP}</div>
+                <div className="text-sm text-gray-600">Current XP</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">{state.xp.totalEarned}</div>
+                <div className="text-sm text-gray-600">Total Earned</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-600">{state.xp.totalSpent}</div>
+                <div className="text-sm text-gray-600">Total Spent</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{state.xp.completedQuests}</div>
+                <div className="text-sm text-gray-600">Completed</div>
+              </div>
             </div>
           </div>
         </CardContent>

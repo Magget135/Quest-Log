@@ -7,6 +7,7 @@ import CompletedQuests from './pages/CompletedQuests';
 import RewardStore from './pages/RewardStore';
 import RecurringTasks from './pages/RecurringTasks';
 import RulesSettings from './pages/RulesSettings';
+import LevelSettings from './pages/LevelSettings';
 import { XPProvider } from './contexts/XPContext';
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/rewards" element={<RewardStore />} />
               <Route path="/recurring" element={<RecurringTasks />} />
               <Route path="/settings" element={<RulesSettings />} />
+              <Route path="/levels" element={<LevelSettings />} />
             </Routes>
           </Layout>
           <Toaster />

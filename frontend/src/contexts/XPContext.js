@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { mockXPData, mockQuests, mockCompletedQuests, mockRewards } from '../data/mock';
+import { mockXPData, mockQuests, mockCompletedQuests, mockRewards, mockCustomRewards, mockLevels } from '../data/mock';
 
 const XPContext = createContext();
 
@@ -7,7 +7,38 @@ const initialState = {
   xp: mockXPData,
   quests: mockQuests,
   completedQuests: mockCompletedQuests,
-  rewards: mockRewards
+  rewards: [...mockRewards, ...mockCustomRewards],
+  levels: mockLevels
+};
+
+// Helper function to get current level
+const getCurrentLevel = (totalEarned, levels) => {
+  const sortedLevels = [...levels].sort((a, b) => b.xpRequired - a.xpRequired);
+  const currentLevel = sortedLevels.find(level => totalEarned >= level.xpRequired);
+  return currentLevel || levels[0];
+};
+
+// Helper function to get next level
+const getNextLevel = (totalEarned, levels) => {
+  const sortedLevels = [...levels].sort((a, b) => a.xpRequired - b.xpRequired);
+  const nextLevel = sortedLevels.find(level => totalEarned < level.xpRequired);
+  return nextLevel || null;
+};
+
+// Helper function to get level progress
+const getLevelProgress = (totalEarned, levels) => {
+  const currentLevel = getCurrentLevel(totalEarned, levels);
+  const nextLevel = getNextLevel(totalEarned, levels);
+  
+  if (!nextLevel) {
+    return { progress: 100, progressXP: 0, totalXPForNext: 0 };
+  }
+  
+  const progressXP = totalEarned - currentLevel.xpRequired;
+  const totalXPForNext = nextLevel.xpRequired - currentLevel.xpRequired;
+  const progress = (progressXP / totalXPForNext) * 100;
+  
+  return { progress, progressXP, totalXPForNext };
 };
 
 function xpReducer(state, action) {
@@ -67,6 +98,35 @@ function xpReducer(state, action) {
         quests: state.quests.filter(q => q.id !== action.payload)
       };
     
+    case 'ADD_CUSTOM_REWARD':
+      return {
+        ...state,
+        rewards: [...state.rewards, { ...action.payload, id: Date.now().toString(), isCustom: true }]
+      };
+    
+    case 'UPDATE_CUSTOM_REWARD':
+      return {
+        ...state,
+        rewards: state.rewards.map(reward =>
+          reward.id === action.payload.id ? { ...reward, ...action.payload } : reward
+        )
+      };
+    
+    case 'DELETE_CUSTOM_REWARD':
+      return {
+        ...state,
+        rewards: state.rewards.filter(r => r.id !== action.payload)
+      };
+    
+    case 'UPDATE_LEVELS':
+      return {
+        ...state,
+        levels: action.payload
+      };
+    
+    case 'RESET_ALL':
+      return initialState;
+    
     default:
       return state;
   }
@@ -77,33 +137,42 @@ export function XPProvider({ children }) {
   
   // Save to localStorage whenever state changes
   useEffect(() => {
-    localStorage.setItem('rpgLogState', JSON.stringify(state));
+    localStorage.setItem('questLogState', JSON.stringify(state));
   }, [state]);
   
   // Load from localStorage on mount
   useEffect(() => {
-    const savedState = localStorage.getItem('rpgLogState');
+    const savedState = localStorage.getItem('questLogState');
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState);
-        // Merge with initial state to ensure we have all required fields
-        Object.keys(parsed).forEach(key => {
-          if (key === 'xp') {
-            dispatch({ type: 'LOAD_XP', payload: parsed[key] });
-          } else if (key === 'quests') {
-            dispatch({ type: 'LOAD_QUESTS', payload: parsed[key] });
-          } else if (key === 'completedQuests') {
-            dispatch({ type: 'LOAD_COMPLETED', payload: parsed[key] });
-          }
-        });
+        // Dispatch actions to load each part of the state
+        if (parsed.xp) state.xp = parsed.xp;
+        if (parsed.quests) state.quests = parsed.quests;
+        if (parsed.completedQuests) state.completedQuests = parsed.completedQuests;
+        if (parsed.rewards) state.rewards = parsed.rewards;
+        if (parsed.levels) state.levels = parsed.levels;
       } catch (error) {
         console.error('Error loading saved state:', error);
       }
     }
   }, []);
   
+  // Helper functions for level system
+  const getCurrentLevel = () => getCurrentLevel(state.xp.totalEarned, state.levels);
+  const getNextLevel = () => getNextLevel(state.xp.totalEarned, state.levels);
+  const getLevelProgress = () => getLevelProgress(state.xp.totalEarned, state.levels);
+  
+  const contextValue = {
+    state,
+    dispatch,
+    getCurrentLevel,
+    getNextLevel,
+    getLevelProgress
+  };
+  
   return (
-    <XPContext.Provider value={{ state, dispatch }}>
+    <XPContext.Provider value={contextValue}>
       {children}
     </XPContext.Provider>
   );
