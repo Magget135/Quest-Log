@@ -1,40 +1,52 @@
-// Mock data for Quest Log app
+// Mock data for Quest Log RPG
 export const mockQuests = [
   {
     id: '1',
     name: 'Complete project proposal',
     rank: 'Epic',
-    dueDate: '2025-01-15',
-    reward: 'Movie',
-    xpReward: 150,
-    dateAdded: '2025-01-10'
+    dueDate: '2025-01-15T14:00',
+    reward: 'Movie Night',
+    description: 'Finish the quarterly project proposal with detailed timeline and budget breakdown.',
+    xpReward: 75,
+    dateAdded: '2025-01-10',
+    isImportant: true,
+    attachments: []
   },
   {
     id: '2',
     name: 'Clean the house',
     rank: 'Common',
     dueDate: '2025-01-14',
-    reward: 'Scrolling',
-    xpReward: 50,
-    dateAdded: '2025-01-12'
+    reward: 'Social Media Time',
+    description: 'Deep clean all rooms including bathroom and kitchen.',
+    xpReward: 25,
+    dateAdded: '2025-01-12',
+    isImportant: false,
+    attachments: []
   },
   {
     id: '3',
-    name: 'Learn new skill',
+    name: 'Learn new programming language',
     rank: 'Legendary',
-    dueDate: '2025-01-16',
-    reward: '1 Hour Gaming',
-    xpReward: 200,
-    dateAdded: '2025-01-13'
+    dueDate: '2025-01-20T10:00',
+    reward: 'New Book',
+    description: 'Complete the intro course for Python programming.',
+    xpReward: 100,
+    dateAdded: '2025-01-13',
+    isImportant: true,
+    attachments: []
   },
   {
     id: '4',
     name: 'Call mom',
     rank: 'Rare',
-    dueDate: '2025-01-13',
-    reward: '$1 Credit',
-    xpReward: 75,
-    dateAdded: '2025-01-10'
+    dueDate: '2025-01-13T18:00',
+    reward: 'Ice Cream',
+    description: '',
+    xpReward: 50,
+    dateAdded: '2025-01-10',
+    isImportant: false,
+    attachments: []
   }
 ];
 
@@ -43,78 +55,144 @@ export const mockCompletedQuests = [
     id: '5',
     name: 'Morning workout',
     rank: 'Common',
-    xpEarned: 50,
-    dateCompleted: '2025-01-13T08:00:00'
+    xpEarned: 25,
+    dateCompleted: '2025-01-13T08:00:00',
+    reward: 'Protein Shake'
   },
   {
     id: '6',
     name: 'Read 20 pages',
     rank: 'Rare',
-    xpEarned: 75,
-    dateCompleted: '2025-01-12T20:30:00'
+    xpEarned: 50,
+    dateCompleted: '2025-01-12T20:30:00',
+    reward: 'Gaming Session'
   },
   {
     id: '7',
     name: 'Finish coding challenge',
     rank: 'Epic',
-    xpEarned: 150,
-    dateCompleted: '2025-01-11T15:45:00'
+    xpEarned: 75,
+    dateCompleted: '2025-01-11T15:45:00',
+    reward: 'Movie Night'
   }
 ];
 
 export const mockRewards = [
   {
     id: '1',
-    name: '1 Hour Gaming',
-    cost: 100,
-    emoji: '🎮',
+    name: '🎮 Gaming Session',
+    cost: 50,
+    description: 'Enjoy 1 hour of your favorite game',
     isCustom: false,
-    note: 'Enjoy your favorite game'
+    icon: '🎮',
+    category: 'Entertainment'
   },
   {
     id: '2',
-    name: '$1 Credit',
+    name: '💰 Spending Money',
     cost: 25,
-    emoji: '💰',
+    description: 'Small treat or coffee money',
     isCustom: false,
-    note: 'Small spending money'
+    icon: '💰',
+    category: 'Treats'
   },
   {
     id: '3',
-    name: 'Movie Night',
-    cost: 100,
-    emoji: '🍿',
+    name: '🍿 Movie Night',
+    cost: 75,
+    description: 'Watch a movie with snacks',
     isCustom: false,
-    note: 'Watch a movie with snacks'
+    icon: '🍿',
+    category: 'Entertainment'
   },
   {
     id: '4',
-    name: 'Social Media',
-    cost: 50,
-    emoji: '📱',
+    name: '📱 Social Media Time',
+    cost: 30,
+    description: '30 minutes of guilt-free scrolling',
     isCustom: false,
-    note: '30 minutes of scrolling'
-  }
-];
-
-export const mockCustomRewards = [
+    icon: '📱',
+    category: 'Digital'
+  },
   {
     id: '5',
-    name: 'Ice Cream',
-    cost: 75,
-    emoji: '🍦',
+    name: '🍦 Ice Cream',
+    cost: 40,
+    description: 'Treat yourself to your favorite flavor',
     isCustom: true,
-    note: 'Treat yourself to your favorite flavor'
+    icon: '🍦',
+    category: 'Treats'
   },
   {
     id: '6',
-    name: 'New Book',
-    cost: 200,
-    emoji: '📚',
+    name: '📚 New Book',
+    cost: 100,
+    description: 'Buy that book you\'ve been wanting',
     isCustom: true,
-    note: 'Buy that book you\'ve been wanting'
+    icon: '📚',
+    category: 'Learning'
   }
 ];
+
+export const mockInventory = [
+  {
+    id: 'inv_1',
+    rewardId: '1',
+    rewardName: '🎮 Gaming Session',
+    dateClaimed: '2025-01-12T10:00:00',
+    xpCost: 50,
+    description: 'Enjoy 1 hour of your favorite game'
+  },
+  {
+    id: 'inv_2',
+    rewardId: '4',
+    rewardName: '📱 Social Media Time',
+    dateClaimed: '2025-01-13T15:30:00',
+    xpCost: 30,
+    description: '30 minutes of guilt-free scrolling'
+  }
+];
+
+export const mockClaimedRewards = [
+  {
+    id: 'claimed_1',
+    rewardName: '🍿 Movie Night',
+    xpCost: 75,
+    dateClaimed: '2025-01-10T19:00:00',
+    dateUsed: '2025-01-10T20:00:00'
+  },
+  {
+    id: 'claimed_2',
+    rewardName: '💰 Spending Money',
+    xpCost: 25,
+    dateClaimed: '2025-01-11T12:00:00',
+    dateUsed: '2025-01-11T14:00:00'
+  }
+];
+
+export const mockXPData = {
+  currentXP: 175,
+  totalEarned: 650,
+  totalSpent: 475,
+  completedQuests: 8,
+  currentLevel: 2,
+  lastMonthlyBonus: '2025-01-01'
+};
+
+export const mockSettings = {
+  xpSystem: 'default',
+  autoCleanup: {
+    enabled: true,
+    frequency: '1month',
+    recurringOnly: false,
+    keepImportant: true
+  },
+  notifications: {
+    levelUp: true,
+    questDue: true,
+    rewardClaimed: true
+  }
+};
 
 export const mockRecurringTasks = [
   {
@@ -124,7 +202,9 @@ export const mockRecurringTasks = [
     frequency: 'Daily',
     days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     status: 'Active',
-    lastAdded: '2025-01-13'
+    lastAdded: '2025-01-13',
+    xpReward: 25,
+    isImportant: false
   },
   {
     id: '2',
@@ -133,7 +213,9 @@ export const mockRecurringTasks = [
     frequency: 'Weekly',
     days: ['Sun'],
     status: 'Active',
-    lastAdded: '2025-01-12'
+    lastAdded: '2025-01-12',
+    xpReward: 50,
+    isImportant: true
   },
   {
     id: '3',
@@ -142,31 +224,10 @@ export const mockRecurringTasks = [
     frequency: 'Monthly',
     days: ['1st'],
     status: 'Inactive',
-    lastAdded: '2025-01-01'
+    lastAdded: '2025-01-01',
+    xpReward: 75,
+    isImportant: false
   }
-];
-
-export const mockXPData = {
-  currentXP: 325,
-  totalEarned: 875,
-  totalSpent: 550,
-  completedQuests: 12
-};
-
-export const mockLevels = [
-  { id: 1, name: 'Novice', xpRequired: 0, color: 'bg-gray-100 text-gray-800' },
-  { id: 2, name: 'Apprentice', xpRequired: 250, color: 'bg-green-100 text-green-800' },
-  { id: 3, name: 'Hero', xpRequired: 500, color: 'bg-blue-100 text-blue-800' },
-  { id: 4, name: 'Champion', xpRequired: 1000, color: 'bg-purple-100 text-purple-800' },
-  { id: 5, name: 'Legend', xpRequired: 2000, color: 'bg-yellow-100 text-yellow-800' },
-  { id: 6, name: 'Master', xpRequired: 4000, color: 'bg-red-100 text-red-800' }
-];
-
-export const questRanks = [
-  { value: 'Common', label: 'Common', color: 'bg-gray-100 text-gray-800' },
-  { value: 'Rare', label: 'Rare', color: 'bg-blue-100 text-blue-800' },
-  { value: 'Epic', label: 'Epic', color: 'bg-purple-100 text-purple-800' },
-  { value: 'Legendary', label: 'Legendary', color: 'bg-yellow-100 text-yellow-800' }
 ];
 
 export const frequencies = [
