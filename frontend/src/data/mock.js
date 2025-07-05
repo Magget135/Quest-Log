@@ -10,7 +10,8 @@ export const mockQuests = [
     xpReward: 75,
     dateAdded: '2025-07-01',
     isImportant: true,
-    attachments: []
+    attachments: [],
+    progressStatus: 'in_progress'
   },
   {
     id: '2',
@@ -22,7 +23,8 @@ export const mockQuests = [
     xpReward: 25,
     dateAdded: '2025-07-02',
     isImportant: false,
-    attachments: []
+    attachments: [],
+    progressStatus: 'not_started'
   },
   {
     id: '3',
@@ -34,7 +36,8 @@ export const mockQuests = [
     xpReward: 100,
     dateAdded: '2025-07-03',
     isImportant: true,
-    attachments: []
+    attachments: [],
+    progressStatus: 'almost_done'
   },
   {
     id: '4',
@@ -46,7 +49,8 @@ export const mockQuests = [
     xpReward: 50,
     dateAdded: '2025-07-04',
     isImportant: false,
-    attachments: []
+    attachments: [],
+    progressStatus: 'pending'
   }
 ];
 
