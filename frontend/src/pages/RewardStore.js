@@ -428,26 +428,22 @@ const RewardStore = () => {
                           {canAffordReward(reward.cost) ? '🛒 Claim' : '🔒 Need XP'}
                         </Button>
                         
-                        {reward.isCustom && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleEditReward(reward)}
-                              className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                            >
-                              ✏️
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleDeleteReward(reward.id)}
-                              className="border-red-200 text-red-600 hover:bg-red-50"
-                            >
-                              🗑️
-                            </Button>
-                          </>
-                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEditReward(reward)}
+                          className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                        >
+                          ✏️
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDeleteReward(reward.id)}
+                          className="border-red-200 text-red-600 hover:bg-red-50"
+                        >
+                          🗑️
+                        </Button>
                       </div>
                     </div>
                   </div>
