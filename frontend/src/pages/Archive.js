@@ -155,83 +155,85 @@ const Archive = () => {
               <p>Complete some quests or use some rewards to see your history!</p>
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Details</TableHead>
-                  <TableHead>XP</TableHead>
-                  <TableHead>Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredItems().map((item) => (
-                  <TableRow key={`${item.type}-${item.id}`} className="hover:bg-gray-50">
-                    <TableCell>
-                      <Badge className={item.type === 'quest' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800'}>
-                        {item.type === 'quest' ? '⚔️ Quest' : '🎁 Reward'}
-                      </Badge>
-                    </TableCell>
-                    
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        {item.type === 'reward' && (
-                          <span className="text-lg">{getCategoryIcon(item.name)}</span>
-                        )}
-                        <span className="font-medium">{item.name}</span>
-                      </div>
-                    </TableCell>
-                    
-                    <TableCell>
-                      {item.type === 'quest' ? (
-                        <div className="space-y-1">
-                          <Badge className={getRankColor(item.rank)}>
-                            {item.rank}
-                          </Badge>
-                          {item.reward && (
-                            <div className="text-xs text-gray-500">
-                              Reward: {item.reward}
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="space-y-1">
-                          {item.dateUsed ? (
-                            <Badge className="bg-green-100 text-green-800">
-                              ✅ Used
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-yellow-100 text-yellow-800">
-                              📦 Claimed
-                            </Badge>
-                          )}
-                          {item.dateUsed && (
-                            <div className="text-xs text-gray-500">
-                              Claimed: {formatCompletedTimestamp(item.dateClaimed)}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </TableCell>
-                    
-                    <TableCell>
-                      <span className={`font-semibold ${
-                        item.type === 'quest' ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                        {item.type === 'quest' ? '+' : '-'}{item.xpEarned || item.xpCost} XP
-                      </span>
-                    </TableCell>
-                    
-                    <TableCell>
-                      <span className="text-sm">
-                        {formatCompletedTimestamp(item.date)}
-                      </span>
-                    </TableCell>
+            <div className="max-h-96 overflow-y-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Details</TableHead>
+                    <TableHead>XP</TableHead>
+                    <TableHead>Date</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredItems().map((item) => (
+                    <TableRow key={`${item.type}-${item.id}`} className="hover:bg-gray-50">
+                      <TableCell>
+                        <Badge className={item.type === 'quest' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800'}>
+                          {item.type === 'quest' ? '⚔️ Quest' : '🎁 Reward'}
+                        </Badge>
+                      </TableCell>
+                      
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          {item.type === 'reward' && (
+                            <span className="text-lg">{getCategoryIcon(item.name)}</span>
+                          )}
+                          <span className="font-medium">{item.name}</span>
+                        </div>
+                      </TableCell>
+                      
+                      <TableCell>
+                        {item.type === 'quest' ? (
+                          <div className="space-y-1">
+                            <Badge className={getRankColor(item.rank)}>
+                              {item.rank}
+                            </Badge>
+                            {item.reward && (
+                              <div className="text-xs text-gray-500">
+                                Reward: {item.reward}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="space-y-1">
+                            {item.dateUsed ? (
+                              <Badge className="bg-green-100 text-green-800">
+                                ✅ Used
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                📦 Claimed
+                              </Badge>
+                            )}
+                            {item.dateUsed && (
+                              <div className="text-xs text-gray-500">
+                                Claimed: {formatCompletedTimestamp(item.dateClaimed)}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </TableCell>
+                      
+                      <TableCell>
+                        <span className={`font-semibold ${
+                          item.type === 'quest' ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {item.type === 'quest' ? '+' : '-'}{item.xpEarned || item.xpCost} XP
+                        </span>
+                      </TableCell>
+                      
+                      <TableCell>
+                        <span className="text-sm">
+                          {formatCompletedTimestamp(item.date)}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>
