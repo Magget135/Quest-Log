@@ -212,7 +212,10 @@ export const mockRecurringTasks = [
     status: 'Active',
     lastAdded: '2025-01-13',
     xpReward: 25,
-    isImportant: false
+    isImportant: false,
+    startBeforeDue: 0, // Add to quests 0 days before due
+    customFrequency: null,
+    yearlyDate: null
   },
   {
     id: '2',
@@ -223,7 +226,10 @@ export const mockRecurringTasks = [
     status: 'Active',
     lastAdded: '2025-01-12',
     xpReward: 50,
-    isImportant: true
+    isImportant: true,
+    startBeforeDue: 1, // Add to quests 1 day before due
+    customFrequency: null,
+    yearlyDate: null
   },
   {
     id: '3',
@@ -234,7 +240,38 @@ export const mockRecurringTasks = [
     status: 'Inactive',
     lastAdded: '2025-01-01',
     xpReward: 75,
-    isImportant: false
+    isImportant: false,
+    startBeforeDue: 2, // Add to quests 2 days before due
+    customFrequency: null,
+    yearlyDate: null
+  },
+  {
+    id: '4',
+    name: 'Anniversary Celebration',
+    rank: 'Legendary',
+    frequency: 'Yearly',
+    days: [],
+    status: 'Active',
+    lastAdded: '2024-06-15',
+    xpReward: 100,
+    isImportant: true,
+    startBeforeDue: 7, // Add to quests 7 days before due
+    customFrequency: null,
+    yearlyDate: '06-15' // June 15th every year
+  },
+  {
+    id: '5',
+    name: 'Weekend Reflection',
+    rank: 'Rare',
+    frequency: 'Weekends',
+    days: ['Sat', 'Sun'],
+    status: 'Active',
+    lastAdded: '2025-01-12',
+    xpReward: 50,
+    isImportant: false,
+    startBeforeDue: 0,
+    customFrequency: null,
+    yearlyDate: null
   }
 ];
 
