@@ -242,7 +242,24 @@ export const frequencies = [
   { value: 'Daily', label: 'Daily' },
   { value: 'Weekly', label: 'Weekly' },
   { value: 'Monthly', label: 'Monthly' },
-  { value: 'Weekdays', label: 'Weekdays' }
+  { value: 'Weekdays', label: 'Weekdays' },
+  { value: 'Yearly', label: 'Yearly' },
+  { value: 'Weekends', label: 'Weekends Only' },
+  { value: 'Custom', label: 'Custom Frequency' }
+];
+
+// Custom frequency options
+export const customFrequencyUnits = [
+  { value: 'days', label: 'Days' },
+  { value: 'weeks', label: 'Weeks' },
+  { value: 'months', label: 'Months' },
+  { value: 'years', label: 'Years' }
+];
+
+export const endConditionTypes = [
+  { value: 'never', label: 'Never' },
+  { value: 'after', label: 'After X occurrences' },
+  { value: 'on', label: 'On specific date' }
 ];
 
 export const dayOptions = [
