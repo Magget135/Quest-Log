@@ -89,7 +89,8 @@ function questReducer(state, action) {
         });
       }
       
-      return {
+      // Create intermediate state for achievement checking
+      const intermediateState = {
         ...state,
         quests: state.quests.filter(q => q.id !== action.payload),
         completedQuests: [...state.completedQuests, completedQuest],
@@ -99,6 +100,26 @@ function questReducer(state, action) {
           totalEarned: newTotalXP,
           completedQuests: state.xp.completedQuests + 1
         },
+        lastCompletedQuestId: action.payload // Helper for achievement logic
+      };
+      
+      // Check for achievements
+      const achievementResult = checkAchievements(intermediateState, { type: 'COMPLETE_QUEST' });
+      
+      // Add achievement unlock notifications
+      achievementResult.newlyUnlocked.forEach(achievement => {
+        notifications.push({
+          id: `achievement_${Date.now()}_${achievement.id}`,
+          type: 'achievement_unlock',
+          message: `🎉 Achievement Unlocked: ${achievement.name}!`,
+          achievement: achievement,
+          timestamp: new Date().toISOString()
+        });
+      });
+      
+      return {
+        ...intermediateState,
+        achievements: achievementResult.achievements,
         notifications: [...state.notifications, ...notifications]
       };
     
