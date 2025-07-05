@@ -105,22 +105,7 @@
 user_problem_statement: "Continuation Task: 1) Make All Rewards Editable & Deletable - Allow all rewards (including defaults) to be fully editable and deletable. 2) Custom Reward Categories - Add ability to create custom categories and delete default categories. 3) Scrollable Panels for Long Lists - Make Active Quest List, History Timeline, and Recent Reward Usage scrollable with fixed height. 4) Auto XP Bonus Popup (Monthly Reward) - Generate monthly bonus XP popup on Dashboard automatically. 5) Auto Cleanup Controls - Add Recent Reward Usage to auto cleanup options. 6) Closeable Tips/Info Boxes - Add close icons to all tip/info boxes."
 
 backend:
-  - task: "Remove status field from quest management system"
-    implemented: true
-    working: true
-    file: "No backend changes needed - this is purely frontend"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "No backend changes required for status field removal - quest management is handled in frontend only"
-      - working: true
-        agent: "testing"
-        comment: "Confirmed no backend changes needed as quest management is handled in frontend only"
-  
-  - task: "API health check endpoint"
+  - task: "Backend API health check and status endpoints"
     implemented: true
     working: true
     file: "/app/backend/server.py"
@@ -130,58 +115,82 @@ backend:
     status_history:
       - working: true
         agent: "testing"
-        comment: "Successfully tested the API health check endpoint at /api/ - returns 200 OK with expected message"
-  
-  - task: "MongoDB connection"
-    implemented: true
-    working: true
-    file: "/app/backend/server.py"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "testing"
-        comment: "Successfully tested MongoDB connection by creating and retrieving status check records"
-  
-  - task: "CORS functionality"
-    implemented: true
-    working: true
-    file: "/app/backend/server.py"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "testing"
-        comment: "CORS is properly configured with appropriate headers for cross-origin requests"
-  
-  - task: "Status API endpoints"
-    implemented: true
-    working: true
-    file: "/app/backend/server.py"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "testing"
-        comment: "Successfully tested POST /api/status and GET /api/status endpoints - both working correctly"
+        comment: "Successfully tested all backend API endpoints - health check, MongoDB connection, CORS, and status APIs all working correctly"
 
 frontend:
-  - task: "Remove status field from mock data"
+  - task: "Make All Rewards Editable & Deletable"
     implemented: true
     working: true
-    file: "/app/frontend/src/data/mock.js"
+    file: "/app/frontend/src/pages/RewardStore.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Successfully removed status field from mockQuests data and removed questStatuses export"
+        comment: "Removed restriction that only custom rewards are editable. All rewards now show edit and delete buttons regardless of isCustom status"
   
-  - task: "Remove status from quest creation form"
+  - task: "Custom Reward Categories Management"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RewardStore.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added category management with localStorage persistence. Users can add custom categories and delete default categories. Prevents deletion if category has rewards"
+  
+  - task: "Scrollable Active Quest List"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Dashboard.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added max-h-96 and overflow-y-auto to Active Quest List container for fixed height scrolling"
+  
+  - task: "Scrollable History Timeline"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Archive.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added max-h-96 and overflow-y-auto to History Timeline table container for fixed height scrolling"
+  
+  - task: "Scrollable Recent Reward Usage"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Inventory.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added max-h-80 and overflow-y-auto to Recent Reward Usage section for fixed height scrolling"
+  
+  - task: "Auto XP Bonus Popup Component"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/MonthlyBonusPopup.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created MonthlyBonusPopup component with auto-display logic. Shows at top of Dashboard when monthly bonus is available. Includes dismiss functionality"
+  
+  - task: "Dashboard Monthly Bonus Integration"
     implemented: true
     working: true
     file: "/app/frontend/src/pages/Dashboard.js"
@@ -191,31 +200,43 @@ frontend:
     status_history:
       - working: true
         agent: "main"
-        comment: "Removed status field from newQuest state and quest form logic"
+        comment: "Integrated MonthlyBonusPopup into Dashboard. Shows popup automatically when user can claim monthly bonus"
   
-  - task: "Remove status display from Active Quest List"
+  - task: "Enhanced Auto Cleanup Controls"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/Dashboard.js"
+    file: "/app/frontend/src/pages/Settings.js"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Removed status display, status icons, and getStatusIcon function from quest list"
+        comment: "Added 'Include Recent Reward Usage cleanup' toggle to auto-cleanup settings with proper state management"
   
-  - task: "Verify quest completion flow still works"
+  - task: "Closeable Tips/Info Boxes Component"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/Dashboard.js"
+    file: "/app/frontend/src/components/CloseableTip.js"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Verified quest completion flow works correctly - quest moves from Active to Completed when Complete button is clicked"
+        comment: "Created reusable CloseableTip component with localStorage persistence for dismissed state"
+  
+  - task: "Closeable Tips Implementation"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RewardStore.js, /app/frontend/src/pages/Settings.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Replaced static info boxes with CloseableTip components in RewardStore and Settings pages"
 
 metadata:
   created_by: "main_agent"
