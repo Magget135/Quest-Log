@@ -37,6 +37,59 @@ const Dashboard = () => {
   const currentLevel = getCurrentLevelInfo();
   const levelProgress = getLevelProgressInfo();
   const xpSystem = getXPSystemInfo();
+
+  // Sorting options
+  const sortOptions = [
+    { value: 'due_date_asc', label: 'Due Date (Chronological)' },
+    { value: 'due_date_desc', label: 'Due Date (Newest First)' },
+    { value: 'xp_high_low', label: 'XP (High to Low)' },
+    { value: 'xp_low_high', label: 'XP (Low to High)' },
+    { value: 'status_priority', label: 'Status Priority' },
+    { value: 'name_a_z', label: 'Name (A-Z)' },
+    { value: 'name_z_a', label: 'Name (Z-A)' }
+  ];
+
+  // Sort quests based on selected option
+  const getSortedQuests = () => {
+    const questsCopy = [...state.quests];
+    
+    switch (sortOption) {
+      case 'due_date_asc':
+        return questsCopy.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+      case 'due_date_desc':
+        return questsCopy.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
+      case 'xp_high_low':
+        return questsCopy.sort((a, b) => b.xpReward - a.xpReward);
+      case 'xp_low_high':
+        return questsCopy.sort((a, b) => a.xpReward - b.xpReward);
+      case 'status_priority':
+        const statusOrder = {
+          'not_started': 1,
+          'pending': 2,
+          'in_progress': 3,
+          'delaying': 4,
+          'on_hold': 5,
+          'almost_done': 6,
+          'abandoned': 7
+        };
+        return questsCopy.sort((a, b) => {
+          const statusA = statusOrder[a.progressStatus] || 1;
+          const statusB = statusOrder[b.progressStatus] || 1;
+          return statusA - statusB;
+        });
+      case 'name_a_z':
+        return questsCopy.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name_z_a':
+        return questsCopy.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return questsCopy;
+    }
+  };
+
+  const handleSortChange = (newSortOption) => {
+    setSortOption(newSortOption);
+    localStorage.setItem('questSortOption', newSortOption);
+  };
   
   const handleAddQuest = () => {
     if (!newQuest.name || !newQuest.rank || !newQuest.dueDate) {
