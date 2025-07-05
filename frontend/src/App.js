@@ -18,7 +18,7 @@ function App() {
   return (
     <QuestProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex flex-col">
+        <div className="min-h-screen wood-bg flex flex-col">
           <div className="flex-1">
             <Layout>
               <Routes>
