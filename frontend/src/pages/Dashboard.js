@@ -14,6 +14,7 @@ import { formatRelativeDueDate, getDueDateColor, getPastDueInfo } from '../utils
 import QuestEditModal from '../components/QuestEditModal';
 import MonthlyBonusPopup from '../components/MonthlyBonusPopup';
 import CalendarView from '../components/CalendarView';
+import TaskProgressBadge from '../components/TaskProgressBadge';
 
 const Dashboard = () => {
   const { state, dispatch, getCurrentLevelInfo, getLevelProgressInfo, getXPSystemInfo } = useQuest();
