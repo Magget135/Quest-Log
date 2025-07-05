@@ -42,6 +42,32 @@ const Dashboard = () => {
   const xpSystem = getXPSystemInfo();
   const achievementProgress = getAchievementProgress(state.achievements || []);
 
+  // Show achievement unlock notifications
+  useEffect(() => {
+    const achievementNotifications = state.notifications?.filter(n => n.type === 'achievement_unlock') || [];
+    achievementNotifications.forEach(notification => {
+      if (notification.achievement) {
+        toast({
+          title: "🎉 Achievement Unlocked!",
+          description: (
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl">{notification.achievement.icon}</span>
+              <div>
+                <div className="font-semibold">{notification.achievement.name}</div>
+                <div className="text-sm text-gray-600">{notification.achievement.description}</div>
+              </div>
+            </div>
+          ),
+          duration: 5000,
+          className: "border-yellow-200 bg-yellow-50"
+        });
+        
+        // Dismiss the notification after showing it
+        dispatch({ type: 'DISMISS_NOTIFICATION', payload: notification.id });
+      }
+    });
+  }, [state.notifications, toast, dispatch]);
+
   // Sorting options
   const sortOptions = [
     { value: 'due_date_asc', label: 'Due Date (Chronological)' },
