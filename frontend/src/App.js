@@ -7,6 +7,7 @@ import Archive from './pages/Archive';
 import RewardStore from './pages/RewardStore';
 import Inventory from './pages/Inventory';
 import RecurringTasks from './pages/RecurringTasks';
+import Achievements from './pages/Achievements';
 import Settings from './pages/Settings';
 import TimezoneFooter from './components/TimezoneFooter';
 import { QuestProvider } from './contexts/QuestContext';
