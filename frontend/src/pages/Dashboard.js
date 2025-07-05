@@ -338,7 +338,24 @@ const Dashboard = () => {
               <span>⚔️</span>
               <span>Active Quest Log</span>
             </div>
-            <Badge variant="secondary">{state.quests.length} active</Badge>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="sort-select" className="text-sm text-gray-600">Sort by:</Label>
+                <Select value={sortOption} onValueChange={handleSortChange}>
+                  <SelectTrigger className="w-48 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sortOptions.map(option => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Badge variant="secondary">{state.quests.length} active</Badge>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
