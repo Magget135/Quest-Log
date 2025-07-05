@@ -359,6 +359,9 @@ const Dashboard = () => {
         </CardContent>
       </Card>
       
+      {/* Calendar View */}
+      <CalendarView onEditQuest={handleEditQuest} />
+      
       {/* Quest Edit Modal */}
       {editingQuest && (
         <QuestEditModal
