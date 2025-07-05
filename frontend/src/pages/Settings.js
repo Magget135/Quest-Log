@@ -17,6 +17,10 @@ const Settings = () => {
   const { toast } = useToast();
   const [confirmXPChange, setConfirmXPChange] = useState(null);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [resetOptions, setResetOptions] = useState({
+    eraseRewards: true,
+    resetXPSystem: false
+  });
   
   const currentXPSystem = getXPSystemInfo();
   const canClaimBonus = canClaimMonthlyBonus();
