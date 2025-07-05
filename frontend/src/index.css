@@ -1,19 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Medieval Theme Variables */
+:root {
+  /* Warm Medieval Colors */
+  --medieval-brown-dark: #3C2414;
+  --medieval-brown: #654321;
+  --medieval-brown-light: #8B4513;
+  --medieval-brown-lighter: #A0522D;
+  --medieval-amber: #D2691E;
+  --medieval-amber-light: #DEB887;
+  --medieval-parchment: #F5F5DC;
+  --medieval-parchment-light: #FFF8DC;
+  --medieval-cream: #FAEBD7;
+  --medieval-gold: #DAA520;
+  --medieval-gold-light: #FFD700;
+  --medieval-gold-dark: #B8860B;
+  --medieval-red: #A0522D;
+  --medieval-green: #556B2F;
+  
+  /* Textures and Shadows */
+  --medieval-shadow: 0 4px 6px -1px rgba(60, 36, 20, 0.1), 0 2px 4px -1px rgba(60, 36, 20, 0.06);
+  --medieval-shadow-lg: 0 10px 15px -3px rgba(60, 36, 20, 0.1), 0 4px 6px -2px rgba(60, 36, 20, 0.05);
+  --medieval-shadow-xl: 0 20px 25px -5px rgba(60, 36, 20, 0.1), 0 10px 10px -5px rgba(60, 36, 20, 0.04);
+}
+
+/* Parchment texture background */
+.parchment-bg {
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 40% 40%, rgba(245, 245, 220, 0.1) 0%, transparent 20%);
+  background-color: var(--medieval-parchment);
+}
+
+/* Wood grain texture */
+.wood-bg {
+  background-image: 
+    linear-gradient(90deg, rgba(101, 67, 33, 0.1) 0%, transparent 50%, rgba(101, 67, 33, 0.1) 100%),
+    linear-gradient(0deg, rgba(139, 69, 19, 0.05) 0%, transparent 50%, rgba(139, 69, 19, 0.05) 100%);
+  background-color: var(--medieval-brown-lighter);
+}
+
+/* Stone texture */
+.stone-bg {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(105, 105, 105, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(105, 105, 105, 0.1) 0%, transparent 50%);
+  background-color: #8B8B8B;
+}
+
+/* Scroll/Parchment card style */
+.medieval-card {
+  background: linear-gradient(135deg, var(--medieval-parchment) 0%, var(--medieval-cream) 100%);
+  border: 2px solid var(--medieval-gold-dark);
+  border-radius: 8px;
+  box-shadow: var(--medieval-shadow-lg);
+  position: relative;
+}
+
+.medieval-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--medieval-gold), var(--medieval-gold-dark));
+  border-radius: 10px;
+  z-index: -1;
+}
+
+/* Medieval button styles */
+.medieval-button {
+  background: linear-gradient(135deg, var(--medieval-amber) 0%, var(--medieval-brown-lighter) 100%);
+  border: 2px solid var(--medieval-gold-dark);
+  color: var(--medieval-parchment);
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(60, 36, 20, 0.5);
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+}
+
+.medieval-button:hover {
+  background: linear-gradient(135deg, var(--medieval-gold) 0%, var(--medieval-amber) 100%);
+  transform: translateY(-1px);
+  box-shadow: var(--medieval-shadow-xl);
+}
+
+/* Medieval scroll navigation */
+.medieval-scroll {
+  background: linear-gradient(135deg, var(--medieval-parchment-light) 0%, var(--medieval-parchment) 100%);
+  border: 2px solid var(--medieval-gold-dark);
+  border-radius: 6px;
+  box-shadow: var(--medieval-shadow);
+  position: relative;
+}
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
+    font-family: 'Libre Baskerville', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, var(--medieval-brown-light) 0%, var(--medieval-amber-light) 100%);
+    min-height: 100vh;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+    font-family: 'Courier New', monospace;
 }
 
 
