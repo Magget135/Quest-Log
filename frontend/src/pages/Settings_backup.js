@@ -133,68 +133,16 @@ const Settings = () => {
           </p>
         </CardContent>
       </Card>
-
-      {/* Rules & System Guidelines Panel */}
-      <CollapsiblePanel 
-        icon="📖" 
-        title="Rules & System Guidelines" 
-        className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50"
-        defaultExpanded={false}
-      >
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-blue-900 flex items-center space-x-2">
-                <span>🎯</span>
-                <span>XP & Quest Rules</span>
-              </h3>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p><strong>✅ XP Earning:</strong> Only completed quests earn XP—progress status is visual only</p>
-                <p><strong>🔄 Recurring Tasks:</strong> Only added to Active Quest Log when within start-before-due range</p>
-                <p><strong>📈 Progress Status:</strong> "In Progress", "Delaying", etc. are for tracking only—no XP until "Completed"</p>
-                <p><strong>⚡ Quest Completion:</strong> Immediately awards XP and moves quest to archive</p>
-                <p><strong>🎁 Monthly Bonus:</strong> Auto-issued monthly XP bonus must be claimed via Settings or popup</p>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="font-semibold text-blue-900 flex items-center space-x-2">
-                <span>⚠️</span>
-                <span>System Warnings</span>
-              </h3>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p><strong>🧪 XP System Changes:</strong> Changing XP system deletes previous ranks and adjusts reward range</p>
-                <p><strong>🗑️ Data Loss:</strong> Deleted rewards, categories, or quests cannot be recovered</p>
-                <p><strong>🧨 Reset Warning:</strong> "Reset Everything" permanently erases all progress and data</p>
-                <p><strong>💾 Auto-Save:</strong> All changes are automatically saved to your browser's local storage</p>
-                <p><strong>🔒 Data Privacy:</strong> Your quest data stays local on your device only</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h4 className="font-medium text-yellow-900 mb-2">💡 Pro Tips</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-800">
-              <div>
-                <p><strong>🎮 Gamification:</strong> Use Important tags for high-priority tasks</p>
-                <p><strong>📅 Scheduling:</strong> Set recurring tasks with appropriate start-before-due timing</p>
-              </div>
-              <div>
-                <p><strong>🏆 Progression:</strong> Higher XP systems offer more customization but require more effort</p>
-                <p><strong>🎁 Rewards:</strong> Balance XP costs with your completion rate for motivation</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CollapsiblePanel>
-
-      {/* XP System Panel */}
-      <CollapsiblePanel 
-        icon="🧪" 
-        title="XP System Configuration" 
-        className="border-purple-200"
-      >
-        <div className="space-y-4">
+      
+      {/* XP System Selection */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <span>🧪</span>
+            <span>XP System Selection</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <div>
               <h3 className="font-semibold text-blue-900">Current System</h3>
@@ -266,16 +214,18 @@ const Settings = () => {
               Higher XP systems give you more customization.
             </p>
           </CloseableTip>
-        </div>
-      </CollapsiblePanel>
-
-      {/* Auto Cleanup Panel */}
-      <CollapsiblePanel 
-        icon="🗑️" 
-        title="Auto-Cleanup Controls" 
-        className="border-orange-200"
-      >
-        <div className="space-y-4">
+        </CardContent>
+      </Card>
+      
+      {/* Auto-Cleanup Settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <span>🗑️</span>
+            <span>Auto-Cleanup Controls</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="auto-cleanup-toggle" className="text-base font-medium">
@@ -324,7 +274,7 @@ const Settings = () => {
                     onCheckedChange={(checked) => handleAutoCleanupChange('recurringOnly', checked)}
                   />
                 </div>
-              
+                
                 <div className="flex items-center justify-between">
                   <Label htmlFor="keep-important" className="text-sm">
                     Keep tasks marked as "Important"
@@ -335,7 +285,7 @@ const Settings = () => {
                     onCheckedChange={(checked) => handleAutoCleanupChange('keepImportant', checked)}
                   />
                 </div>
-              
+                
                 <div className="flex items-center justify-between">
                   <Label htmlFor="cleanup-rewards" className="text-sm">
                     Include Recent Reward Usage cleanup
@@ -349,16 +299,18 @@ const Settings = () => {
               </div>
             </div>
           )}
-        </div>
-      </CollapsiblePanel>
-
-      {/* Quest Customization Panel */}
-      <CollapsiblePanel 
-        icon="🎨" 
-        title="Quest Customization" 
-        className="border-green-200"
-      >
-        <div className="space-y-4">
+        </CardContent>
+      </Card>
+      
+      {/* Calendar View Settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <span>📅</span>
+            <span>Calendar View Settings</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="calendar-enabled" className="text-base font-medium">
@@ -395,63 +347,19 @@ const Settings = () => {
               </div>
             </div>
           )}
-        </div>
-      </CollapsiblePanel>
-
-      {/* Recurring Tasks Rules Panel */}
-      <CollapsiblePanel 
-        icon="🔄" 
-        title="Recurring Task Settings" 
-        className="border-cyan-200"
-        defaultExpanded={false}
-      >
-        <div className="space-y-4">
-          <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4">
-            <h4 className="font-medium text-cyan-900 mb-2">🔄 Recurring Task Behavior</h4>
-            <div className="space-y-2 text-sm text-cyan-800">
-              <p><strong>⏰ Start Before Due:</strong> Tasks appear in Active Quest Log based on your configured timing (0-7 days early)</p>
-              <p><strong>📅 Frequency Types:</strong> Daily, Weekly, Monthly, Weekdays, Yearly, Weekends Only, or Custom patterns</p>
-              <p><strong>🔧 Custom Frequency:</strong> Create advanced patterns like "every 2 weeks on Monday and Friday"</p>
-              <p><strong>🎂 Yearly Tasks:</strong> Perfect for birthdays, anniversaries, or annual renewals</p>
-              <p><strong>🎮 Weekend Tasks:</strong> Leisure activities automatically scheduled for Saturday and Sunday</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-gray-900">Frequency Examples</h4>
-              <div className="space-y-1 text-sm text-gray-700">
-                <p><strong>📅 Daily:</strong> Exercise, journaling, meditation</p>
-                <p><strong>📆 Weekly:</strong> Grocery shopping, weekly review</p>
-                <p><strong>🗓️ Monthly:</strong> Goal setting, bill paying</p>
-                <p><strong>🎂 Yearly:</strong> Birthday planning, insurance renewal</p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-gray-900">Advanced Features</h4>
-              <div className="space-y-1 text-sm text-gray-700">
-                <p><strong>🔧 Custom:</strong> "Every 3 weeks on Tuesday"</p>
-                <p><strong>⏰ Early Start:</strong> "Add 2 days before due"</p>
-                <p><strong>🎮 Weekends:</strong> "Only Saturday & Sunday"</p>
-                <p><strong>📅 End Conditions:</strong> "After 10 times" or "Until Dec 31"</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CollapsiblePanel>
-
-      {/* Reward Settings & Monthly Bonus Panel */}
-      <CollapsiblePanel 
-        icon="🎁" 
-        title="Reward Settings & Monthly Bonus" 
-        className="border-yellow-200"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <h3 className="font-semibold text-yellow-900 flex items-center space-x-2">
+        </CardContent>
+      </Card>
+      
+      {/* Monthly Bonus & Data Management */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
               <span>🎁</span>
               <span>Monthly XP Bonus</span>
-            </h3>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div className="space-y-2">
               <p className="text-sm text-gray-600">
                 Apply your monthly XP bonus based on your current level and XP system.
@@ -488,42 +396,18 @@ const Settings = () => {
             >
               🎁 {canClaimBonus ? 'Claim Monthly Bonus' : 'Already Claimed'}
             </Button>
-          </div>
-          
-          <div className="space-y-4">
-            <h3 className="font-semibold text-yellow-900 flex items-center space-x-2">
-              <span>🏆</span>
-              <span>Reward Guidelines</span>
-            </h3>
-            <div className="space-y-2 text-sm text-gray-700">
-              <p><strong>💰 Cost Balance:</strong> Set reward costs based on your average quest completion rate</p>
-              <p><strong>🎯 Motivation:</strong> Use rewards as motivation for completing challenging quests</p>
-              <p><strong>⚖️ XP Range:</strong> Rewards must stay within your current XP system's range</p>
-              <p><strong>🛍️ Custom Rewards:</strong> Create personalized rewards that matter to you</p>
-              <p><strong>📦 Inventory:</strong> Claimed rewards go to inventory—use them when earned!</p>
-            </div>
-          </div>
-        </div>
-      </CollapsiblePanel>
-
-      {/* Danger Zone Panel */}
-      <CollapsiblePanel 
-        icon="💥" 
-        title="Danger Zone" 
-        className="border-red-200 bg-gradient-to-r from-red-50 to-pink-50"
-        defaultExpanded={false}
-      >
-        <div className="space-y-4">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h4 className="font-medium text-red-900 mb-2">⚠️ Irreversible Actions</h4>
-            <p className="text-sm text-red-800">
-              These actions permanently delete data and cannot be undone. Use with extreme caution.
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold text-gray-900 mb-2">💾 Data Management</h4>
-            <p className="text-sm text-gray-600 mb-4">
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <span>💾</span>
+              <span>Data Management</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-gray-600">
               Reset all quest log data to start fresh. This action cannot be undone.
             </p>
             <Button 
@@ -533,9 +417,9 @@ const Settings = () => {
             >
               🧨 Reset Everything
             </Button>
-          </div>
-        </div>
-      </CollapsiblePanel>
+          </CardContent>
+        </Card>
+      </div>
       
       {/* XP System Change Confirmation */}
       {confirmXPChange && (
