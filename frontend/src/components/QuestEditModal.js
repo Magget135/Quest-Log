@@ -17,7 +17,8 @@ const QuestEditModal = ({ quest, isOpen, onClose, onSave, xpSystem }) => {
     dueTime: '',
     reward: '',
     description: '',
-    isImportant: false
+    isImportant: false,
+    progressStatus: 'not_started'
   });
 
   useEffect(() => {
