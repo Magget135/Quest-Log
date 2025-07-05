@@ -3,37 +3,39 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
-import CompletedQuests from './pages/CompletedQuests';
+import Archive from './pages/Archive';
 import RewardStore from './pages/RewardStore';
+import Inventory from './pages/Inventory';
 import RecurringTasks from './pages/RecurringTasks';
-import RulesSettings from './pages/RulesSettings';
-import LevelSettings from './pages/LevelSettings';
+import Settings from './pages/Settings';
 import TimezoneFooter from './components/TimezoneFooter';
-import { XPProvider } from './contexts/XPContext';
+import { QuestProvider } from './contexts/QuestContext';
+import NotificationManager from './components/NotificationManager';
 import './App.css';
 
 function App() {
   return (
-    <XPProvider>
+    <QuestProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex flex-col">
           <div className="flex-1">
             <Layout>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/completed" element={<CompletedQuests />} />
+                <Route path="/archive" element={<Archive />} />
                 <Route path="/rewards" element={<RewardStore />} />
+                <Route path="/inventory" element={<Inventory />} />
                 <Route path="/recurring" element={<RecurringTasks />} />
-                <Route path="/settings" element={<RulesSettings />} />
-                <Route path="/levels" element={<LevelSettings />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>
           </div>
           <TimezoneFooter />
+          <NotificationManager />
           <Toaster />
         </div>
       </Router>
-    </XPProvider>
+    </QuestProvider>
   );
 }
 

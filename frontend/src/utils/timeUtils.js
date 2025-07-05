@@ -1,205 +1,128 @@
-// Time and date utilities for Quest Log
-
-// Get user's timezone or stored preference
-export const getUserTimezone = () => {
-  const stored = localStorage.getItem('questLogTimezone');
-  if (stored) {
-    const { useSystemTimezone, selectedTimezone } = JSON.parse(stored);
-    if (!useSystemTimezone && selectedTimezone) {
-      return selectedTimezone;
-    }
-  }
-  return Intl.DateTimeFormat().resolvedOptions().timeZone;
-};
-
-// Save timezone preference
-export const saveTimezonePreference = (useSystemTimezone, selectedTimezone = null) => {
-  localStorage.setItem('questLogTimezone', JSON.stringify({
-    useSystemTimezone,
-    selectedTimezone
-  }));
-};
-
-// Get timezone preference from storage
-export const getTimezonePreference = () => {
-  const stored = localStorage.getItem('questLogTimezone');
-  if (stored) {
-    return JSON.parse(stored);
-  }
-  return { useSystemTimezone: true, selectedTimezone: null };
-};
-
-// Format relative due date with time
-export const formatRelativeDueDate = (dueDate, includeTime = false) => {
+// Time utility functions for Quest Log
+export const formatRelativeDueDate = (dueDate) => {
   if (!dueDate) return 'No due date';
   
-  const timezone = getUserTimezone();
   const now = new Date();
   const due = new Date(dueDate);
+  const diffMs = due.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+  const diffMinutes = Math.ceil(diffMs / (1000 * 60));
   
-  // If it's just a date (no time), treat as all day
-  const isAllDay = dueDate.length === 10; // YYYY-MM-DD format
+  // Check if it's today
+  const isToday = due.toDateString() === now.toDateString();
   
-  if (isAllDay) {
-    return formatRelativeDate(due, now) + ' (All Day)';
+  if (isToday) {
+    if (diffMs < 0) {
+      // Past due today
+      const pastMinutes = Math.abs(diffMinutes);
+      const pastHours = Math.abs(diffHours);
+      
+      if (pastMinutes < 60) {
+        return `⏰ Passed by ${pastMinutes} min${pastMinutes !== 1 ? 's' : ''}`;
+      } else if (pastHours < 24) {
+        return `⏰ Passed by ${pastHours} hour${pastHours !== 1 ? 's' : ''}`;
+      }
+    } else {
+      // Due today
+      const timeStr = due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return `Today at ${timeStr}`;
+    }
   }
   
-  const timeString = due.toLocaleTimeString([], { 
-    hour: 'numeric', 
-    minute: '2-digit',
-    timeZone: timezone 
-  });
+  // Future dates
+  if (diffDays > 0) {
+    if (diffDays === 1) {
+      return 'Tomorrow';
+    } else if (diffDays <= 7) {
+      return `In ${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+    } else {
+      return due.toLocaleDateString();
+    }
+  }
   
-  return formatRelativeDate(due, now) + ` at ${timeString}`;
-};
-
-// Format relative date portion
-const formatRelativeDate = (due, now) => {
-  const diffTime = due - now;
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-  if (diffDays === 0) {
-    return 'Today';
-  } else if (diffDays === 1) {
-    return 'Tomorrow';
-  } else if (diffDays === -1) {
+  // Past dates (not today)
+  const pastDays = Math.abs(diffDays);
+  if (pastDays === 1) {
     return 'Yesterday';
-  } else if (diffDays > 1 && diffDays <= 7) {
-    return `In ${diffDays} days`;
-  } else if (diffDays < -1 && diffDays >= -7) {
-    return `${Math.abs(diffDays)} days ago`;
+  } else if (pastDays <= 7) {
+    return `${pastDays} day${pastDays !== 1 ? 's' : ''} ago`;
   } else {
-    // For dates far in the future or past, show the actual date
-    const timezone = getUserTimezone();
-    return due.toLocaleDateString([], { 
-      month: 'short', 
-      day: 'numeric',
-      timeZone: timezone 
-    });
+    return due.toLocaleDateString();
   }
 };
 
-// Get timezone display name
-export const getTimezoneDisplayName = (timezone) => {
-  try {
-    const now = new Date();
-    const shortName = now.toLocaleDateString('en', {
-      timeZoneName: 'short',
-      timeZone: timezone
-    }).split(', ')[1];
-    
-    return `${timezone} (${shortName})`;
-  } catch (error) {
-    return timezone;
-  }
-};
-
-// Popular timezone list
-export const POPULAR_TIMEZONES = [
-  'America/New_York',
-  'America/Chicago', 
-  'America/Denver',
-  'America/Los_Angeles',
-  'America/Toronto',
-  'Europe/London',
-  'Europe/Paris',
-  'Europe/Berlin',
-  'Europe/Rome',
-  'Asia/Tokyo',
-  'Asia/Shanghai',
-  'Asia/Kolkata',
-  'Asia/Singapore',
-  'Asia/Ho_Chi_Minh',
-  'Australia/Sydney',
-  'Australia/Melbourne',
-  'Pacific/Auckland'
-];
-
-// Get all available timezones (fallback for comprehensive list)
-export const getAllTimezones = () => {
-  try {
-    return Intl.supportedValuesOf('timeZone');
-  } catch (error) {
-    // Fallback to popular timezones if not supported
-    return POPULAR_TIMEZONES;
-  }
-};
-
-// Format timestamp for completed quests with timezone
-export const formatCompletedTimestamp = (timestamp) => {
-  const timezone = getUserTimezone();
-  const date = new Date(timestamp);
-  
-  return date.toLocaleString([], {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    timeZone: timezone
-  });
-};
-
-// Check if a date is overdue, today, or future (CARD BACKGROUND LOGIC)
 export const getDateStatus = (dueDate) => {
-  if (!dueDate) return 'future';
+  if (!dueDate) return 'none';
+  
+  const now = new Date();
+  const due = new Date(dueDate);
+  const diffMs = due.getTime() - now.getTime();
+  
+  const isToday = due.toDateString() === now.toDateString();
+  
+  if (isToday) {
+    return diffMs < 0 ? 'overdue' : 'today';
+  }
+  
+  return diffMs < 0 ? 'overdue' : 'future';
+};
+
+export const formatCompletedTimestamp = (timestamp) => {
+  if (!timestamp) return 'Unknown';
+  
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  
+  if (diffMinutes < 60) {
+    return `${diffMinutes} min${diffMinutes !== 1 ? 's' : ''} ago`;
+  } else if (diffHours < 24) {
+    return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+  } else if (diffDays === 1) {
+    return 'Yesterday';
+  } else if (diffDays <= 7) {
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+  } else {
+    return date.toLocaleDateString();
+  }
+};
+
+export const formatDateTime = (dateTime) => {
+  if (!dateTime) return '';
+  
+  const date = new Date(dateTime);
+  return date.toLocaleString();
+};
+
+export const isOverdue = (dueDate) => {
+  if (!dueDate) return false;
   
   const now = new Date();
   const due = new Date(dueDate);
   
-  // Compare just the date part (ignore time for card background)
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
-  
-  if (dueDay < today) return 'overdue';      // Past dates = red
-  if (dueDay.getTime() === today.getTime()) return 'today';  // Today = blue (regardless of time)
-  return 'future';                           // Future dates = green
+  return due.getTime() < now.getTime();
 };
 
-// Check if quest time has passed (for TODAY's quests only)
-export const getTimeOverdueInfo = (dueDate) => {
-  if (!dueDate) return null;
+export const getDueDateColor = (dueDate) => {
+  const status = getDateStatus(dueDate);
+  switch (status) {
+    case 'overdue': return 'border-l-red-500 bg-red-50';
+    case 'today': return 'border-l-blue-500 bg-blue-50';
+    case 'future': return 'border-l-green-500 bg-green-50';
+    default: return 'border-l-gray-500 bg-gray-50';
+  }
+};
+
+export const shouldShowOverdueBadge = (dueDate) => {
+  if (!dueDate) return false;
   
   const now = new Date();
   const due = new Date(dueDate);
+  const isToday = due.toDateString() === now.toDateString();
   
-  // Only check time overdue for today's quests
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
-  
-  // If it's not today, don't show time overdue
-  if (dueDay.getTime() !== today.getTime()) return null;
-  
-  // If it's just a date (no time), no time overdue
-  const isAllDay = dueDate.length === 10;
-  if (isAllDay) return null;
-  
-  // Check if time has passed
-  if (due <= now) {
-    const timeDiff = now - due;
-    return {
-      isOverdue: true,
-      overdueText: formatOverdueTime(timeDiff)
-    };
-  }
-  
-  return null;
-};
-
-// Format overdue time in human readable format
-const formatOverdueTime = (milliseconds) => {
-  const totalMinutes = Math.floor(milliseconds / (1000 * 60));
-  
-  if (totalMinutes < 60) {
-    return `Passed by ${totalMinutes} min${totalMinutes !== 1 ? 's' : ''}`;
-  }
-  
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  
-  if (minutes === 0) {
-    return `Passed by ${hours} hour${hours !== 1 ? 's' : ''}`;
-  }
-  
-  return `Passed by ${hours} hour${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+  return isToday && due.getTime() < now.getTime();
 };
