@@ -590,6 +590,22 @@ const RecurringTasks = () => {
           </div>
         </CardContent>
       </Card>
+      
+      {/* Custom Frequency Builder Dialog */}
+      {showCustomFrequency && (
+        <Dialog open={showCustomFrequency} onOpenChange={setShowCustomFrequency}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Custom Frequency Configuration</DialogTitle>
+            </DialogHeader>
+            <CustomFrequencyBuilder
+              customFrequency={newTask.customFrequency}
+              onFrequencyChange={handleCustomFrequencyChange}
+              onClose={() => setShowCustomFrequency(false)}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
