@@ -15,6 +15,8 @@ import QuestEditModal from '../components/QuestEditModal';
 import MonthlyBonusPopup from '../components/MonthlyBonusPopup';
 import CalendarView from '../components/CalendarView';
 import TaskProgressBadge from '../components/TaskProgressBadge';
+import Badges from '../components/Badges';
+import { getAchievementProgress } from '../data/achievements';
 
 const Dashboard = () => {
   const { state, dispatch, getCurrentLevelInfo, getLevelProgressInfo, getXPSystemInfo } = useQuest();
