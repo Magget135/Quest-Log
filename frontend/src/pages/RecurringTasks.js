@@ -1,217 +1,360 @@
 import React, { useState } from 'react';
+import { useQuest } from '../contexts/QuestContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
-import { Badge } from '../components/ui/badge';
 import { Switch } from '../components/ui/switch';
 import { useToast } from '../hooks/use-toast';
-import { mockRecurringTasks, questRanks, frequencies } from '../data/mock';
+import { frequencies, dayOptions } from '../data/mock';
 
 const RecurringTasks = () => {
+  const { state, dispatch, getXPSystemInfo } = useQuest();
   const { toast } = useToast();
-  const [tasks, setTasks] = useState(mockRecurringTasks);
+  
+  const [showAddForm, setShowAddForm] = useState(false);
   const [newTask, setNewTask] = useState({
     name: '',
     rank: '',
-    frequency: '',
-    days: [],
-    status: 'Active'
+    frequency: 'Daily',
+    days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    status: 'Active',
+    isImportant: false
   });
   
-  const getRankColor = (rank) => {
-    const colors = {
-      'Common': 'bg-gray-100 text-gray-800',
-      'Rare': 'bg-blue-100 text-blue-800',
-      'Epic': 'bg-purple-100 text-purple-800',
-      'Legendary': 'bg-yellow-100 text-yellow-800'
-    };
-    return colors[rank] || 'bg-gray-100 text-gray-800';
-  };
+  const xpSystem = getXPSystemInfo();
   
   const handleAddTask = () => {
     if (!newTask.name || !newTask.rank || !newTask.frequency) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
+        description: "Please fill in task name, rank, and frequency.",
         variant: "destructive"
       });
       return;
     }
     
-    const taskWithId = {
+    // Find XP for selected rank
+    const selectedRank = xpSystem.ranks.find(r => r.value === newTask.rank);
+    const xpReward = selectedRank ? selectedRank.xp : 0;
+    
+    const taskData = {
       ...newTask,
-      id: Date.now().toString(),
+      xpReward,
       lastAdded: new Date().toISOString().split('T')[0]
     };
     
-    setTasks([...tasks, taskWithId]);
+    dispatch({ type: 'ADD_RECURRING_TASK', payload: taskData });
     setNewTask({
       name: '',
       rank: '',
-      frequency: '',
-      days: [],
-      status: 'Active'
+      frequency: 'Daily',
+      days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      status: 'Active',
+      isImportant: false
     });
+    setShowAddForm(false);
     
     toast({
       title: "Recurring Task Added! 🔄",
-      description: `"${newTask.name}" has been added to your recurring tasks.`
+      description: `"${newTask.name}" will now appear automatically.`
     });
   };
   
-  const toggleTaskStatus = (taskId) => {
-    setTasks(tasks.map(task => 
-      task.id === taskId 
-        ? { ...task, status: task.status === 'Active' ? 'Inactive' : 'Active' }
-        : task
-    ));
+  const handleToggleTask = (taskId) => {
+    const task = state.recurringTasks.find(t => t.id === taskId);
+    if (task) {
+      const newStatus = task.status === 'Active' ? 'Inactive' : 'Active';
+      dispatch({ 
+        type: 'UPDATE_RECURRING_TASK', 
+        payload: { ...task, status: newStatus }
+      });
+      
+      toast({
+        title: `Task ${newStatus}`,
+        description: `"${task.name}" is now ${newStatus.toLowerCase()}.`
+      });
+    }
   };
   
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+  const handleDeleteTask = (taskId) => {
+    dispatch({ type: 'DELETE_RECURRING_TASK', payload: taskId });
     toast({
-      title: "Task Deleted",
-      description: "Recurring task has been removed."
+      title: "Task Removed",
+      description: "Recurring task has been deleted."
     });
   };
   
-  const getFrequencyDisplay = (frequency, days) => {
-    if (frequency === 'Daily') return 'Every day';
-    if (frequency === 'Weekly') return `Every ${days.join(', ')}`;
-    if (frequency === 'Monthly') return `Monthly on ${days.join(', ')}`;
-    if (frequency === 'Weekdays') return 'Monday to Friday';
-    return frequency;
+  const handleAddToQuests = (task) => {
+    const questData = {
+      name: task.name,
+      rank: task.rank,
+      dueDate: new Date().toISOString().split('T')[0],
+      reward: '',
+      description: 'Auto-generated from recurring task',
+      xpReward: task.xpReward,
+      isImportant: task.isImportant,
+      attachments: []
+    };
+    
+    dispatch({ type: 'ADD_QUEST', payload: questData });
+    
+    // Update last added date
+    dispatch({ 
+      type: 'UPDATE_RECURRING_TASK', 
+      payload: { ...task, lastAdded: new Date().toISOString().split('T')[0] }
+    });
+    
+    toast({
+      title: "Added to Quest Log! 📜",
+      description: `"${task.name}" has been added to your active quests.`
+    });
+  };
+  
+  const getRankColor = (rank) => {
+    const rankObj = xpSystem.ranks.find(r => r.value === rank);
+    return rankObj ? rankObj.color : 'bg-gray-100 text-gray-800';
+  };
+  
+  const getFrequencyIcon = (frequency) => {
+    const icons = {
+      'Daily': '📅',
+      'Weekly': '📆',
+      'Monthly': '🗓️',
+      'Weekdays': '💼'
+    };
+    return icons[frequency] || '🔄';
+  };
+  
+  const handleDayToggle = (day) => {
+    const newDays = newTask.days.includes(day)
+      ? newTask.days.filter(d => d !== day)
+      : [...newTask.days, day];
+    setNewTask({ ...newTask, days: newDays });
   };
   
   return (
     <div className="space-y-6">
-      <Card className="bg-gradient-to-r from-indigo-50 to-cyan-50 border-indigo-200">
+      {/* Header */}
+      <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span>🔄</span>
+              <span>Recurring Quest Templates</span>
+            </div>
+            <Button 
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              ➕ Add Recurring Task
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        
+        {showAddForm && (
+          <CardContent className="border-t border-blue-200 mt-4 pt-4">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="task-name">Task Name</Label>
+                  <Input
+                    id="task-name"
+                    value={newTask.name}
+                    onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
+                    placeholder="Enter recurring task name"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="task-rank">Task Rank</Label>
+                  <Select value={newTask.rank} onValueChange={(value) => setNewTask({ ...newTask, rank: value })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select rank" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {xpSystem.ranks.map(rank => (
+                        <SelectItem key={rank.value} value={rank.value}>
+                          <div className="flex items-center space-x-2">
+                            <Badge className={rank.color} variant="outline">
+                              {rank.label}
+                            </Badge>
+                            <span className="text-sm text-gray-600">({rank.xp} XP)</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="task-frequency">Frequency</Label>
+                  <Select value={newTask.frequency} onValueChange={(value) => setNewTask({ ...newTask, frequency: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {frequencies.map(freq => (
+                        <SelectItem key={freq.value} value={freq.value}>
+                          {getFrequencyIcon(freq.value)} {freq.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="task-important"
+                    checked={newTask.isImportant}
+                    onCheckedChange={(checked) => setNewTask({ ...newTask, isImportant: checked })}
+                  />
+                  <Label htmlFor="task-important" className="text-sm">Mark as Important</Label>
+                </div>
+              </div>
+              
+              {(newTask.frequency === 'Weekly' || newTask.frequency === 'Weekdays') && (
+                <div>
+                  <Label>Active Days</Label>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {dayOptions.map(day => (
+                      <Button
+                        key={day.value}
+                        size="sm"
+                        variant={newTask.days.includes(day.value) ? "default" : "outline"}
+                        onClick={() => handleDayToggle(day.value)}
+                        className="text-xs"
+                      >
+                        {day.value}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" onClick={() => setShowAddForm(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleAddTask} className="bg-blue-600 hover:bg-blue-700">
+                  Add Recurring Task
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+      
+      {/* Recurring Tasks List */}
+      <div className="space-y-4">
+        {state.recurringTasks.map((task) => (
+          <Card 
+            key={task.id}
+            className={`transition-all duration-200 ${
+              task.status === 'Active' 
+                ? 'border-green-200 bg-gradient-to-r from-white to-green-50' 
+                : 'border-gray-200 bg-gradient-to-r from-white to-gray-50 opacity-75'
+            }`}
+          >
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <h3 className="font-semibold text-gray-900">{task.name}</h3>
+                    <Badge className={getRankColor(task.rank)}>
+                      {task.rank}
+                    </Badge>
+                    <Badge className={task.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                      {task.status === 'Active' ? '🟢 Active' : '⚪ Inactive'}
+                    </Badge>
+                    {task.isImportant && (
+                      <Badge variant="outline" className="border-yellow-400 text-yellow-700">
+                        ⭐ Important
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                    <span>{getFrequencyIcon(task.frequency)} {task.frequency}</span>
+                    <span>✨ {task.xpReward} XP</span>
+                    {task.lastAdded && (
+                      <span>📅 Last added: {new Date(task.lastAdded).toLocaleDateString()}</span>
+                    )}
+                    {task.days && task.days.length < 7 && (
+                      <span>📌 {task.days.join(', ')}</span>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex space-x-2">
+                  {task.status === 'Active' && (
+                    <Button
+                      size="sm"
+                      onClick={() => handleAddToQuests(task)}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      ➕ Add to Quests
+                    </Button>
+                  )}
+                  
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleToggleTask(task.id)}
+                    className={task.status === 'Active' 
+                      ? 'border-orange-200 text-orange-600 hover:bg-orange-50'
+                      : 'border-green-200 text-green-600 hover:bg-green-50'
+                    }
+                  >
+                    {task.status === 'Active' ? '⏸️ Pause' : '▶️ Resume'}
+                  </Button>
+                  
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleDeleteTask(task.id)}
+                    className="border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    🗑️
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+        
+        {state.recurringTasks.length === 0 && (
+          <Card>
+            <CardContent className="text-center py-12">
+              <div className="text-4xl mb-4">🔄</div>
+              <p className="text-lg font-medium mb-2">No recurring tasks</p>
+              <p className="text-gray-600 mb-4">Create templates for tasks you do regularly!</p>
+              <Button onClick={() => setShowAddForm(true)} className="bg-blue-600 hover:bg-blue-700">
+                ➕ Add First Recurring Task
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+      
+      {/* Usage Tips */}
+      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <span>🔁</span>
-            <span>Recurring Tasks</span>
+            <span>💡</span>
+            <span>Recurring Tasks Tips</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-600">
-            Set up tasks that automatically generate quests based on your schedule.
-            Perfect for building consistent habits! 💪
-          </p>
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Add New Recurring Task ➕</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="taskName">Task Name</Label>
-              <Input
-                id="taskName"
-                value={newTask.name}
-                onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
-                placeholder="Enter task name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="taskRank">Quest Rank</Label>
-              <Select value={newTask.rank} onValueChange={(value) => setNewTask({ ...newTask, rank: value })}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select rank" />
-                </SelectTrigger>
-                <SelectContent>
-                  {questRanks.map(rank => (
-                    <SelectItem key={rank.value} value={rank.value}>
-                      {rank.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="frequency">Frequency</Label>
-              <Select value={newTask.frequency} onValueChange={(value) => setNewTask({ ...newTask, frequency: value })}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select frequency" />
-                </SelectTrigger>
-                <SelectContent>
-                  {frequencies.map(freq => (
-                    <SelectItem key={freq.value} value={freq.value}>
-                      {freq.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p><strong>📅 Daily:</strong> Perfect for habits like exercise, reading, or meditation</p>
+            <p><strong>📆 Weekly:</strong> Great for weekly reviews, cleaning, or skill practice</p>
+            <p><strong>🗓️ Monthly:</strong> Ideal for goal setting, planning, or major tasks</p>
+            <p><strong>💼 Weekdays:</strong> Work-related tasks that only happen on business days</p>
+            <p><strong>⭐ Important:</strong> Marked tasks are protected from auto-cleanup</p>
           </div>
-          <Button onClick={handleAddTask} className="w-full md:w-auto">
-            ➕ Add Recurring Task
-          </Button>
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Recurring Tasks 📅</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {tasks.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <p>No recurring tasks yet. Add your first recurring task above! 🎯</p>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Task Name</TableHead>
-                  <TableHead>Rank</TableHead>
-                  <TableHead>Frequency</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Last Added</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {tasks.map((task) => (
-                  <TableRow key={task.id} className="hover:bg-gray-50">
-                    <TableCell className="font-medium">{task.name}</TableCell>
-                    <TableCell>
-                      <Badge className={getRankColor(task.rank)}>
-                        {task.rank}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{getFrequencyDisplay(task.frequency, task.days)}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Switch
-                          checked={task.status === 'Active'}
-                          onCheckedChange={() => toggleTaskStatus(task.id)}
-                        />
-                        <span className={task.status === 'Active' ? 'text-green-600' : 'text-gray-500'}>
-                          {task.status}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{task.lastAdded}</TableCell>
-                    <TableCell>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => deleteTask(task.id)}
-                      >
-                        🗑️
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
         </CardContent>
       </Card>
     </div>
