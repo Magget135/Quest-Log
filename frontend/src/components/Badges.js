@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { ACHIEVEMENT_CATEGORIES, getAchievementProgress } from '../../data/achievements';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { ACHIEVEMENT_CATEGORIES, getAchievementProgress } from '../data/achievements';
 
 const Badges = ({ achievements, className = '' }) => {
   const [filterCategory, setFilterCategory] = useState('all');
