@@ -98,6 +98,13 @@ const Dashboard = () => {
       description: "Quest has been removed from your log."
     });
   };
+
+  const handleProgressChange = (questId, newStatus) => {
+    dispatch({ 
+      type: 'UPDATE_QUEST_PROGRESS', 
+      payload: { id: questId, progressStatus: newStatus } 
+    });
+  };
   
   const getRankColor = (rank) => {
     const rankObj = xpSystem.ranks.find(r => r.value === rank);
