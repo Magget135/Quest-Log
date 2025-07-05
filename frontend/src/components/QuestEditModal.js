@@ -33,7 +33,8 @@ const QuestEditModal = ({ quest, isOpen, onClose, onSave, xpSystem }) => {
         dueDate,
         dueTime,
         description: quest.description || '',
-        reward: quest.reward || ''
+        reward: quest.reward || '',
+        progressStatus: quest.progressStatus || 'not_started'
       });
     }
   }, [quest]);
