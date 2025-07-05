@@ -31,7 +31,11 @@ function questReducer(state, action) {
     case 'ADD_QUEST':
       return {
         ...state,
-        quests: [...state.quests, { ...action.payload, id: Date.now().toString() }]
+        quests: [...state.quests, { 
+          ...action.payload, 
+          id: Date.now().toString(),
+          progressStatus: action.payload.progressStatus || 'not_started'
+        }]
       };
     
     case 'UPDATE_QUEST':
