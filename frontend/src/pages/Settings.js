@@ -56,6 +56,23 @@ const Settings = () => {
     });
   };
   
+  const handleCalendarViewChange = (setting, value) => {
+    const newCalendarView = {
+      ...state.settings.calendarView,
+      [setting]: value
+    };
+    
+    dispatch({ 
+      type: 'UPDATE_SETTINGS', 
+      payload: { calendarView: newCalendarView }
+    });
+    
+    toast({
+      title: "Settings Updated",
+      description: "Calendar view settings have been saved.",
+    });
+  };
+  
   const applyMonthlyBonus = () => {
     if (!canClaimBonus) {
       toast({
