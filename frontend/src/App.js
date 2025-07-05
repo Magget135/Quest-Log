@@ -8,6 +8,7 @@ import RewardStore from './pages/RewardStore';
 import RecurringTasks from './pages/RecurringTasks';
 import RulesSettings from './pages/RulesSettings';
 import LevelSettings from './pages/LevelSettings';
+import TimezoneFooter from './components/TimezoneFooter';
 import { XPProvider } from './contexts/XPContext';
 import './App.css';
 
@@ -15,17 +16,20 @@ function App() {
   return (
     <XPProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/completed" element={<CompletedQuests />} />
-              <Route path="/rewards" element={<RewardStore />} />
-              <Route path="/recurring" element={<RecurringTasks />} />
-              <Route path="/settings" element={<RulesSettings />} />
-              <Route path="/levels" element={<LevelSettings />} />
-            </Routes>
-          </Layout>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col">
+          <div className="flex-1">
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/completed" element={<CompletedQuests />} />
+                <Route path="/rewards" element={<RewardStore />} />
+                <Route path="/recurring" element={<RecurringTasks />} />
+                <Route path="/settings" element={<RulesSettings />} />
+                <Route path="/levels" element={<LevelSettings />} />
+              </Routes>
+            </Layout>
+          </div>
+          <TimezoneFooter />
           <Toaster />
         </div>
       </Router>

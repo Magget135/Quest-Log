@@ -3,6 +3,7 @@ import { useXP } from '../contexts/XPContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
+import { formatCompletedTimestamp } from '../utils/timeUtils';
 
 const CompletedQuests = () => {
   const { state } = useXP();
@@ -15,11 +16,6 @@ const CompletedQuests = () => {
       'Legendary': 'bg-yellow-100 text-yellow-800'
     };
     return colors[rank] || 'bg-gray-100 text-gray-800';
-  };
-  
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
   
   const totalXPEarned = state.completedQuests.reduce((sum, quest) => sum + quest.xpEarned, 0);
@@ -88,7 +84,11 @@ const CompletedQuests = () => {
                           +{quest.xpEarned} XP
                         </span>
                       </TableCell>
-                      <TableCell>{formatDate(quest.dateCompleted)}</TableCell>
+                      <TableCell>
+                        <span className="text-sm">
+                          ⏰ {formatCompletedTimestamp(quest.dateCompleted)}
+                        </span>
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
