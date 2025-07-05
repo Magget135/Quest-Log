@@ -259,6 +259,17 @@ const Settings = () => {
                     onCheckedChange={(checked) => handleAutoCleanupChange('keepImportant', checked)}
                   />
                 </div>
+                
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="cleanup-rewards" className="text-sm">
+                    Include Recent Reward Usage cleanup
+                  </Label>
+                  <Switch
+                    id="cleanup-rewards"
+                    checked={state.settings.autoCleanup.includeRewards}
+                    onCheckedChange={(checked) => handleAutoCleanupChange('includeRewards', checked)}
+                  />
+                </div>
               </div>
             </div>
           )}
