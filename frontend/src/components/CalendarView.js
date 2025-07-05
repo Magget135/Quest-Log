@@ -383,6 +383,14 @@ const QuestBlock = ({ quest, onClick, compact = false, mini = false, onProgressC
             <Badge className={getRankColor(quest.rank)}>
               {quest.rank}
             </Badge>
+            {onProgressChange && (
+              <TaskProgressBadge
+                questId={quest.id}
+                currentStatus={quest.progressStatus || 'not_started'}
+                onStatusChange={onProgressChange}
+                size="sm"
+              />
+            )}
             <span className="text-sm">✨ {quest.xpReward} XP</span>
             {quest.isImportant && (
               <Badge variant="outline" className="border-yellow-400 text-yellow-700">
