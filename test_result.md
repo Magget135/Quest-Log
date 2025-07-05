@@ -205,17 +205,65 @@ frontend:
         agent: "main"
         comment: "Added Progress Status selector dropdown to Quest Edit Modal. Users can now change quest progress status during editing. Progress status is properly saved and persisted with quest data. Moved 'Mark as Important' toggle to same row for better layout."
   
-  - task: "Reset System Backend Logic Enhancement"
+  - task: "Enhanced Recurring Task Data Structure"
     implemented: true
     working: true
-    file: "/app/frontend/src/contexts/QuestContext.js"
+    file: "/app/frontend/src/data/mock.js, /app/frontend/src/contexts/QuestContext.js"
     stuck_count: 0
-    priority: "medium"
+    priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Enhanced RESET_EVERYTHING action to accept payload with reset options. Conditional reset logic based on eraseRewards and resetXPSystem flags. Preserves rewards, claimedRewards, and XP system setting when respective toggles are OFF."
+        comment: "Updated recurring task data structure to support startBeforeDue (0-7 days), customFrequency object for advanced patterns, yearlyDate for yearly tasks, and endCondition support. Extended mock data with examples of yearly and weekend tasks."
+
+  - task: "Custom Frequency Builder Component"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CustomFrequencyBuilder.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created Google Calendar-style custom frequency builder with interval/unit selection, weekly days picker, end conditions (never/after X/on date), and real-time preview. Supports advanced patterns like 'every 2 weeks on Monday and Friday'."
+
+  - task: "Enhanced Recurring Tasks Page with New Features"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RecurringTasks.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Updated RecurringTasks page with: 1) Start Before Due option (0-7 days), 2) New frequency types (Yearly, Weekends Only, Custom), 3) Yearly date picker, 4) Custom frequency configuration dialog, 5) Enhanced frequency descriptions, 6) Updated tips section with new features."
+
+  - task: "Collapsible Panel Component"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CollapsiblePanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created reusable CollapsiblePanel component with expand/collapse animation, color-coded borders, and smooth transitions. Supports default expanded state and custom styling for different panel types."
+
+  - task: "Rules & Settings Page Redesign"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Settings.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Completely redesigned Settings page with collapsible panels: Rules & System Guidelines, XP System Configuration, Auto-Cleanup Controls, Quest Customization, Recurring Task Settings, Reward Settings & Monthly Bonus, and Danger Zone. Added comprehensive rules documentation with XP earning rules, system warnings, and pro tips."
 
 metadata:
   created_by: "main_agent"
