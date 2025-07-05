@@ -279,7 +279,7 @@ const CalendarView = ({ onEditQuest }) => {
 };
 
 // Quest Block Component
-const QuestBlock = ({ quest, onClick, compact = false, mini = false }) => {
+const QuestBlock = ({ quest, onClick, compact = false, mini = false, onProgressChange }) => {
   const { getXPSystemInfo } = useQuest();
   const xpSystem = getXPSystemInfo();
   
