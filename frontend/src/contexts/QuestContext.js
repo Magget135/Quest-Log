@@ -41,6 +41,16 @@ function questReducer(state, action) {
           quest.id === action.payload.id ? { ...quest, ...action.payload } : quest
         )
       };
+
+    case 'UPDATE_QUEST_PROGRESS':
+      return {
+        ...state,
+        quests: state.quests.map(quest =>
+          quest.id === action.payload.id 
+            ? { ...quest, progressStatus: action.payload.progressStatus } 
+            : quest
+        )
+      };
     
     case 'DELETE_QUEST':
       return {
