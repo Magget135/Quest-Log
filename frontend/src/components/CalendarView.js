@@ -344,6 +344,14 @@ const QuestBlock = ({ quest, onClick, compact = false, mini = false, onProgressC
               <Badge className={`${getRankColor(quest.rank)} text-xs`}>
                 {quest.rank}
               </Badge>
+              {onProgressChange && (
+                <TaskProgressBadge
+                  questId={quest.id}
+                  currentStatus={quest.progressStatus || 'not_started'}
+                  onStatusChange={onProgressChange}
+                  size="xs"
+                />
+              )}
               {hasTime && (
                 <div className="text-xs flex items-center space-x-1">
                   <Clock size={12} />
