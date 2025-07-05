@@ -47,7 +47,7 @@ const RewardStore = () => {
     if (!newReward.name || !newReward.cost) {
       toast({
         title: "Missing Information",
-        description: "Please fill in reward name and XP cost.",
+        description: "Please fill in reward name and gold cost.",
         variant: "destructive"
       });
       return;
@@ -56,8 +56,8 @@ const RewardStore = () => {
     const cost = parseInt(newReward.cost);
     if (cost < xpSystem.rewardRange.min || cost > xpSystem.rewardRange.max) {
       toast({
-        title: "Invalid XP Cost",
-        description: `XP cost must be between ${xpSystem.rewardRange.min} and ${xpSystem.rewardRange.max} for your current XP system.`,
+        title: "Invalid Gold Cost",
+        description: `Gold cost must be between ${xpSystem.rewardRange.min} and ${xpSystem.rewardRange.max} for your current XP system.`,
         variant: "destructive"
       });
       return;
@@ -81,15 +81,15 @@ const RewardStore = () => {
     
     toast({
       title: "Reward Added! 🛍️",
-      description: `"${newReward.name}" has been added to your reward store.`
+      description: `"${newReward.name}" has been added to the merchant's emporium.`
     });
   };
   
   const handleClaimReward = (reward) => {
     if (!canAffordReward(reward.cost)) {
       toast({
-        title: "Insufficient XP",
-        description: `You need ${reward.cost} XP to claim this reward. You currently have ${state.xp.currentXP} XP.`,
+        title: "Insufficient Gold",
+        description: `You need ${reward.cost} gold pieces to claim this reward. You currently have ${state.xp.currentXP} gold.`,
         variant: "destructive"
       });
       return;
@@ -110,7 +110,7 @@ const RewardStore = () => {
     dispatch({ type: 'DELETE_REWARD', payload: rewardId });
     toast({
       title: "Reward Removed",
-      description: "Reward has been deleted from your store."
+      description: "Reward has been deleted from the emporium."
     });
   };
   
@@ -172,14 +172,14 @@ const RewardStore = () => {
   
   const getCategoryColor = (category) => {
     const colors = {
-      'Entertainment': 'bg-purple-100 text-purple-800',
-      'Treats': 'bg-orange-100 text-orange-800',
-      'Digital': 'bg-blue-100 text-blue-800',
-      'Learning': 'bg-green-100 text-green-800',
-      'Self-Care': 'bg-pink-100 text-pink-800',
-      'Activities': 'bg-yellow-100 text-yellow-800'
+      'Entertainment': 'bg-purple-600 text-purple-100',
+      'Treats': 'bg-orange-600 text-orange-100',
+      'Digital': 'bg-blue-600 text-blue-100',
+      'Learning': 'bg-green-600 text-green-100',
+      'Self-Care': 'bg-pink-600 text-pink-100',
+      'Activities': 'bg-yellow-600 text-yellow-100'
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-gray-600 text-gray-100';
   };
   
   const groupedRewards = state.rewards.reduce((groups, reward) => {
@@ -511,293 +511,6 @@ const RewardStore = () => {
           categories={categories}
           iconOptions={iconOptions}
           xpSystem={xpSystem}
-        />
-      )}
-    </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Badge className="bg-yellow-100 text-yellow-800 text-lg px-3 py-1">
-                💰 {state.xp.currentXP} XP
-              </Badge>
-              <Button 
-                onClick={() => setShowCategoryForm(!showCategoryForm)}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                🏷️ Manage Categories
-              </Button>
-              <Button 
-                onClick={() => setShowAddForm(!showAddForm)}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                ➕ Add Reward
-              </Button>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        
-        {showCategoryForm && (
-          <CardContent className="border-t border-purple-200 mt-4 pt-4">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Manage Categories</h3>
-                <div className="flex space-x-2">
-                  <Input
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    placeholder="New category name"
-                    className="w-48"
-                  />
-                  <Button onClick={handleAddCategory} className="bg-green-600 hover:bg-green-700">
-                    Add
-                  </Button>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {categories.map((category) => (
-                  <div key={category} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <Badge className={getCategoryColor(category)}>
-                      {category}
-                    </Badge>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleDeleteCategory(category)}
-                      className="ml-2 border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      🗑️
-                    </Button>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => setShowCategoryForm(false)}>
-                  Close
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        )}
-        
-        {showAddForm && (
-          <CardContent className="border-t border-purple-200 mt-4 pt-4">
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="reward-name">Reward Name</Label>
-                  <Input
-                    id="reward-name"
-                    value={newReward.name}
-                    onChange={(e) => setNewReward({ ...newReward, name: e.target.value })}
-                    placeholder="Enter reward name"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="reward-cost">XP Cost ({xpSystem.rewardRange.min}-{xpSystem.rewardRange.max})</Label>
-                  <Input
-                    id="reward-cost"
-                    type="number"
-                    min={xpSystem.rewardRange.min}
-                    max={xpSystem.rewardRange.max}
-                    value={newReward.cost}
-                    onChange={(e) => setNewReward({ ...newReward, cost: e.target.value })}
-                    placeholder="XP cost"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="reward-icon">Icon</Label>
-                  <Select value={newReward.icon} onValueChange={(value) => setNewReward({ ...newReward, icon: value })}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {iconOptions.map(icon => (
-                        <SelectItem key={icon} value={icon}>
-                          <span className="text-lg">{icon}</span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="reward-category">Category</Label>
-                  <Select value={newReward.category} onValueChange={(value) => setNewReward({ ...newReward, category: value })}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map(category => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="md:col-span-2">
-                  <Label htmlFor="reward-description">Description</Label>
-                  <Textarea
-                    id="reward-description"
-                    value={newReward.description}
-                    onChange={(e) => setNewReward({ ...newReward, description: e.target.value })}
-                    placeholder="Describe your reward..."
-                    rows={2}
-                  />
-                </div>
-              </div>
-              
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setShowAddForm(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleAddReward} className="bg-purple-600 hover:bg-purple-700">
-                  Add to Store
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        )}
-      </Card>
-      
-      {/* XP System Info */}
-      <CloseableTip 
-        id="fairplay-reminder"
-        icon="⚠️"
-        title="Fair Play Reminder"
-        className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200"
-      >
-        <div className="flex items-center justify-between">
-          <p className="text-gray-600">
-            Be fair with your XP reward values. Setting unrealistic XP can break your system and reduce motivation.
-          </p>
-          <Badge className="bg-blue-100 text-blue-800 ml-4">
-            Current System: {xpSystem.name}
-          </Badge>
-        </div>
-      </CloseableTip>
-      
-      {/* Reward Categories */}
-      <div className="space-y-6">
-        {Object.entries(groupedRewards).map(([category, rewards]) => (
-          <Card key={category}>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Badge className={getCategoryColor(category)}>
-                    {category}
-                  </Badge>
-                </div>
-                <Badge variant="secondary">{rewards.length} items</Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {rewards.map((reward) => (
-                  <div
-                    key={reward.id}
-                    className={`p-4 rounded-lg border-2 transition-all duration-200 hover:shadow-lg ${
-                      canAffordReward(reward.cost) 
-                        ? 'border-green-200 bg-gradient-to-br from-white to-green-50' 
-                        : 'border-gray-200 bg-gradient-to-br from-white to-gray-50 opacity-75'
-                    }`}
-                  >
-                    <div className="text-center space-y-3">
-                      <div className="text-4xl">{reward.icon || reward.name.charAt(0)}</div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{reward.name}</h3>
-                        {reward.description && (
-                          <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {reward.description}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <div className="flex items-center justify-center space-x-2">
-                        <Badge className="bg-yellow-100 text-yellow-800">
-                          💰 {reward.cost} XP
-                        </Badge>
-                        {reward.isCustom && (
-                          <Badge variant="outline" className="text-purple-600 border-purple-300">
-                            Custom
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <div className="flex space-x-2">
-                        <Button
-                          size="sm"
-                          onClick={() => handleClaimReward(reward)}
-                          disabled={!canAffordReward(reward.cost)}
-                          className={`flex-1 ${
-                            canAffordReward(reward.cost)
-                              ? 'bg-green-600 hover:bg-green-700'
-                              : 'bg-gray-400 cursor-not-allowed'
-                          }`}
-                        >
-                          {canAffordReward(reward.cost) ? '🛒 Claim' : '🔒 Need XP'}
-                        </Button>
-                        
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleEditReward(reward)}
-                          className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                        >
-                          ✏️
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleDeleteReward(reward.id)}
-                          className="border-red-200 text-red-600 hover:bg-red-50"
-                        >
-                          🗑️
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      
-      {state.rewards.length === 0 && (
-        <Card>
-          <CardContent className="text-center py-12">
-            <div className="text-4xl mb-4">🛍️</div>
-            <p className="text-lg font-medium mb-2">No rewards available</p>
-            <p className="text-gray-600 mb-4">Add your first reward to start building your store!</p>
-            <Button onClick={() => setShowAddForm(true)} className="bg-purple-600 hover:bg-purple-700">
-              ➕ Add First Reward
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-      
-      {/* Reward Edit Modal */}
-      {editingReward && (
-        <RewardEditModal
-          reward={editingReward}
-          isOpen={!!editingReward}
-          onClose={() => setEditingReward(null)}
-          onSave={(updatedReward) => {
-            dispatch({ type: 'UPDATE_REWARD', payload: updatedReward });
-            setEditingReward(null);
-            toast({
-              title: "Reward Updated! 🛍️",
-              description: "Your reward has been successfully updated."
-            });
-          }}
-          xpSystem={xpSystem}
-          categories={categories}
-          iconOptions={iconOptions}
         />
       )}
     </div>
