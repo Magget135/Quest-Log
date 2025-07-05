@@ -581,6 +581,10 @@ const RecurringTasks = () => {
             <p><strong>📆 Weekly:</strong> Great for weekly reviews, cleaning, or skill practice</p>
             <p><strong>🗓️ Monthly:</strong> Ideal for goal setting, planning, or major tasks</p>
             <p><strong>💼 Weekdays:</strong> Work-related tasks that only happen on business days</p>
+            <p><strong>🎂 Yearly:</strong> Annual events like birthdays, anniversaries, or renewals</p>
+            <p><strong>🎮 Weekends Only:</strong> Leisure activities for Saturday and Sunday</p>
+            <p><strong>🔧 Custom Frequency:</strong> Advanced patterns like "every 2 weeks on Monday and Friday"</p>
+            <p><strong>⏰ Start Before Due:</strong> Add tasks to quest log days before they're actually due</p>
             <p><strong>⭐ Important:</strong> Marked tasks are protected from auto-cleanup</p>
             <p><strong>🟢 Active vs ⏸️ Paused:</strong> Only active tasks regenerate in daily cycles</p>
           </div>
