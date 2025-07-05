@@ -159,7 +159,7 @@ const CalendarView = ({ onEditQuest }) => {
             <div key={day.toISOString()} className="border border-gray-200 min-h-32 p-1">
               <div className="space-y-1">
                 {dayQuests.slice(0, 3).map(quest => (
-                  <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} compact />
+                  <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} onProgressChange={handleProgressChange} compact />
                 ))}
                 {dayQuests.length > 3 && (
                   <div className="text-xs text-gray-500">+{dayQuests.length - 3} more</div>
