@@ -179,7 +179,13 @@ function questReducer(state, action) {
     case 'ADD_RECURRING_TASK':
       return {
         ...state,
-        recurringTasks: [...state.recurringTasks, { ...action.payload, id: Date.now().toString() }]
+        recurringTasks: [...state.recurringTasks, { 
+          ...action.payload, 
+          id: Date.now().toString(),
+          startBeforeDue: action.payload.startBeforeDue || 0,
+          customFrequency: action.payload.customFrequency || null,
+          yearlyDate: action.payload.yearlyDate || null
+        }]
       };
     
     case 'UPDATE_RECURRING_TASK':
