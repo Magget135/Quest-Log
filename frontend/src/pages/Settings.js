@@ -424,8 +424,11 @@ const Settings = () => {
             </DialogHeader>
             
             <div className="space-y-4">
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <h4 className="font-medium text-yellow-800 mb-2">Warning</h4>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 animate-pulse">
+                <div className="flex items-center space-x-2 mb-2">
+                  <span className="text-xl">⚠️</span>
+                  <h4 className="font-medium text-yellow-800">Warning</h4>
+                </div>
                 <p className="text-sm text-yellow-700">
                   Changing your XP system will remove your current quest rank setup and reset your reward XP range. 
                   Continue?
@@ -435,9 +438,9 @@ const Settings = () => {
               <div className="space-y-2">
                 <h4 className="font-medium">New System Details:</h4>
                 <div className="text-sm text-gray-600">
-                  <p><strong>Name:</strong> {XP_SYSTEMS[confirmXPChange]?.name}</p>
-                  <p><strong>Description:</strong> {XP_SYSTEMS[confirmXPChange]?.description}</p>
-                  <p><strong>Reward Range:</strong> {XP_SYSTEMS[confirmXPChange]?.rewardRange.min}-{XP_SYSTEMS[confirmXPChange]?.rewardRange.max} XP</p>
+                  <p><strong>Name:</strong> {getXPSystem(confirmXPChange)?.name}</p>
+                  <p><strong>Description:</strong> {getXPSystem(confirmXPChange)?.description}</p>
+                  <p><strong>Reward Range:</strong> {getXPSystem(confirmXPChange)?.rewardRange.min}–{getXPSystem(confirmXPChange)?.rewardRange.max} XP</p>
                 </div>
               </div>
               
