@@ -5,7 +5,6 @@ export const mockQuests = [
     name: 'Complete project proposal',
     rank: 'Epic',
     dueDate: '2025-01-15',
-    status: 'Pending',
     reward: 'Movie',
     xpReward: 150,
     dateAdded: '2025-01-10'
@@ -15,7 +14,6 @@ export const mockQuests = [
     name: 'Clean the house',
     rank: 'Common',
     dueDate: '2025-01-14',
-    status: 'In Progress',
     reward: 'Scrolling',
     xpReward: 50,
     dateAdded: '2025-01-12'
@@ -25,7 +23,6 @@ export const mockQuests = [
     name: 'Learn new skill',
     rank: 'Legendary',
     dueDate: '2025-01-16',
-    status: 'Pending',
     reward: '1 Hour Gaming',
     xpReward: 200,
     dateAdded: '2025-01-13'
@@ -35,7 +32,6 @@ export const mockQuests = [
     name: 'Call mom',
     rank: 'Rare',
     dueDate: '2025-01-13',
-    status: 'Incomplete',
     reward: '$1 Credit',
     xpReward: 75,
     dateAdded: '2025-01-10'
@@ -171,13 +167,6 @@ export const questRanks = [
   { value: 'Rare', label: 'Rare', color: 'bg-blue-100 text-blue-800' },
   { value: 'Epic', label: 'Epic', color: 'bg-purple-100 text-purple-800' },
   { value: 'Legendary', label: 'Legendary', color: 'bg-yellow-100 text-yellow-800' }
-];
-
-export const questStatuses = [
-  { value: 'Pending', label: 'Pending', icon: '⏳' },
-  { value: 'In Progress', label: 'In Progress', icon: '🔄' },
-  { value: 'Completed', label: 'Completed', icon: '✅' },
-  { value: 'Incomplete', label: 'Incomplete', icon: '❌' }
 ];
 
 export const frequencies = [

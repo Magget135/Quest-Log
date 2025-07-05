@@ -8,7 +8,7 @@ import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Progress } from '../components/ui/progress';
 import { useToast } from '../hooks/use-toast';
-import { questRanks, questStatuses } from '../data/mock';
+import { questRanks } from '../data/mock';
 import { formatRelativeDueDate, getDateStatus } from '../utils/timeUtils';
 
 const Dashboard = () => {
@@ -19,7 +19,6 @@ const Dashboard = () => {
     rank: '',
     dueDate: '',
     dueTime: '',
-    status: 'Pending',
     reward: '',
     xpReward: 0
   });
@@ -43,11 +42,6 @@ const Dashboard = () => {
   const getRankColor = (rank) => {
     const rankObj = questRanks.find(r => r.value === rank);
     return rankObj ? rankObj.color : 'bg-gray-100 text-gray-800';
-  };
-  
-  const getStatusIcon = (status) => {
-    const statusObj = questStatuses.find(s => s.value === status);
-    return statusObj ? statusObj.icon : '⏳';
   };
   
   const getXPByRank = (rank) => {
@@ -89,7 +83,6 @@ const Dashboard = () => {
       rank: '',
       dueDate: '',
       dueTime: '',
-      status: 'Pending',
       reward: '',
       xpReward: 0
     });
@@ -267,11 +260,9 @@ const Dashboard = () => {
                       <Badge className={getRankColor(quest.rank)}>
                         {quest.rank}
                       </Badge>
-                      <span className="text-lg">{getStatusIcon(quest.status)}</span>
                     </div>
                     <div className="flex items-center space-x-4 text-sm text-gray-600">
                       <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
-                      <span>Status: {quest.status}</span>
                       <span>XP: {quest.xpReward}</span>
                     </div>
                   </div>
