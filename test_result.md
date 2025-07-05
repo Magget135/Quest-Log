@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "🛠️ Implement the following enhancements for Quest Log: 1. 🔥 Data Reset Update in Settings - Add toggle to 'Erase All Rewards' when performing a full data reset with confirmation popup for clear warning. 2. 🛡️ Add Task Progress Tracker for Each Quest - Add rounded rectangle badge to each task showing task progress status (Not Started, Pending, In Progress, Delaying, On Hold, Almost Done, Abandoned) with dropdown/selector to update status manually. Status changes saved in localStorage and persist after refresh. Only 'Completed' tasks reward XP."
+user_problem_statement: "🎯 Implement the following feature enhancements and UI improvements for the Quest Log application: 1. 🔁 Recurring Task Improvements: Add 'Start Before Due Option' (0-7 days), Additional Frequency Options (Yearly, Weekends Only, Custom Frequency with Google Calendar-style builder), 2. ⚙️ Rules & Settings Section Redesign: Merge Rules and Settings into collapsible panels with comprehensive rules documentation"
 
 backend:
   - task: "Backend API health check and status endpoints"
