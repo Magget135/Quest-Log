@@ -360,7 +360,7 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3 max-h-96 overflow-y-auto">
-            {state.quests.map((quest) => {
+            {getSortedQuests().map((quest) => {
               const pastDueInfo = getPastDueInfo(quest.dueDate);
               
               return (
