@@ -2,22 +2,22 @@
 export const XP_SYSTEMS = {
   SIMPLE: {
     id: 'simple',
-    name: '🟩 Simple Mode',
-    description: 'Perfect for beginners - easy to manage and track',
+    name: 'Simple Starter',
+    description: 'Minimalist system for casual adventurers. Great for beginners.',
     ranks: [
       { value: 'Easy', label: 'Easy', xp: 10, color: 'bg-green-100 text-green-800' },
       { value: 'Medium', label: 'Medium', xp: 20, color: 'bg-yellow-100 text-yellow-800' },
       { value: 'Hard', label: 'Hard', xp: 30, color: 'bg-orange-100 text-orange-800' },
       { value: 'Extreme', label: 'Extreme', xp: 50, color: 'bg-red-100 text-red-800' }
     ],
-    rewardRange: { min: 0, max: 75 },
+    rewardRange: { min: 0, max: 50 },
     monthlyBonusXP: [0, 10, 20, 30, 40],
     levelThresholds: [0, 250, 600, 1000, 1500]
   },
   DEFAULT: {
     id: 'default',
-    name: '🟨 Default (Balanced)',
-    description: 'Balanced system for most users',
+    name: 'Default',
+    description: 'Balanced XP system for all players. Simple and easy to use.',
     ranks: [
       { value: 'Common', label: 'Common', xp: 25, color: 'bg-gray-100 text-gray-800' },
       { value: 'Rare', label: 'Rare', xp: 50, color: 'bg-blue-100 text-blue-800' },
@@ -30,45 +30,45 @@ export const XP_SYSTEMS = {
   },
   CHALLENGER: {
     id: 'challenger',
-    name: '🟦 Challenger',
-    description: 'Higher stakes for ambitious users',
+    name: 'Heroic Grind',
+    description: 'Challenging system with steeper XP climb. Best for committed players.',
     ranks: [
       { value: 'Novice', label: 'Novice', xp: 50, color: 'bg-gray-100 text-gray-800' },
       { value: 'Skilled', label: 'Skilled', xp: 100, color: 'bg-green-100 text-green-800' },
       { value: 'Veteran', label: 'Veteran', xp: 150, color: 'bg-blue-100 text-blue-800' },
       { value: 'Elite', label: 'Elite', xp: 200, color: 'bg-purple-100 text-purple-800' }
     ],
-    rewardRange: { min: 0, max: 250 },
+    rewardRange: { min: 50, max: 400 },
     monthlyBonusXP: [0, 40, 80, 120, 160],
     levelThresholds: [0, 750, 1800, 3000, 4500]
   },
   PRECISION: {
     id: 'precision',
-    name: '🟥 Precision',
-    description: 'Structured progression system',
+    name: 'Epic Precision',
+    description: 'Detailed system with more ranks and XP steps. Ideal for power users.',
     ranks: [
       { value: 'Tier I', label: 'Tier I', xp: 30, color: 'bg-gray-100 text-gray-800' },
       { value: 'Tier II', label: 'Tier II', xp: 60, color: 'bg-blue-100 text-blue-800' },
       { value: 'Tier III', label: 'Tier III', xp: 90, color: 'bg-green-100 text-green-800' },
       { value: 'Tier IV', label: 'Tier IV', xp: 120, color: 'bg-purple-100 text-purple-800' }
     ],
-    rewardRange: { min: 0, max: 180 },
+    rewardRange: { min: 0, max: 300 },
     monthlyBonusXP: [0, 20, 45, 65, 85],
     levelThresholds: [0, 400, 950, 1600, 2400]
   },
   ULTRA_RPG: {
     id: 'ultra_rpg',
-    name: '🟪 Ultra RPG',
-    description: 'Maximum customization and XP ranges',
+    name: 'Relaxed Explorer',
+    description: 'Slower pace with lower XP values. Ideal for relaxed or busy schedules.',
     ranks: [
-      { value: 'Fledgling', label: 'Fledgling', xp: 40, color: 'bg-gray-100 text-gray-800' },
-      { value: 'Adept', label: 'Adept', xp: 80, color: 'bg-green-100 text-green-800' },
-      { value: 'Hero', label: 'Hero', xp: 160, color: 'bg-blue-100 text-blue-800' },
-      { value: 'Warlord', label: 'Warlord', xp: 240, color: 'bg-red-100 text-red-800' }
+      { value: 'Fledgling', label: 'Fledgling', xp: 15, color: 'bg-gray-100 text-gray-800' },
+      { value: 'Adept', label: 'Adept', xp: 25, color: 'bg-green-100 text-green-800' },
+      { value: 'Hero', label: 'Hero', xp: 40, color: 'bg-blue-100 text-blue-800' },
+      { value: 'Warlord', label: 'Warlord', xp: 60, color: 'bg-red-100 text-red-800' }
     ],
-    rewardRange: { min: 0, max: 300 },
-    monthlyBonusXP: [0, 50, 100, 150, 200],
-    levelThresholds: [0, 600, 1440, 2400, 3600]
+    rewardRange: { min: 0, max: 75 },
+    monthlyBonusXP: [0, 15, 30, 45, 60],
+    levelThresholds: [0, 300, 720, 1200, 1800]
   }
 };
 
