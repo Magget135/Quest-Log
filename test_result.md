@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Add Calendar View Below Active Quest Log - Implement a Calendar View component beneath the Active Quest Log List on the Dashboard page with Day/Week/Month views, quest integration with color coding, editing functionality, and settings toggle."
+user_problem_statement: "🛠️ Implement dynamic XP system confirmation window update: When user opens the 'Confirm XP System Change' modal, auto-fill the New System Details section with content based on the XP system selected. Replace placeholder fields with Name, Description, and Reward Range for all 5 XP systems (Default, Simple Starter, Epic Precision, Heroic Grind, Relaxed Explorer). Optional: Style the warning box with an icon or mild animation for emphasis."
 
 backend:
   - task: "Backend API health check and status endpoints"
