@@ -41,6 +41,26 @@ const RecurringTasks = () => {
       });
       return;
     }
+
+    // Validate custom frequency
+    if (newTask.frequency === 'Custom' && !newTask.customFrequency) {
+      toast({
+        title: "Missing Custom Frequency",
+        description: "Please configure your custom frequency settings.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate yearly date
+    if (newTask.frequency === 'Yearly' && !newTask.yearlyDate) {
+      toast({
+        title: "Missing Yearly Date",
+        description: "Please specify the yearly date for this task.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     // Find XP for selected rank
     const selectedRank = xpSystem.ranks.find(r => r.value === newTask.rank);
@@ -49,7 +69,13 @@ const RecurringTasks = () => {
     const taskData = {
       ...newTask,
       xpReward,
-      lastAdded: new Date().toISOString().split('T')[0]
+      lastAdded: new Date().toISOString().split('T')[0],
+      // Set appropriate days based on frequency
+      days: newTask.frequency === 'Weekends' ? ['Sat', 'Sun'] :
+            newTask.frequency === 'Yearly' ? [] :
+            newTask.frequency === 'Custom' && newTask.customFrequency ? 
+              (newTask.customFrequency.unit === 'weeks' ? newTask.customFrequency.weeklyDays : []) :
+            newTask.days
     };
     
     dispatch({ type: 'ADD_RECURRING_TASK', payload: taskData });
@@ -59,7 +85,10 @@ const RecurringTasks = () => {
       frequency: 'Daily',
       days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       status: 'Active',
-      isImportant: false
+      isImportant: false,
+      startBeforeDue: 0,
+      customFrequency: null,
+      yearlyDate: ''
     });
     setShowAddForm(false);
     
