@@ -9,11 +9,18 @@ import { formatDistanceToNow, format, startOfDay, endOfDay, isToday, isPast, isF
 import TaskProgressBadge from './TaskProgressBadge';
 
 const CalendarView = ({ onEditQuest }) => {
-  const { state, getXPSystemInfo } = useQuest();
+  const { state, getXPSystemInfo, dispatch } = useQuest();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewType, setViewType] = useState('month'); // 'day', 'week', 'month'
   
   const xpSystem = getXPSystemInfo();
+
+  const handleProgressChange = (questId, newStatus) => {
+    dispatch({ 
+      type: 'UPDATE_QUEST_PROGRESS', 
+      payload: { id: questId, progressStatus: newStatus } 
+    });
+  };
   
   // Get quest color based on due date
   const getQuestColor = (dueDate) => {
