@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Remove Status Field - Completely remove the 'Status' column from the Active Quest List and any related form inputs or logic. Tasks should no longer include statuses like 'Pending', 'In Progress', or 'Completed'. Task progress is now managed automatically: When a quest is marked as done, it moves to Completed Quests. Otherwise, it's just shown as active."
+user_problem_statement: "Continuation Task: 1) Make All Rewards Editable & Deletable - Allow all rewards (including defaults) to be fully editable and deletable. 2) Custom Reward Categories - Add ability to create custom categories and delete default categories. 3) Scrollable Panels for Long Lists - Make Active Quest List, History Timeline, and Recent Reward Usage scrollable with fixed height. 4) Auto XP Bonus Popup (Monthly Reward) - Generate monthly bonus XP popup on Dashboard automatically. 5) Auto Cleanup Controls - Add Recent Reward Usage to auto cleanup options. 6) Closeable Tips/Info Boxes - Add close icons to all tip/info boxes."
 
 backend:
   - task: "Remove status field from quest management system"
