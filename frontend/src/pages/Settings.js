@@ -8,7 +8,7 @@ import { Switch } from '../components/ui/switch';
 import { Label } from '../components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { useToast } from '../hooks/use-toast';
-import { XP_SYSTEMS, AUTO_CLEANUP_OPTIONS } from '../data/xpSystems';
+import { XP_SYSTEMS, AUTO_CLEANUP_OPTIONS, getXPSystem } from '../data/xpSystems';
 import { isCurrentMonth, formatMonthYear } from '../utils/timeUtils';
 import CloseableTip from '../components/CloseableTip';
 
