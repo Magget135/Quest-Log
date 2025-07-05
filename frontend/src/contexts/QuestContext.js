@@ -193,10 +193,32 @@ function questReducer(state, action) {
         dateUsed: new Date().toISOString()
       };
       
-      return {
+      // Create intermediate state for achievement checking
+      const intermediateInventoryState = {
         ...state,
         inventory: state.inventory.filter(item => item.id !== action.payload),
         claimedRewards: [...state.claimedRewards, claimedReward]
+      };
+      
+      // Check for achievements
+      const inventoryAchievementResult = checkAchievements(intermediateInventoryState, { type: 'USE_INVENTORY_ITEM' });
+      
+      // Add achievement unlock notifications
+      const inventoryNotifications = [];
+      inventoryAchievementResult.newlyUnlocked.forEach(achievement => {
+        inventoryNotifications.push({
+          id: `achievement_${Date.now()}_${achievement.id}`,
+          type: 'achievement_unlock',
+          message: `🎉 Achievement Unlocked: ${achievement.name}!`,
+          achievement: achievement,
+          timestamp: new Date().toISOString()
+        });
+      });
+      
+      return {
+        ...intermediateInventoryState,
+        achievements: inventoryAchievementResult.achievements,
+        notifications: [...state.notifications, ...inventoryNotifications]
       };
     
     case 'ADD_REWARD':
