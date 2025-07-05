@@ -12,6 +12,7 @@ import { Switch } from '../components/ui/switch';
 import { useToast } from '../hooks/use-toast';
 import { formatRelativeDueDate, getDueDateColor, getPastDueInfo } from '../utils/timeUtils';
 import QuestEditModal from '../components/QuestEditModal';
+import MonthlyBonusPopup from '../components/MonthlyBonusPopup';
 
 const Dashboard = () => {
   const { state, dispatch, getCurrentLevelInfo, getLevelProgressInfo, getXPSystemInfo } = useQuest();
