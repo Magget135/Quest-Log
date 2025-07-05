@@ -122,7 +122,7 @@ const CalendarView = ({ onEditQuest }) => {
                 </div>
                 <div className="flex-1 py-1 pl-4">
                   {hourQuests.map(quest => (
-                    <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} compact />
+                    <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} onProgressChange={handleProgressChange} compact />
                   ))}
                 </div>
               </div>
