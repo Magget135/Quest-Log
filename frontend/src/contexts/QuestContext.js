@@ -150,14 +150,34 @@ function questReducer(state, action) {
         });
       }
       
-      return {
+      // Create intermediate state for achievement checking
+      const intermediateRewardState = {
         ...state,
         inventory: [...state.inventory, inventoryItem],
         xp: {
           ...state.xp,
           currentXP: newCurrentXP,
           totalSpent: state.xp.totalSpent + reward.cost
-        },
+        }
+      };
+      
+      // Check for achievements
+      const rewardAchievementResult = checkAchievements(intermediateRewardState, { type: 'CLAIM_REWARD' });
+      
+      // Add achievement unlock notifications
+      rewardAchievementResult.newlyUnlocked.forEach(achievement => {
+        rewardNotifications.push({
+          id: `achievement_${Date.now()}_${achievement.id}`,
+          type: 'achievement_unlock',
+          message: `🎉 Achievement Unlocked: ${achievement.name}!`,
+          achievement: achievement,
+          timestamp: new Date().toISOString()
+        });
+      });
+      
+      return {
+        ...intermediateRewardState,
+        achievements: rewardAchievementResult.achievements,
         notifications: [...state.notifications, ...rewardNotifications]
       };
     
