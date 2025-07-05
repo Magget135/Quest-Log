@@ -360,7 +360,9 @@ const Dashboard = () => {
       </Card>
       
       {/* Calendar View */}
-      <CalendarView onEditQuest={handleEditQuest} />
+      {state.settings.calendarView?.enabled && (
+        <CalendarView onEditQuest={handleEditQuest} />
+      )}
       
       {/* Quest Edit Modal */}
       {editingQuest && (
