@@ -1,58 +1,37 @@
 import React, { useState } from 'react';
-import { useXP } from '../contexts/XPContext';
+import { useQuest } from '../contexts/QuestContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Progress } from '../components/ui/progress';
+import { Switch } from '../components/ui/switch';
 import { useToast } from '../hooks/use-toast';
-import { questRanks } from '../data/mock';
-import { formatRelativeDueDate, getDateStatus } from '../utils/timeUtils';
+import { formatRelativeDueDate, getDueDateColor, shouldShowOverdueBadge } from '../utils/timeUtils';
+import QuestEditModal from '../components/QuestEditModal';
 
 const Dashboard = () => {
-  const { state, dispatch, getCurrentLevel, getNextLevel, getLevelProgress } = useXP();
+  const { state, dispatch, getCurrentLevelInfo, getLevelProgressInfo, getXPSystemInfo } = useQuest();
   const { toast } = useToast();
+  
   const [newQuest, setNewQuest] = useState({
     name: '',
     rank: '',
     dueDate: '',
     dueTime: '',
     reward: '',
-    xpReward: 0
+    description: '',
+    isImportant: false
   });
   
-  const [selectedReward, setSelectedReward] = useState('');
+  const [editingQuest, setEditingQuest] = useState(null);
   
-  const currentLevel = getCurrentLevel();
-  const nextLevel = getNextLevel();
-  const levelProgress = getLevelProgress();
-  
-  const getDateColor = (dueDate) => {
-    const status = getDateStatus(dueDate);
-    switch (status) {
-      case 'overdue': return 'border-l-red-500 bg-red-50';
-      case 'today': return 'border-l-blue-500 bg-blue-50';
-      case 'future': return 'border-l-green-500 bg-green-50';
-      default: return 'border-l-gray-500 bg-gray-50';
-    }
-  };
-  
-  const getRankColor = (rank) => {
-    const rankObj = questRanks.find(r => r.value === rank);
-    return rankObj ? rankObj.color : 'bg-gray-100 text-gray-800';
-  };
-  
-  const getXPByRank = (rank) => {
-    switch (rank) {
-      case 'Common': return 50;
-      case 'Rare': return 75;
-      case 'Epic': return 150;
-      case 'Legendary': return 200;
-      default: return 50;
-    }
-  };
+  const currentLevel = getCurrentLevelInfo();
+  const levelProgress = getLevelProgressInfo();
+  const xpSystem = getXPSystemInfo();
   
   const handleAddQuest = () => {
     if (!newQuest.name || !newQuest.rank || !newQuest.dueDate) {
@@ -70,11 +49,16 @@ const Dashboard = () => {
       fullDueDate = `${newQuest.dueDate}T${newQuest.dueTime}`;
     }
     
+    // Find XP for selected rank
+    const selectedRank = xpSystem.ranks.find(r => r.value === newQuest.rank);
+    const xpReward = selectedRank ? selectedRank.xp : 0;
+    
     const questWithXP = {
       ...newQuest,
       dueDate: fullDueDate,
-      xpReward: getXPByRank(newQuest.rank),
-      dateAdded: new Date().toISOString().split('T')[0]
+      xpReward,
+      dateAdded: new Date().toISOString().split('T')[0],
+      attachments: []
     };
     
     dispatch({ type: 'ADD_QUEST', payload: questWithXP });
@@ -84,7 +68,8 @@ const Dashboard = () => {
       dueDate: '',
       dueTime: '',
       reward: '',
-      xpReward: 0
+      description: '',
+      isImportant: false
     });
     
     toast({
@@ -101,27 +86,21 @@ const Dashboard = () => {
     });
   };
   
-  const handleRedeemReward = () => {
-    if (!selectedReward) return;
-    
-    const reward = state.rewards.find(r => r.id === selectedReward);
-    if (!reward) return;
-    
-    if (state.xp.currentXP < reward.cost) {
-      toast({
-        title: "Insufficient XP",
-        description: `You need ${reward.cost} XP to redeem this reward.`,
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    dispatch({ type: 'REDEEM_REWARD', payload: selectedReward });
-    setSelectedReward('');
+  const handleEditQuest = (quest) => {
+    setEditingQuest(quest);
+  };
+  
+  const handleDeleteQuest = (questId) => {
+    dispatch({ type: 'DELETE_QUEST', payload: questId });
     toast({
-      title: "Reward Redeemed! 🎁",
-      description: `Enjoy your "${reward.name}"!`
+      title: "Quest Deleted",
+      description: "Quest has been removed from your log."
     });
+  };
+  
+  const getRankColor = (rank) => {
+    const rankObj = xpSystem.ranks.find(r => r.value === rank);
+    return rankObj ? rankObj.color : 'bg-gray-100 text-gray-800';
   };
   
   return (
@@ -131,7 +110,7 @@ const Dashboard = () => {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <span>🏆</span>
-            <span>Level & XP Summary</span>
+            <span>Adventurer Status</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -140,23 +119,29 @@ const Dashboard = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Badge className={`${currentLevel.color} text-lg px-3 py-1`}>
-                  🏆 {currentLevel.name}
+                  {currentLevel.icon} {currentLevel.title}
                 </Badge>
                 <span className="text-sm text-gray-600">
-                  Level {currentLevel.id}
+                  Level {currentLevel.level}
                 </span>
               </div>
               
-              {nextLevel && (
+              {currentLevel.nextLevelXP && (
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Progress to {nextLevel.name}</span>
+                    <span>Progress to Level {currentLevel.level + 1}</span>
                     <span>{levelProgress.progressXP}/{levelProgress.totalXPForNext} XP</span>
                   </div>
                   <Progress value={levelProgress.progress} className="h-3" />
                   <div className="text-xs text-gray-500">
                     {Math.round(levelProgress.progress)}% complete
                   </div>
+                </div>
+              )}
+              
+              {!currentLevel.nextLevelXP && (
+                <div className="text-sm text-purple-600 font-medium">
+                  🌟 Maximum level achieved! You are a true legend!
                 </div>
               )}
             </div>
@@ -185,12 +170,15 @@ const Dashboard = () => {
       </Card>
       
       {/* Add New Quest */}
-      <Card>
+      <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50">
         <CardHeader>
-          <CardTitle>Add New Quest 📜</CardTitle>
+          <CardTitle className="flex items-center space-x-2">
+            <span>📜</span>
+            <span>Create New Quest</span>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="questName">Quest Name</Label>
               <Input
@@ -198,23 +186,31 @@ const Dashboard = () => {
                 value={newQuest.name}
                 onChange={(e) => setNewQuest({ ...newQuest, name: e.target.value })}
                 placeholder="Enter quest name"
+                className="border-purple-200 focus:border-purple-500"
               />
             </div>
+            
             <div>
               <Label htmlFor="questRank">Quest Rank</Label>
               <Select value={newQuest.rank} onValueChange={(value) => setNewQuest({ ...newQuest, rank: value })}>
-                <SelectTrigger>
+                <SelectTrigger className="border-purple-200 focus:border-purple-500">
                   <SelectValue placeholder="Select rank" />
                 </SelectTrigger>
                 <SelectContent>
-                  {questRanks.map(rank => (
+                  {xpSystem.ranks.map(rank => (
                     <SelectItem key={rank.value} value={rank.value}>
-                      {rank.label} ({getXPByRank(rank.value)} XP)
+                      <div className="flex items-center space-x-2">
+                        <Badge className={rank.color} variant="outline">
+                          {rank.label}
+                        </Badge>
+                        <span className="text-sm text-gray-600">({rank.xp} XP)</span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
+            
             <div>
               <Label htmlFor="dueDate">Due Date</Label>
               <Input
@@ -222,8 +218,10 @@ const Dashboard = () => {
                 type="date"
                 value={newQuest.dueDate}
                 onChange={(e) => setNewQuest({ ...newQuest, dueDate: e.target.value })}
+                className="border-purple-200 focus:border-purple-500"
               />
             </div>
+            
             <div>
               <Label htmlFor="dueTime">Due Time (Optional)</Label>
               <Input
@@ -231,12 +229,48 @@ const Dashboard = () => {
                 type="time"
                 value={newQuest.dueTime}
                 onChange={(e) => setNewQuest({ ...newQuest, dueTime: e.target.value })}
-                placeholder="Leave empty for all day"
+                className="border-purple-200 focus:border-purple-500"
               />
             </div>
+            
+            <div>
+              <Label htmlFor="reward">Reward (Optional)</Label>
+              <Input
+                id="reward"
+                value={newQuest.reward}
+                onChange={(e) => setNewQuest({ ...newQuest, reward: e.target.value })}
+                placeholder="What will you reward yourself?"
+                className="border-purple-200 focus:border-purple-500"
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="important"
+                checked={newQuest.isImportant}
+                onCheckedChange={(checked) => setNewQuest({ ...newQuest, isImportant: checked })}
+              />
+              <Label htmlFor="important" className="text-sm">Mark as Important</Label>
+            </div>
           </div>
-          <Button onClick={handleAddQuest} className="w-full md:w-auto">
-            ➕ Add Quest
+          
+          <div>
+            <Label htmlFor="description">Description (Optional)</Label>
+            <Textarea
+              id="description"
+              value={newQuest.description}
+              onChange={(e) => setNewQuest({ ...newQuest, description: e.target.value })}
+              placeholder="Add quest details, notes, or requirements..."
+              className="border-purple-200 focus:border-purple-500"
+              rows={3}
+            />
+          </div>
+          
+          <Button 
+            onClick={handleAddQuest} 
+            className="w-full md:w-auto bg-purple-600 hover:bg-purple-700"
+          >
+            ⚔️ Embark on Quest
           </Button>
         </CardContent>
       </Card>
@@ -244,14 +278,20 @@ const Dashboard = () => {
       {/* Active Quests */}
       <Card>
         <CardHeader>
-          <CardTitle>Active Quest List ⚔️</CardTitle>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span>⚔️</span>
+              <span>Active Quest Log</span>
+            </div>
+            <Badge variant="secondary">{state.quests.length} active</Badge>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {state.quests.map((quest) => (
               <div
                 key={quest.id}
-                className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDateColor(quest.dueDate)}`}
+                className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDueDateColor(quest.dueDate)}`}
               >
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
@@ -260,13 +300,40 @@ const Dashboard = () => {
                       <Badge className={getRankColor(quest.rank)}>
                         {quest.rank}
                       </Badge>
+                      {quest.isImportant && (
+                        <Badge variant="outline" className="border-yellow-400 text-yellow-700">
+                          ⭐ Important
+                        </Badge>
+                      )}
+                      {shouldShowOverdueBadge(quest.dueDate) && (
+                        <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300">
+                          {formatRelativeDueDate(quest.dueDate)}
+                        </Badge>
+                      )}
                     </div>
-                    <div className="flex items-center space-x-4 text-sm text-gray-600">
+                    
+                    <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
                       <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
-                      <span>XP: {quest.xpReward}</span>
+                      <span>✨ {quest.xpReward} XP</span>
+                      {quest.reward && <span>🎁 {quest.reward}</span>}
                     </div>
+                    
+                    {quest.description && (
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                        {quest.description}
+                      </p>
+                    )}
                   </div>
+                  
                   <div className="flex space-x-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleEditQuest(quest)}
+                      className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                    >
+                      ✏️ Edit
+                    </Button>
                     <Button
                       size="sm"
                       onClick={() => handleCompleteQuest(quest.id)}
@@ -277,7 +344,8 @@ const Dashboard = () => {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => dispatch({ type: 'DELETE_QUEST', payload: quest.id })}
+                      onClick={() => handleDeleteQuest(quest.id)}
+                      className="border-red-200 text-red-600 hover:bg-red-50"
                     >
                       🗑️
                     </Button>
@@ -285,40 +353,35 @@ const Dashboard = () => {
                 </div>
               </div>
             ))}
+            
             {state.quests.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                <p>No active quests. Add your first quest above! 🎯</p>
+              <div className="text-center py-12 text-gray-500">
+                <div className="text-4xl mb-4">⚔️</div>
+                <p className="text-lg font-medium mb-2">No active quests</p>
+                <p>Create your first quest above to begin your adventure! 🎯</p>
               </div>
             )}
           </div>
         </CardContent>
       </Card>
       
-      {/* Reward Redemption */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Reward Redemption 🎁</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex space-x-2">
-            <Select value={selectedReward} onValueChange={setSelectedReward}>
-              <SelectTrigger className="flex-1">
-                <SelectValue placeholder="Select a reward" />
-              </SelectTrigger>
-              <SelectContent>
-                {state.rewards.map(reward => (
-                  <SelectItem key={reward.id} value={reward.id}>
-                    {reward.emoji} {reward.name} - {reward.cost} XP
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button onClick={handleRedeemReward} disabled={!selectedReward}>
-              🎁 Redeem
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Quest Edit Modal */}
+      {editingQuest && (
+        <QuestEditModal
+          quest={editingQuest}
+          isOpen={!!editingQuest}
+          onClose={() => setEditingQuest(null)}
+          onSave={(updatedQuest) => {
+            dispatch({ type: 'UPDATE_QUEST', payload: updatedQuest });
+            setEditingQuest(null);
+            toast({
+              title: "Quest Updated! 📝",
+              description: "Your quest has been successfully updated."
+            });
+          }}
+          xpSystem={xpSystem}
+        />
+      )}
     </div>
   );
 };
