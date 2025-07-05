@@ -129,7 +129,7 @@ const Settings = () => {
         </CardHeader>
         <CardContent>
           <p className="text-gray-600">
-            Customize your quest log experience with XP systems, auto-cleanup, and other preferences.
+            Customize your Quest Log experience and learn about system rules. Click on any section below to expand or collapse it.
           </p>
         </CardContent>
       </Card>
