@@ -121,79 +121,19 @@ backend:
         comment: "Re-tested all backend API endpoints on July 5, 2025. Health check endpoint, CORS configuration, MongoDB connection, and status endpoints (GET and POST) are all working correctly. All tests passed successfully."
 
 frontend:
-  - task: "Make All Rewards Editable & Deletable"
+  - task: "Calendar View Component Creation"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RewardStore.js"
+    file: "/app/frontend/src/components/CalendarView.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Removed restriction that only custom rewards are editable. All rewards now show edit and delete buttons regardless of isCustom status"
+        comment: "Created comprehensive CalendarView component with Day, Week, and Month views. Includes quest integration, color coding, and navigation controls."
   
-  - task: "Custom Reward Categories Management"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/pages/RewardStore.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Added category management with localStorage persistence. Users can add custom categories and delete default categories. Prevents deletion if category has rewards"
-  
-  - task: "Scrollable Active Quest List"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/pages/Dashboard.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Added max-h-96 and overflow-y-auto to Active Quest List container for fixed height scrolling"
-  
-  - task: "Scrollable History Timeline"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/pages/Archive.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Added max-h-96 and overflow-y-auto to History Timeline table container for fixed height scrolling"
-  
-  - task: "Scrollable Recent Reward Usage"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/pages/Inventory.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Added max-h-80 and overflow-y-auto to Recent Reward Usage section for fixed height scrolling"
-  
-  - task: "Auto XP Bonus Popup Component"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/components/MonthlyBonusPopup.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Created MonthlyBonusPopup component with auto-display logic. Shows at top of Dashboard when monthly bonus is available. Includes dismiss functionality"
-  
-  - task: "Dashboard Monthly Bonus Integration"
+  - task: "Calendar View Integration with Dashboard"
     implemented: true
     working: true
     file: "/app/frontend/src/pages/Dashboard.js"
@@ -203,9 +143,9 @@ frontend:
     status_history:
       - working: true
         agent: "main"
-        comment: "Integrated MonthlyBonusPopup into Dashboard. Shows popup automatically when user can claim monthly bonus"
+        comment: "Successfully integrated CalendarView component below Active Quest Log. Calendar conditionally displays based on settings."
   
-  - task: "Enhanced Auto Cleanup Controls"
+  - task: "Calendar View Settings Controls"
     implemented: true
     working: true
     file: "/app/frontend/src/pages/Settings.js"
@@ -215,31 +155,79 @@ frontend:
     status_history:
       - working: true
         agent: "main"
-        comment: "Added 'Include Recent Reward Usage cleanup' toggle to auto-cleanup settings with proper state management"
+        comment: "Added Calendar View Settings section with enable/disable toggle and default view selection."
   
-  - task: "Closeable Tips/Info Boxes Component"
+  - task: "Quest Data Sync with Calendar"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/CloseableTip.js"
+    file: "/app/frontend/src/components/CalendarView.js, /app/frontend/src/data/mock.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Quests successfully sync with calendar views. Updated mock data to current dates for proper visualization. Color coding works: blue (today), green (future), red (past)."
+  
+  - task: "Multiple Calendar Views (Day/Week/Month)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CalendarView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "All three view types implemented: Day view (hourly schedule with all-day events), Week view (7-day grid), Month view (calendar grid). View switching works correctly."
+  
+  - task: "Quest Color Coding and Visual Design"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CalendarView.js"
     stuck_count: 0
     priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Created reusable CloseableTip component with localStorage persistence for dismissed state"
+        comment: "Color coding implemented: Red (past days), Blue (today), Green (future). RPG theme maintained with indigo/purple gradients. Quest rank colors and XP display integrated."
   
-  - task: "Closeable Tips Implementation"
+  - task: "Quest Editing from Calendar"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RewardStore.js, /app/frontend/src/pages/Settings.js"
+    file: "/app/frontend/src/components/CalendarView.js"
     stuck_count: 0
     priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Replaced static info boxes with CloseableTip components in RewardStore and Settings pages"
+        comment: "Calendar quest blocks are clickable and trigger quest editing modal. Edits reflect in both calendar and Active Quest List."
+  
+  - task: "Overdue Quest Display"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CalendarView.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Overdue quests show time indicators (past X mins/hours) when they're still in today's view. Overdue badges implemented."
+  
+  - task: "All Day vs Timed Events"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CalendarView.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Quests without specific times display as all-day events. Timed quests show in hourly slots in Day view and with time indicators in other views."
 
 metadata:
   created_by: "main_agent"
