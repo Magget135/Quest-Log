@@ -10,6 +10,7 @@ import {
   mockRecurringTasks 
 } from '../data/mock';
 import { getXPSystem, getCurrentLevel, getLevelProgress } from '../data/xpSystems';
+import { isCurrentMonth } from '../utils/timeUtils';
 
 const QuestContext = createContext();
 
@@ -161,6 +162,26 @@ function questReducer(state, action) {
         rewards: state.rewards.filter(r => r.id !== action.payload)
       };
     
+    case 'ADD_RECURRING_TASK':
+      return {
+        ...state,
+        recurringTasks: [...state.recurringTasks, { ...action.payload, id: Date.now().toString() }]
+      };
+    
+    case 'UPDATE_RECURRING_TASK':
+      return {
+        ...state,
+        recurringTasks: state.recurringTasks.map(task =>
+          task.id === action.payload.id ? { ...task, ...action.payload } : task
+        )
+      };
+    
+    case 'DELETE_RECURRING_TASK':
+      return {
+        ...state,
+        recurringTasks: state.recurringTasks.filter(t => t.id !== action.payload)
+      };
+    
     case 'UPDATE_SETTINGS':
       return {
         ...state,
@@ -182,6 +203,11 @@ function questReducer(state, action) {
       };
     
     case 'APPLY_MONTHLY_BONUS':
+      // Check if bonus already claimed this month
+      if (isCurrentMonth(state.xp.lastMonthlyBonus)) {
+        return state; // No bonus if already claimed this month
+      }
+      
       const xpSystem = getXPSystem(state.settings.xpSystem);
       const userLevel = getCurrentLevel(state.xp.totalEarned, xpSystem);
       const bonusXP = xpSystem.monthlyBonusXP[userLevel.level - 1] || 0;
@@ -204,6 +230,44 @@ function questReducer(state, action) {
         };
       }
       return state;
+    
+    case 'RESET_EVERYTHING':
+      // Keep only default systems and settings structure
+      return {
+        xp: {
+          currentXP: 0,
+          totalEarned: 0,
+          totalSpent: 0,
+          completedQuests: 0,
+          lastMonthlyBonus: null
+        },
+        quests: [],
+        completedQuests: [],
+        rewards: mockRewards.filter(r => !r.isCustom), // Keep only default rewards
+        inventory: [],
+        claimedRewards: [],
+        settings: {
+          xpSystem: 'default',
+          autoCleanup: {
+            enabled: false,
+            frequency: '1month',
+            recurringOnly: false,
+            keepImportant: true
+          },
+          notifications: {
+            levelUp: true,
+            questDue: true,
+            rewardClaimed: true
+          }
+        },
+        recurringTasks: [],
+        notifications: [{
+          id: Date.now().toString(),
+          type: 'reset',
+          message: '🧨 All data has been reset! Ready for a fresh adventure!',
+          timestamp: new Date().toISOString()
+        }]
+      };
     
     case 'DISMISS_NOTIFICATION':
       return {
@@ -260,13 +324,18 @@ export function QuestProvider({ children }) {
     return state.xp.currentXP >= cost;
   };
   
+  const canClaimMonthlyBonus = () => {
+    return !isCurrentMonth(state.xp.lastMonthlyBonus);
+  };
+  
   const contextValue = {
     state,
     dispatch,
     getCurrentLevelInfo,
     getLevelProgressInfo,
     getXPSystemInfo,
-    canAffordReward
+    canAffordReward,
+    canClaimMonthlyBonus
   };
   
   return (

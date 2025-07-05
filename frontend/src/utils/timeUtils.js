@@ -13,21 +13,9 @@ export const formatRelativeDueDate = (dueDate) => {
   const isToday = due.toDateString() === now.toDateString();
   
   if (isToday) {
-    if (diffMs < 0) {
-      // Past due today
-      const pastMinutes = Math.abs(diffMinutes);
-      const pastHours = Math.abs(diffHours);
-      
-      if (pastMinutes < 60) {
-        return `⏰ Passed by ${pastMinutes} min${pastMinutes !== 1 ? 's' : ''}`;
-      } else if (pastHours < 24) {
-        return `⏰ Passed by ${pastHours} hour${pastHours !== 1 ? 's' : ''}`;
-      }
-    } else {
-      // Due today
-      const timeStr = due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      return `Today at ${timeStr}`;
-    }
+    // Due today - just show time
+    const timeStr = due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return `Today at ${timeStr}`;
   }
   
   // Future dates
@@ -57,15 +45,39 @@ export const getDateStatus = (dueDate) => {
   
   const now = new Date();
   const due = new Date(dueDate);
-  const diffMs = due.getTime() - now.getTime();
   
   const isToday = due.toDateString() === now.toDateString();
   
   if (isToday) {
-    return diffMs < 0 ? 'overdue' : 'today';
+    return 'today'; // Always return 'today' for same day, regardless of time
   }
   
-  return diffMs < 0 ? 'overdue' : 'future';
+  return due.getTime() < now.getTime() ? 'overdue' : 'future';
+};
+
+export const getPastDueInfo = (dueDate) => {
+  if (!dueDate) return null;
+  
+  const now = new Date();
+  const due = new Date(dueDate);
+  const isToday = due.toDateString() === now.toDateString();
+  
+  // Only show past due badge if it's today and time has passed
+  if (isToday && due.getTime() < now.getTime()) {
+    const diffMs = now.getTime() - due.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (diffHours > 0) {
+      return `⚠️ Past due by ${diffHours}h ${diffMinutes}m`;
+    } else if (diffMinutes > 0) {
+      return `⚠️ Past due by ${diffMinutes}m`;
+    } else {
+      return `⚠️ Just past due`;
+    }
+  }
+  
+  return null;
 };
 
 export const formatCompletedTimestamp = (timestamp) => {
@@ -110,19 +122,30 @@ export const isOverdue = (dueDate) => {
 export const getDueDateColor = (dueDate) => {
   const status = getDateStatus(dueDate);
   switch (status) {
-    case 'overdue': return 'border-l-red-500 bg-red-50';
-    case 'today': return 'border-l-blue-500 bg-blue-50';
-    case 'future': return 'border-l-green-500 bg-green-50';
+    case 'today': return 'border-l-blue-500 bg-blue-50'; // Blue for today
+    case 'overdue': return 'border-l-red-500 bg-red-50'; // Red for overdue (not today)
+    case 'future': return 'border-l-green-500 bg-green-50'; // Green for future
     default: return 'border-l-gray-500 bg-gray-50';
   }
 };
 
-export const shouldShowOverdueBadge = (dueDate) => {
-  if (!dueDate) return false;
+export const shouldShowPastDueBadge = (dueDate) => {
+  return getPastDueInfo(dueDate) !== null;
+};
+
+export const isCurrentMonth = (dateString) => {
+  if (!dateString) return false;
   
+  const date = new Date(dateString);
   const now = new Date();
-  const due = new Date(dueDate);
-  const isToday = due.toDateString() === now.toDateString();
   
-  return isToday && due.getTime() < now.getTime();
+  return date.getFullYear() === now.getFullYear() && 
+         date.getMonth() === now.getMonth();
+};
+
+export const formatMonthYear = (dateString) => {
+  if (!dateString) return 'Never';
+  
+  const date = new Date(dateString);
+  return date.toLocaleDateString([], { month: 'long', year: 'numeric' });
 };
