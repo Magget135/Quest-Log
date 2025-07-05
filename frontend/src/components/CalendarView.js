@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, Edit } from 'lucide-react';
 import { useQuest } from '../contexts/QuestContext';
 import { formatDistanceToNow, format, startOfDay, endOfDay, isToday, isPast, isFuture, startOfWeek, endOfWeek, startOfMonth, endOfMonth, eachDayOfInterval, addDays, addWeeks, addMonths, subDays, subWeeks, subMonths, isSameDay, parseISO, isValid } from 'date-fns';
+import TaskProgressBadge from './TaskProgressBadge';
 
 const CalendarView = ({ onEditQuest }) => {
   const { state, getXPSystemInfo } = useQuest();
