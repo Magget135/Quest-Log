@@ -201,69 +201,75 @@ const Dashboard = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
       <MonthlyBonusPopup />
       
-      {/* Hero Section - Level & XP Summary */}
-      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200 shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-3 text-xl">
-            <span className="text-2xl">🏆</span>
-            <span>Adventurer Status</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Level Progress */}
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Badge className={`${currentLevel.color} text-lg px-4 py-2 font-semibold`}>
+      {/* Hero Section - Adventurer Status */}
+      <div className="medieval-card p-6 shadow-xl">
+        <div className="flex items-center space-x-3 mb-6">
+          <span className="text-3xl">🏆</span>
+          <h2 className="text-2xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+            Adventurer's Chronicle
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Level Progress */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="medieval-scroll px-4 py-2">
+                <Badge className={`${currentLevel.color} text-lg px-4 py-2 font-bold`} style={{ fontFamily: 'Cinzel, serif' }}>
                   {currentLevel.icon} {currentLevel.title}
                 </Badge>
-                <span className="text-lg text-gray-600 font-medium">
-                  Level {currentLevel.level}
-                </span>
               </div>
-              
-              {currentLevel.nextLevelXP && (
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm font-medium">
-                    <span>Progress to Level {currentLevel.level + 1}</span>
-                    <span>{levelProgress.progressXP}/{levelProgress.totalXPForNext} XP</span>
-                  </div>
-                  <Progress value={levelProgress.progress} className="h-3" />
-                  <div className="text-sm text-gray-500 font-medium">
-                    {Math.round(levelProgress.progress)}% complete
-                  </div>
-                </div>
-              )}
-              
-              {!currentLevel.nextLevelXP && (
-                <div className="text-base text-purple-600 font-bold bg-purple-50 p-3 rounded-lg">
-                  🌟 Maximum level achieved! You are a true legend!
-                </div>
-              )}
+              <span className="text-lg text-yellow-800 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
+                Level {currentLevel.level}
+              </span>
             </div>
             
-            {/* XP & Achievement Stats */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-3xl font-bold text-yellow-600">{state.xp.currentXP}</div>
-                <div className="text-sm text-gray-600 font-medium">Current XP</div>
+            {currentLevel.nextLevelXP && (
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                  <span>Progress to Level {currentLevel.level + 1}</span>
+                  <span>{levelProgress.progressXP}/{levelProgress.totalXPForNext} XP</span>
+                </div>
+                <div className="w-full bg-yellow-200 rounded-full h-4 border-2 border-yellow-800">
+                  <div 
+                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full transition-all duration-500"
+                    style={{ width: `${levelProgress.progress}%` }}
+                  />
+                </div>
+                <div className="text-sm text-yellow-700 font-bold text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+                  {Math.round(levelProgress.progress)}% complete
+                </div>
               </div>
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-3xl font-bold text-green-600">{state.xp.totalEarned}</div>
-                <div className="text-sm text-gray-600 font-medium">Total Earned</div>
+            )}
+            
+            {!currentLevel.nextLevelXP && (
+              <div className="text-base text-yellow-800 font-bold bg-yellow-100 p-4 rounded-lg border-2 border-yellow-600" style={{ fontFamily: 'Cinzel, serif' }}>
+                🌟 Maximum level achieved! You are a true legend of the realm!
               </div>
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-3xl font-bold text-blue-600">{state.xp.completedQuests}</div>
-                <div className="text-sm text-gray-600 font-medium">Completed</div>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-3xl font-bold text-purple-600">{achievementProgress.unlocked}</div>
-                <div className="text-sm text-gray-600 font-medium">Achievements</div>
-              </div>
+            )}
+          </div>
+          
+          {/* XP & Achievement Stats */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 medieval-scroll">
+              <div className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>{state.xp.currentXP}</div>
+              <div className="text-sm text-yellow-700 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>Gold Pieces</div>
+            </div>
+            <div className="text-center p-4 medieval-scroll">
+              <div className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>{state.xp.totalEarned}</div>
+              <div className="text-sm text-yellow-700 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>Total Earned</div>
+            </div>
+            <div className="text-center p-4 medieval-scroll">
+              <div className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>{state.xp.completedQuests}</div>
+              <div className="text-sm text-yellow-700 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>Completed</div>
+            </div>
+            <div className="text-center p-4 medieval-scroll">
+              <div className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>{achievementProgress.unlocked}</div>
+              <div className="text-sm text-yellow-700 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>Honors</div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Two Column Layout for Main Content */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -271,33 +277,35 @@ const Dashboard = () => {
         {/* Left Column - Quest Management (2/3 width) */}
         <div className="xl:col-span-2 space-y-6">
           
-          {/* Quick Add Quest - Compact Version */}
-          <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-lg">
-                <span>📜</span>
-                <span>Quick Add Quest</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          {/* Quick Add Quest - Medieval Style */}
+          <div className="medieval-card p-6">
+            <div className="flex items-center space-x-3 mb-4">
+              <span className="text-2xl">📜</span>
+              <h3 className="text-xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                Register New Quest
+              </h3>
+            </div>
+            
+            <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="md:col-span-2">
                   <Input
                     value={newQuest.name}
                     onChange={(e) => setNewQuest({ ...newQuest, name: e.target.value })}
-                    placeholder="What needs to be done?"
-                    className="border-purple-200 focus:border-purple-500 text-base"
+                    placeholder="What deed must be accomplished?"
+                    className="border-yellow-600 focus:border-yellow-700 text-base bg-yellow-50"
+                    style={{ fontFamily: 'Libre Baskerville, serif' }}
                   />
                 </div>
                 <div className="flex gap-2">
                   <Select value={newQuest.rank} onValueChange={(value) => setNewQuest({ ...newQuest, rank: value })}>
-                    <SelectTrigger className="border-purple-200 focus:border-purple-500">
-                      <SelectValue placeholder="Rank" />
+                    <SelectTrigger className="border-yellow-600 focus:border-yellow-700 bg-yellow-50">
+                      <SelectValue placeholder="Difficulty" />
                     </SelectTrigger>
                     <SelectContent>
                       {xpSystem.ranks.map(rank => (
                         <SelectItem key={rank.value} value={rank.value}>
-                          <Badge className={rank.color} variant="outline">
+                          <Badge className={rank.color} variant="outline" style={{ fontFamily: 'Cinzel, serif' }}>
                             {rank.label}
                           </Badge>
                         </SelectItem>
@@ -312,21 +320,23 @@ const Dashboard = () => {
                   type="date"
                   value={newQuest.dueDate}
                   onChange={(e) => setNewQuest({ ...newQuest, dueDate: e.target.value })}
-                  className="border-purple-200 focus:border-purple-500"
+                  className="border-yellow-600 focus:border-yellow-700 bg-yellow-50"
                 />
                 <Input
                   type="time"
                   value={newQuest.dueTime}
                   onChange={(e) => setNewQuest({ ...newQuest, dueTime: e.target.value })}
-                  placeholder="Time (optional)"
-                  className="border-purple-200 focus:border-purple-500"
+                  placeholder="Hour (optional)"
+                  className="border-yellow-600 focus:border-yellow-700 bg-yellow-50"
                 />
                 <div className="flex items-center space-x-2">
                   <Switch
                     checked={newQuest.isImportant}
                     onCheckedChange={(checked) => setNewQuest({ ...newQuest, isImportant: checked })}
                   />
-                  <Label className="text-sm font-medium">Important</Label>
+                  <Label className="text-sm font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                    Urgent
+                  </Label>
                 </div>
               </div>
               
@@ -335,8 +345,9 @@ const Dashboard = () => {
                 <Textarea
                   value={newQuest.description}
                   onChange={(e) => setNewQuest({ ...newQuest, description: e.target.value })}
-                  placeholder="Add description (optional)..."
-                  className="border-purple-200 focus:border-purple-500"
+                  placeholder="Describe the quest details..."
+                  className="border-yellow-600 focus:border-yellow-700 bg-yellow-50"
+                  style={{ fontFamily: 'Libre Baskerville, serif' }}
                   rows={2}
                 />
               ) : (
@@ -344,172 +355,181 @@ const Dashboard = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setNewQuest({ ...newQuest, description: '' })}
-                  className="text-gray-600"
+                  className="text-yellow-700 border-yellow-600 hover:bg-yellow-50"
+                  style={{ fontFamily: 'Cinzel, serif' }}
                 >
-                  + Add Description
+                  + Add Details
                 </Button>
               )}
               
               <Button 
                 onClick={handleAddQuest} 
-                className="w-full bg-purple-600 hover:bg-purple-700 font-semibold py-2"
+                className="w-full medieval-button py-3 text-lg"
                 disabled={!newQuest.name || !newQuest.rank || !newQuest.dueDate}
               >
-                ⚔️ Add Quest
+                ⚔️ Register Quest
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
           
           {/* Active Quest Log */}
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
+          <div className="medieval-card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">⚔️</span>
+                <h3 className="text-xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                  Active Quest Registry
+                </h3>
+              </div>
+              <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <span className="text-xl">⚔️</span>
-                  <span>Active Quest Log</span>
+                  <Label htmlFor="sort-select" className="text-sm text-yellow-700 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
+                    Sort by:
+                  </Label>
+                  <Select value={sortOption} onValueChange={handleSortChange}>
+                    <SelectTrigger className="w-48 h-9 text-sm border-yellow-600 bg-yellow-50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sortOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <Label htmlFor="sort-select" className="text-sm text-gray-600">Sort:</Label>
-                    <Select value={sortOption} onValueChange={handleSortChange}>
-                      <SelectTrigger className="w-48 h-9 text-sm">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {sortOptions.map(option => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Badge variant="secondary" className="font-semibold">
+                <div className="medieval-scroll px-3 py-1">
+                  <Badge className="bg-yellow-600 text-yellow-100 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
                     {state.quests.length} active
                   </Badge>
                 </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {getSortedQuests().map((quest) => {
-                  const pastDueInfo = getPastDueInfo(quest.dueDate);
-                  
-                  return (
-                    <div
-                      key={quest.id}
-                      className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDueDateColor(quest.dueDate)}`}
-                    >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h3 className="font-semibold text-gray-900 text-base">{quest.name}</h3>
-                            <Badge className={getRankColor(quest.rank)} variant="outline">
-                              {quest.rank}
+              </div>
+            </div>
+            
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {getSortedQuests().map((quest) => {
+                const pastDueInfo = getPastDueInfo(quest.dueDate);
+                
+                return (
+                  <div
+                    key={quest.id}
+                    className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDueDateColor(quest.dueDate)} bg-yellow-50`}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <h4 className="font-bold text-yellow-900 text-base" style={{ fontFamily: 'Cinzel, serif' }}>
+                            {quest.name}
+                          </h4>
+                          <Badge className={getRankColor(quest.rank)} variant="outline" style={{ fontFamily: 'Cinzel, serif' }}>
+                            {quest.rank}
+                          </Badge>
+                          <TaskProgressBadge
+                            questId={quest.id}
+                            currentStatus={quest.progressStatus || 'not_started'}
+                            onStatusChange={handleProgressChange}
+                            size="sm"
+                          />
+                          {quest.isImportant && (
+                            <Badge variant="outline" className="border-red-400 text-red-700 bg-red-50" style={{ fontFamily: 'Cinzel, serif' }}>
+                              ⭐ Urgent
                             </Badge>
-                            <TaskProgressBadge
-                              questId={quest.id}
-                              currentStatus={quest.progressStatus || 'not_started'}
-                              onStatusChange={handleProgressChange}
-                              size="sm"
-                            />
-                            {quest.isImportant && (
-                              <Badge variant="outline" className="border-yellow-400 text-yellow-700">
-                                ⭐ Important
-                              </Badge>
-                            )}
-                            {pastDueInfo && (
-                              <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300">
-                                {pastDueInfo}
-                              </Badge>
-                            )}
-                          </div>
-                          
-                          <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
-                            <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
-                            <span>✨ {quest.xpReward} XP</span>
-                          </div>
-                          
-                          {quest.description && (
-                            <p className="text-sm text-gray-600 mt-2 line-clamp-2">
-                              {quest.description}
-                            </p>
+                          )}
+                          {pastDueInfo && (
+                            <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300" style={{ fontFamily: 'Cinzel, serif' }}>
+                              {pastDueInfo}
+                            </Badge>
                           )}
                         </div>
                         
-                        <div className="flex space-x-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleEditQuest(quest)}
-                            className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                          >
-                            ✏️
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={() => handleCompleteQuest(quest.id)}
-                            className="bg-green-600 hover:bg-green-700"
-                          >
-                            ✅
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleDeleteQuest(quest.id)}
-                            className="border-red-200 text-red-600 hover:bg-red-50"
-                          >
-                            🗑️
-                          </Button>
+                        <div className="flex items-center space-x-4 text-sm text-yellow-700 mb-2 font-medium" style={{ fontFamily: 'Cinzel, serif' }}>
+                          <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
+                          <span>💰 {quest.xpReward} Gold</span>
                         </div>
+                        
+                        {quest.description && (
+                          <p className="text-sm text-yellow-700 mt-2 line-clamp-2" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                            {quest.description}
+                          </p>
+                        )}
+                      </div>
+                      
+                      <div className="flex space-x-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEditQuest(quest)}
+                          className="border-blue-400 text-blue-700 hover:bg-blue-50"
+                          style={{ fontFamily: 'Cinzel, serif' }}
+                        >
+                          ✏️
+                        </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => handleCompleteQuest(quest.id)}
+                          className="medieval-button"
+                        >
+                          ✅
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDeleteQuest(quest.id)}
+                          className="border-red-400 text-red-700 hover:bg-red-50"
+                          style={{ fontFamily: 'Cinzel, serif' }}
+                        >
+                          🗑️
+                        </Button>
                       </div>
                     </div>
-                  );
-                })}
-                
-                {state.quests.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">
-                    <div className="text-4xl mb-4">⚔️</div>
-                    <p className="text-lg font-medium mb-2">No active quests</p>
-                    <p>Create your first quest above to begin your adventure! 🎯</p>
                   </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                );
+              })}
+              
+              {state.quests.length === 0 && (
+                <div className="text-center py-12 text-yellow-700">
+                  <div className="text-4xl mb-4">⚔️</div>
+                  <p className="text-lg font-bold mb-2" style={{ fontFamily: 'Cinzel, serif' }}>No active quests</p>
+                  <p style={{ fontFamily: 'Libre Baskerville, serif' }}>Register your first quest above to begin your adventure! 🎯</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Right Column - Achievements & Quick Stats (1/3 width) */}
         <div className="space-y-6">
           
           {/* Quick Achievement Overview */}
-          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-lg">
-                <span>🏆</span>
-                <span>Achievements</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <div className="medieval-card p-6">
+            <div className="flex items-center space-x-3 mb-4">
+              <span className="text-2xl">🏆</span>
+              <h3 className="text-lg font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                Honors & Achievements
+              </h3>
+            </div>
+            
+            <div className="space-y-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-indigo-600 mb-1">
+                <div className="text-2xl font-bold text-yellow-800 mb-1" style={{ fontFamily: 'Cinzel, serif' }}>
                   {achievementProgress.unlocked}/{achievementProgress.total}
                 </div>
-                <div className="text-sm text-gray-600 mb-3">Badges Unlocked</div>
-                <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
+                <div className="text-sm text-yellow-700 mb-3 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>Badges Earned</div>
+                <div className="w-full bg-yellow-200 rounded-full h-4 mb-3 border-2 border-yellow-800">
                   <div 
-                    className="bg-gradient-to-r from-indigo-400 to-purple-500 h-3 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full transition-all duration-500"
                     style={{ width: `${achievementProgress.percentage}%` }}
                   />
                 </div>
-                <div className="text-sm font-medium text-indigo-600">
+                <div className="text-sm font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
                   {achievementProgress.percentage}% Complete
                 </div>
               </div>
               
               {/* Recent Achievements */}
               <div className="space-y-2">
-                <h4 className="text-sm font-semibold text-gray-700">Recent Unlocks:</h4>
+                <h4 className="text-sm font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>Recent Honors:</h4>
                 {state.achievements
                   ?.filter(a => a.unlocked)
                   ?.slice(-3)
@@ -517,21 +537,21 @@ const Dashboard = () => {
                   ?.map(achievement => (
                     <div
                       key={achievement.id}
-                      className="flex items-center space-x-2 bg-white rounded-lg px-3 py-2 border border-indigo-100"
+                      className="flex items-center space-x-2 medieval-scroll px-3 py-2"
                     >
                       <span className="text-lg">{achievement.icon}</span>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900 truncate">
+                        <div className="text-sm font-bold text-yellow-900 truncate" style={{ fontFamily: 'Cinzel, serif' }}>
                           {achievement.name}
                         </div>
-                        <div className="text-xs text-gray-500 truncate">
+                        <div className="text-xs text-yellow-700 truncate" style={{ fontFamily: 'Libre Baskerville, serif' }}>
                           {achievement.description}
                         </div>
                       </div>
                     </div>
                   )) || (
-                  <p className="text-sm text-gray-500 italic text-center py-2">
-                    Complete quests to unlock achievements!
+                  <p className="text-sm text-yellow-700 italic text-center py-2" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                    Complete quests to unlock honors!
                   </p>
                 )}
               </div>
@@ -540,26 +560,25 @@ const Dashboard = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => setShowAchievements(!showAchievements)}
-                className="w-full border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+                className="w-full border-yellow-600 text-yellow-800 hover:bg-yellow-50"
+                style={{ fontFamily: 'Cinzel, serif' }}
               >
-                View All Achievements
+                View All Honors
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Calendar Preview */}
           {state.settings.calendarView?.enabled && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-lg">
-                  <span>📅</span>
-                  <span>Quest Calendar</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CalendarView onEditQuest={handleEditQuest} compact={true} />
-              </CardContent>
-            </Card>
+            <div className="medieval-card p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="text-2xl">📅</span>
+                <h3 className="text-lg font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                  Quest Calendar
+                </h3>
+              </div>
+              <CalendarView onEditQuest={handleEditQuest} compact={true} />
+            </div>
           )}
 
         </div>
@@ -567,27 +586,26 @@ const Dashboard = () => {
 
       {/* Full Achievements View (when expanded) */}
       {showAchievements && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span>🏆</span>
-                <span>All Achievements</span>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowAchievements(false)}
-                className="text-gray-600"
-              >
-                Collapse
-              </Button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Badges achievements={state.achievements || []} />
-          </CardContent>
-        </Card>
+        <div className="medieval-card p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl">🏆</span>
+              <h3 className="text-xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                All Honors & Achievements
+              </h3>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAchievements(false)}
+              className="text-yellow-700 border-yellow-600 hover:bg-yellow-50"
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              Collapse
+            </Button>
+          </div>
+          <Badges achievements={state.achievements || []} />
+        </div>
       )}
       
       {/* Quest Edit Modal */}
