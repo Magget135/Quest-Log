@@ -239,6 +239,74 @@ const Dashboard = () => {
         </CardContent>
       </Card>
       
+      {/* Achievements Mini Widget */}
+      <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span>🏆</span>
+              <span>Recent Achievements</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Badge className="bg-indigo-100 text-indigo-800">
+                {achievementProgress.unlocked}/{achievementProgress.total} Unlocked
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowAchievements(!showAchievements)}
+                className="border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+              >
+                {showAchievements ? 'Hide' : 'View All'}
+              </Button>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {!showAchievements ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Progress:</span>
+                <span className="text-sm font-medium text-indigo-600">
+                  {achievementProgress.percentage}% Complete
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-indigo-400 to-purple-500 h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${achievementProgress.percentage}%` }}
+                />
+              </div>
+              
+              {/* Show last 3 unlocked achievements */}
+              <div className="flex items-center space-x-2 mt-3">
+                {state.achievements
+                  ?.filter(a => a.unlocked)
+                  ?.slice(-3)
+                  ?.map(achievement => (
+                    <div
+                      key={achievement.id}
+                      className="flex items-center space-x-1 bg-white rounded-full px-2 py-1 border border-indigo-200"
+                      title={achievement.description}
+                    >
+                      <span className="text-lg">{achievement.icon}</span>
+                      <span className="text-xs font-medium text-gray-700">
+                        {achievement.name}
+                      </span>
+                    </div>
+                  )) || (
+                  <p className="text-sm text-gray-500 italic">
+                    Complete your first quest to unlock achievements!
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <Badges achievements={state.achievements || []} />
+          )}
+        </CardContent>
+      </Card>
+      
       {/* Add New Quest */}
       <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50">
         <CardHeader>
