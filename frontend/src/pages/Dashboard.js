@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Progress } from '../components/ui/progress';
 import { useToast } from '../hooks/use-toast';
 import { questRanks, questStatuses } from '../data/mock';
+import { formatRelativeDueDate, getDateStatus } from '../utils/timeUtils';
 
 const Dashboard = () => {
   const { state, dispatch, getCurrentLevel, getNextLevel, getLevelProgress } = useXP();
@@ -17,6 +18,7 @@ const Dashboard = () => {
     name: '',
     rank: '',
     dueDate: '',
+    dueTime: '',
     status: 'Pending',
     reward: '',
     xpReward: 0
@@ -27,15 +29,6 @@ const Dashboard = () => {
   const currentLevel = getCurrentLevel();
   const nextLevel = getNextLevel();
   const levelProgress = getLevelProgress();
-  
-  const getDateStatus = (dueDate) => {
-    const today = new Date().toISOString().split('T')[0];
-    const due = new Date(dueDate).toISOString().split('T')[0];
-    
-    if (due < today) return 'overdue';
-    if (due === today) return 'today';
-    return 'future';
-  };
   
   const getDateColor = (dueDate) => {
     const status = getDateStatus(dueDate);
@@ -71,14 +64,21 @@ const Dashboard = () => {
     if (!newQuest.name || !newQuest.rank || !newQuest.dueDate) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
+        description: "Please fill in quest name, rank, and due date.",
         variant: "destructive"
       });
       return;
     }
     
+    // Combine date and time if time is provided
+    let fullDueDate = newQuest.dueDate;
+    if (newQuest.dueTime) {
+      fullDueDate = `${newQuest.dueDate}T${newQuest.dueTime}`;
+    }
+    
     const questWithXP = {
       ...newQuest,
+      dueDate: fullDueDate,
       xpReward: getXPByRank(newQuest.rank),
       dateAdded: new Date().toISOString().split('T')[0]
     };
@@ -88,6 +88,7 @@ const Dashboard = () => {
       name: '',
       rank: '',
       dueDate: '',
+      dueTime: '',
       status: 'Pending',
       reward: '',
       xpReward: 0
@@ -196,7 +197,7 @@ const Dashboard = () => {
           <CardTitle>Add New Quest 📜</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <Label htmlFor="questName">Quest Name</Label>
               <Input
@@ -230,6 +231,16 @@ const Dashboard = () => {
                 onChange={(e) => setNewQuest({ ...newQuest, dueDate: e.target.value })}
               />
             </div>
+            <div>
+              <Label htmlFor="dueTime">Due Time (Optional)</Label>
+              <Input
+                id="dueTime"
+                type="time"
+                value={newQuest.dueTime}
+                onChange={(e) => setNewQuest({ ...newQuest, dueTime: e.target.value })}
+                placeholder="Leave empty for all day"
+              />
+            </div>
           </div>
           <Button onClick={handleAddQuest} className="w-full md:w-auto">
             ➕ Add Quest
@@ -259,7 +270,7 @@ const Dashboard = () => {
                       <span className="text-lg">{getStatusIcon(quest.status)}</span>
                     </div>
                     <div className="flex items-center space-x-4 text-sm text-gray-600">
-                      <span>Due: {quest.dueDate}</span>
+                      <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
                       <span>Status: {quest.status}</span>
                       <span>XP: {quest.xpReward}</span>
                     </div>
