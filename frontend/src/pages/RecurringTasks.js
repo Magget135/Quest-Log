@@ -17,13 +17,17 @@ const RecurringTasks = () => {
   const { toast } = useToast();
   
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showCustomFrequency, setShowCustomFrequency] = useState(false);
   const [newTask, setNewTask] = useState({
     name: '',
     rank: '',
     frequency: 'Daily',
     days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     status: 'Active',
-    isImportant: false
+    isImportant: false,
+    startBeforeDue: 0,
+    customFrequency: null,
+    yearlyDate: ''
   });
   
   const xpSystem = getXPSystemInfo();
