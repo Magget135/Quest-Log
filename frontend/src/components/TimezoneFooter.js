@@ -1,18 +1,16 @@
 import React from 'react';
-import { getUserTimezone, getTimezoneDisplayName } from '../utils/timeUtils';
 
 const TimezoneFooter = () => {
-  const currentTimezone = getUserTimezone();
-  const displayName = getTimezoneDisplayName(currentTimezone);
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   
   return (
-    <div className="bg-gray-50 border-t border-gray-200 py-2 px-4">
-      <div className="max-w-7xl mx-auto">
-        <p className="text-xs text-gray-500 text-center">
-          🌍 Times shown in {displayName}
-        </p>
+    <footer className="bg-gray-100 border-t border-gray-200 py-2">
+      <div className="container mx-auto px-4">
+        <div className="text-center text-sm text-gray-600">
+          Time shown in {timezone} (UTC{new Date().getTimezoneOffset() > 0 ? '-' : '+'}${Math.abs(new Date().getTimezoneOffset() / 60)})
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
