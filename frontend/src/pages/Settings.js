@@ -11,6 +11,7 @@ import { useToast } from '../hooks/use-toast';
 import { XP_SYSTEMS, AUTO_CLEANUP_OPTIONS, getXPSystem } from '../data/xpSystems';
 import { isCurrentMonth, formatMonthYear } from '../utils/timeUtils';
 import CloseableTip from '../components/CloseableTip';
+import CollapsiblePanel from '../components/CollapsiblePanel';
 
 const Settings = () => {
   const { state, dispatch, getXPSystemInfo, canClaimMonthlyBonus } = useQuest();
