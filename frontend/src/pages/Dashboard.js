@@ -35,10 +35,12 @@ const Dashboard = () => {
   const [sortOption, setSortOption] = useState(() => {
     return localStorage.getItem('questSortOption') || 'due_date_asc';
   });
+  const [showAchievements, setShowAchievements] = useState(false);
   
   const currentLevel = getCurrentLevelInfo();
   const levelProgress = getLevelProgressInfo();
   const xpSystem = getXPSystemInfo();
+  const achievementProgress = getAchievementProgress(state.achievements || []);
 
   // Sorting options
   const sortOptions = [
