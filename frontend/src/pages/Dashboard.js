@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Progress } from '../components/ui/progress';
 import { Switch } from '../components/ui/switch';
 import { useToast } from '../hooks/use-toast';
-import { formatRelativeDueDate, getDueDateColor, shouldShowOverdueBadge } from '../utils/timeUtils';
+import { formatRelativeDueDate, getDueDateColor, getPastDueInfo } from '../utils/timeUtils';
 import QuestEditModal from '../components/QuestEditModal';
 
 const Dashboard = () => {
@@ -22,7 +22,6 @@ const Dashboard = () => {
     rank: '',
     dueDate: '',
     dueTime: '',
-    reward: '',
     description: '',
     isImportant: false
   });
@@ -67,7 +66,6 @@ const Dashboard = () => {
       rank: '',
       dueDate: '',
       dueTime: '',
-      reward: '',
       description: '',
       isImportant: false
     });
@@ -233,17 +231,6 @@ const Dashboard = () => {
               />
             </div>
             
-            <div>
-              <Label htmlFor="reward">Reward (Optional)</Label>
-              <Input
-                id="reward"
-                value={newQuest.reward}
-                onChange={(e) => setNewQuest({ ...newQuest, reward: e.target.value })}
-                placeholder="What will you reward yourself?"
-                className="border-purple-200 focus:border-purple-500"
-              />
-            </div>
-            
             <div className="flex items-center space-x-2">
               <Switch
                 id="important"
@@ -288,71 +275,74 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {state.quests.map((quest) => (
-              <div
-                key={quest.id}
-                className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDueDateColor(quest.dueDate)}`}
-              >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <h3 className="font-semibold text-gray-900">{quest.name}</h3>
-                      <Badge className={getRankColor(quest.rank)}>
-                        {quest.rank}
-                      </Badge>
-                      {quest.isImportant && (
-                        <Badge variant="outline" className="border-yellow-400 text-yellow-700">
-                          ⭐ Important
+            {state.quests.map((quest) => {
+              const pastDueInfo = getPastDueInfo(quest.dueDate);
+              
+              return (
+                <div
+                  key={quest.id}
+                  className={`p-4 rounded-lg border-l-4 transition-all duration-200 hover:shadow-md ${getDueDateColor(quest.dueDate)}`}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <h3 className="font-semibold text-gray-900">{quest.name}</h3>
+                        <Badge className={getRankColor(quest.rank)}>
+                          {quest.rank}
                         </Badge>
-                      )}
-                      {shouldShowOverdueBadge(quest.dueDate) && (
-                        <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300">
-                          {formatRelativeDueDate(quest.dueDate)}
-                        </Badge>
+                        {quest.isImportant && (
+                          <Badge variant="outline" className="border-yellow-400 text-yellow-700">
+                            ⭐ Important
+                          </Badge>
+                        )}
+                        {pastDueInfo && (
+                          <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300">
+                            {pastDueInfo}
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
+                        <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
+                        <span>✨ {quest.xpReward} XP</span>
+                      </div>
+                      
+                      {quest.description && (
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                          {quest.description}
+                        </p>
                       )}
                     </div>
                     
-                    <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
-                      <span>📅 {formatRelativeDueDate(quest.dueDate)}</span>
-                      <span>✨ {quest.xpReward} XP</span>
-                      {quest.reward && <span>🎁 {quest.reward}</span>}
+                    <div className="flex space-x-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEditQuest(quest)}
+                        className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                      >
+                        ✏️ Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => handleCompleteQuest(quest.id)}
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        ✅ Complete
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDeleteQuest(quest.id)}
+                        className="border-red-200 text-red-600 hover:bg-red-50"
+                      >
+                        🗑️
+                      </Button>
                     </div>
-                    
-                    {quest.description && (
-                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">
-                        {quest.description}
-                      </p>
-                    )}
-                  </div>
-                  
-                  <div className="flex space-x-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleEditQuest(quest)}
-                      className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                    >
-                      ✏️ Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleCompleteQuest(quest.id)}
-                      className="bg-green-600 hover:bg-green-700"
-                    >
-                      ✅ Complete
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleDeleteQuest(quest.id)}
-                      className="border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      🗑️
-                    </Button>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             
             {state.quests.length === 0 && (
               <div className="text-center py-12 text-gray-500">
