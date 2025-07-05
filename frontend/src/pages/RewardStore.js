@@ -192,12 +192,328 @@ const RewardStore = () => {
   return (
     <div className="space-y-6">
       {/* Store Header */}
-      <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span>🛍️</span>
-              <span>Mystic Reward Emporium</span>
+      <div className="medieval-card p-6 shadow-xl medieval-corners">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-4">
+            <span className="text-3xl">💰</span>
+            <h1 className="text-3xl font-bold text-yellow-800 medieval-text-title">
+              The Merchant's Emporium
+            </h1>
+          </div>
+          <div className="medieval-scroll px-4 py-2">
+            <Badge className="bg-yellow-600 text-yellow-100 text-lg px-3 py-1 font-bold medieval-text-header">
+              {state.xp.currentXP} Gold Pieces
+            </Badge>
+          </div>
+        </div>
+        
+        <p className="text-yellow-700 font-medium medieval-text-body mb-6">
+          Welcome, brave adventurer! Trade your hard-earned gold pieces for magnificent rewards and treasures.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center p-4 medieval-scroll">
+            <div className="text-2xl font-bold text-yellow-800 medieval-text-header">{state.xp.currentXP}</div>
+            <div className="text-sm text-yellow-700 font-bold medieval-text-body">Current Gold</div>
+          </div>
+          <div className="text-center p-4 medieval-scroll">
+            <div className="text-2xl font-bold text-yellow-800 medieval-text-header">{state.xp.totalSpent}</div>
+            <div className="text-sm text-yellow-700 font-bold medieval-text-body">Gold Spent</div>
+          </div>
+          <div className="text-center p-4 medieval-scroll">
+            <div className="text-2xl font-bold text-yellow-800 medieval-text-header">{state.rewards.length}</div>
+            <div className="text-sm text-yellow-700 font-bold medieval-text-body">Available Rewards</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-4">
+        <Button 
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="medieval-button"
+        >
+          {showAddForm ? '📜 Hide Scroll' : '📜 Create New Reward'}
+        </Button>
+        
+        <Button 
+          onClick={() => setShowCategoryForm(!showCategoryForm)}
+          variant="outline"
+          className="border-yellow-600 text-yellow-800 hover:bg-yellow-50 medieval-text-header"
+        >
+          🏷️ Manage Categories
+        </Button>
+      </div>
+
+      {/* Tips */}
+      <CloseableTip 
+        id="reward-store-tip"
+        icon="💡"
+        title="Merchant's Wisdom"
+        className="bg-yellow-50 border-yellow-600 medieval-scroll"
+      >
+        <p className="text-yellow-700 medieval-text-body">
+          Create rewards that truly motivate you! Set appropriate gold costs based on your quest completion rate. 
+          The merchant recommends balancing cost with your earning speed for maximum satisfaction.
+        </p>
+      </CloseableTip>
+
+      {/* Category Management Form */}
+      {showCategoryForm && (
+        <div className="medieval-card p-6">
+          <h3 className="text-xl font-bold text-yellow-800 mb-4 medieval-text-header">
+            🏷️ Manage Reward Categories
+          </h3>
+          
+          <div className="space-y-4">
+            <div className="flex space-x-2">
+              <Input
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="Enter new category name..."
+                className="flex-1 border-yellow-600 bg-yellow-50 medieval-input"
+                onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
+              />
+              <Button onClick={handleAddCategory} className="medieval-button">
+                Add Category
+              </Button>
+            </div>
+            
+            <div className="space-y-2">
+              <h4 className="font-bold text-gray-900 medieval-text-header">Current Categories:</h4>
+              <div className="flex flex-wrap gap-2">
+                {categories.map(category => (
+                  <div key={category} className="flex items-center space-x-1 medieval-scroll px-3 py-1">
+                    <Badge className={getCategoryColor(category)} style={{ fontFamily: 'Cinzel, serif' }}>
+                      {category}
+                    </Badge>
+                    {(customCategories.includes(category) || !defaultCategories.includes(category)) && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleDeleteCategory(category)}
+                        className="h-4 w-4 p-0 text-red-600 hover:text-red-800"
+                      >
+                        ×
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Reward Form */}
+      {showAddForm && (
+        <div className="medieval-card p-6">
+          <h3 className="text-xl font-bold text-yellow-800 mb-4 medieval-text-header">
+            📜 Create New Reward
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="reward-name" className="font-bold text-yellow-800 medieval-text-header">Reward Name</Label>
+                <Input
+                  id="reward-name"
+                  value={newReward.name}
+                  onChange={(e) => setNewReward({ ...newReward, name: e.target.value })}
+                  placeholder="What treasure awaits?"
+                  className="border-yellow-600 bg-yellow-50 medieval-input"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="reward-cost" className="font-bold text-yellow-800 medieval-text-header">
+                  Gold Cost ({xpSystem.rewardRange.min}-{xpSystem.rewardRange.max})
+                </Label>
+                <Input
+                  id="reward-cost"
+                  type="number"
+                  value={newReward.cost}
+                  onChange={(e) => setNewReward({ ...newReward, cost: e.target.value })}
+                  placeholder="How much gold?"
+                  min={xpSystem.rewardRange.min}
+                  max={xpSystem.rewardRange.max}
+                  className="border-yellow-600 bg-yellow-50 medieval-input"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="reward-icon" className="font-bold text-yellow-800 medieval-text-header">Icon</Label>
+                <Select value={newReward.icon} onValueChange={(value) => setNewReward({ ...newReward, icon: value })}>
+                  <SelectTrigger className="border-yellow-600 bg-yellow-50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {iconOptions.map(icon => (
+                      <SelectItem key={icon} value={icon}>
+                        <span className="text-lg">{icon}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="reward-category" className="font-bold text-yellow-800 medieval-text-header">Category</Label>
+                <Select value={newReward.category} onValueChange={(value) => setNewReward({ ...newReward, category: value })}>
+                  <SelectTrigger className="border-yellow-600 bg-yellow-50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(category => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <Label htmlFor="reward-description" className="font-bold text-yellow-800 medieval-text-header">Description (Optional)</Label>
+                <Textarea
+                  id="reward-description"
+                  value={newReward.description}
+                  onChange={(e) => setNewReward({ ...newReward, description: e.target.value })}
+                  placeholder="Describe this magnificent treasure..."
+                  rows={3}
+                  className="border-yellow-600 bg-yellow-50 medieval-input"
+                />
+              </div>
+              
+              <Button 
+                onClick={handleAddReward} 
+                className="w-full medieval-button"
+                disabled={!newReward.name || !newReward.cost}
+              >
+                💰 Add to Emporium
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Grouped Rewards Display */}
+      <div className="space-y-6">
+        {Object.entries(groupedRewards).map(([category, rewards]) => (
+          <div key={category} className="medieval-card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-yellow-800 flex items-center space-x-2 medieval-text-header">
+                <span>🏷️</span>
+                <span>{category}</span>
+              </h3>
+              <div className="medieval-scroll px-3 py-1">
+                <Badge className={getCategoryColor(category)} style={{ fontFamily: 'Cinzel, serif' }}>
+                  {rewards.length} items
+                </Badge>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {rewards.map((reward) => (
+                <div key={reward.id} className="quest-parchment p-4 transition-all duration-200 hover:shadow-md">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-2xl">{reward.icon}</span>
+                      <h4 className="font-bold text-yellow-900 medieval-text-header">{reward.name}</h4>
+                    </div>
+                    <div className="medieval-scroll px-2 py-1">
+                      <Badge className="bg-yellow-600 text-yellow-100 font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
+                        {reward.cost} Gold
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  {reward.description && (
+                    <p className="text-sm text-yellow-700 mb-3 medieval-text-body">
+                      {reward.description}
+                    </p>
+                  )}
+                  
+                  <div className="flex space-x-2">
+                    <Button
+                      size="sm"
+                      onClick={() => handleClaimReward(reward)}
+                      disabled={!canAffordReward(reward.cost)}
+                      className={`flex-1 ${
+                        canAffordReward(reward.cost) 
+                          ? 'medieval-button' 
+                          : 'opacity-50 cursor-not-allowed bg-gray-400'
+                      }`}
+                    >
+                      {canAffordReward(reward.cost) ? '💰 Purchase' : '💸 Too Expensive'}
+                    </Button>
+                    
+                    {reward.isCustom && (
+                      <>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEditReward(reward)}
+                          className="border-blue-400 text-blue-700 hover:bg-blue-50 medieval-text-header"
+                        >
+                          ✏️
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDeleteReward(reward.id)}
+                          className="border-red-400 text-red-700 hover:bg-red-50 medieval-text-header"
+                        >
+                          🗑️
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        
+        {Object.keys(groupedRewards).length === 0 && (
+          <div className="medieval-card p-12 text-center">
+            <div className="text-6xl mb-4">💰</div>
+            <h3 className="text-xl font-bold text-yellow-800 mb-2 medieval-text-header">Empty Emporium</h3>
+            <p className="text-yellow-700 mb-4 medieval-text-body">
+              The merchant's shelves are bare! Create your first reward to stock the emporium.
+            </p>
+            <Button 
+              onClick={() => setShowAddForm(true)}
+              className="medieval-button"
+            >
+              📜 Create First Reward
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Edit Reward Modal */}
+      {editingReward && (
+        <RewardEditModal
+          reward={editingReward}
+          isOpen={!!editingReward}
+          onClose={() => setEditingReward(null)}
+          onSave={(updatedReward) => {
+            dispatch({ type: 'UPDATE_REWARD', payload: updatedReward });
+            setEditingReward(null);
+            toast({
+              title: "Reward Updated! 📝",
+              description: "Your reward has been successfully updated."
+            });
+          }}
+          categories={categories}
+          iconOptions={iconOptions}
+          xpSystem={xpSystem}
+        />
+      )}
+    </div>
             </div>
             <div className="flex items-center space-x-4">
               <Badge className="bg-yellow-100 text-yellow-800 text-lg px-3 py-1">
