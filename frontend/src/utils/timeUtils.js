@@ -140,31 +140,66 @@ export const formatCompletedTimestamp = (timestamp) => {
   });
 };
 
-// Check if a date is overdue, today, or future
+// Check if a date is overdue, today, or future (CARD BACKGROUND LOGIC)
 export const getDateStatus = (dueDate) => {
   if (!dueDate) return 'future';
   
   const now = new Date();
   const due = new Date(dueDate);
   
-  // For date-only quests, compare just the date part
-  const isAllDay = dueDate.length === 10;
+  // Compare just the date part (ignore time for card background)
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
   
-  if (isAllDay) {
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
-    
-    if (dueDay < today) return 'overdue';
-    if (dueDay.getTime() === today.getTime()) return 'today';
-    return 'future';
-  } else {
-    if (due < now) return 'overdue';
-    
-    // Check if it's today
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
-    
-    if (dueDay.getTime() === today.getTime()) return 'today';
-    return 'future';
+  if (dueDay < today) return 'overdue';      // Past dates = red
+  if (dueDay.getTime() === today.getTime()) return 'today';  // Today = blue (regardless of time)
+  return 'future';                           // Future dates = green
+};
+
+// Check if quest time has passed (for TODAY's quests only)
+export const getTimeOverdueInfo = (dueDate) => {
+  if (!dueDate) return null;
+  
+  const now = new Date();
+  const due = new Date(dueDate);
+  
+  // Only check time overdue for today's quests
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+  
+  // If it's not today, don't show time overdue
+  if (dueDay.getTime() !== today.getTime()) return null;
+  
+  // If it's just a date (no time), no time overdue
+  const isAllDay = dueDate.length === 10;
+  if (isAllDay) return null;
+  
+  // Check if time has passed
+  if (due <= now) {
+    const timeDiff = now - due;
+    return {
+      isOverdue: true,
+      overdueText: formatOverdueTime(timeDiff)
+    };
   }
+  
+  return null;
+};
+
+// Format overdue time in human readable format
+const formatOverdueTime = (milliseconds) => {
+  const totalMinutes = Math.floor(milliseconds / (1000 * 60));
+  
+  if (totalMinutes < 60) {
+    return `Passed by ${totalMinutes} min${totalMinutes !== 1 ? 's' : ''}`;
+  }
+  
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  
+  if (minutes === 0) {
+    return `Passed by ${hours} hour${hours !== 1 ? 's' : ''}`;
+  }
+  
+  return `Passed by ${hours} hour${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
 };
