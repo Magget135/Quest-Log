@@ -24,6 +24,7 @@ const initialState = {
   claimedRewards: mockClaimedRewards,
   settings: mockSettings,
   recurringTasks: mockRecurringTasks,
+  achievements: initializeAchievements(),
   notifications: []
 };
 
