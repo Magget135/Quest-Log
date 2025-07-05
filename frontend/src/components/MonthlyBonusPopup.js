@@ -62,16 +62,6 @@ const MonthlyBonusPopup = () => {
       return () => clearTimeout(timer);
     }
   }, [canClaimMonthlyBonus, state.xp.completedQuests]);
-    // 1. User can claim monthly bonus
-    // 2. Not dismissed for this month
-    // 3. Has XP (not a brand new user)
-    if (canClaimMonthlyBonus() && 
-        dismissed !== currentMonth && 
-        state.xp.totalEarned > 0 &&
-        getBonusAmount() > 0) {
-      setShowPopup(true);
-    }
-  }, [canClaimMonthlyBonus, state.xp.totalEarned]);
   
   const handleClaimBonus = () => {
     dispatch({ type: 'APPLY_MONTHLY_BONUS' });
