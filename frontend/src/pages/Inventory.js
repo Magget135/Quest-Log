@@ -152,7 +152,7 @@ const Inventory = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
+            <div className="space-y-3 max-h-80 overflow-y-auto">
               {state.claimedRewards
                 .sort((a, b) => new Date(b.dateUsed) - new Date(a.dateUsed))
                 .slice(0, 5)
