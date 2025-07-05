@@ -26,7 +26,20 @@ const RewardStore = () => {
   
   const xpSystem = getXPSystemInfo();
   
-  const categories = ['Entertainment', 'Treats', 'Digital', 'Learning', 'Self-Care', 'Activities'];
+  // Custom categories management
+  const [customCategories, setCustomCategories] = useState(
+    JSON.parse(localStorage.getItem('customCategories') || '[]')
+  );
+  const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
+  
+  // Default categories that can be deleted
+  const defaultCategories = ['Entertainment', 'Treats', 'Digital', 'Learning', 'Self-Care', 'Activities'];
+  const [activeCategories, setActiveCategories] = useState(
+    JSON.parse(localStorage.getItem('activeCategories') || JSON.stringify(defaultCategories))
+  );
+  
+  const categories = [...activeCategories, ...customCategories];
   const iconOptions = ['🎮', '🍿', '📱', '📚', '🍦', '💰', '🎁', '⭐', '🏆', '🎯', '🎨', '🎵', '🍕', '☕', '🛍️'];
   
   const handleAddReward = () => {
