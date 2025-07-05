@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
 import { useToast } from '../hooks/use-toast';
 import { XP_SYSTEMS, AUTO_CLEANUP_OPTIONS } from '../data/xpSystems';
 import { isCurrentMonth, formatMonthYear } from '../utils/timeUtils';
+import CloseableTip from '../components/CloseableTip';
 
 const Settings = () => {
   const { state, dispatch, getXPSystemInfo, canClaimMonthlyBonus } = useQuest();
