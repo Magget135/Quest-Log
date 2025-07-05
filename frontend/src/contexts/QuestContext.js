@@ -398,12 +398,21 @@ function questReducer(state, action) {
           }
         },
         recurringTasks: [],
+        achievements: initializeAchievements(), // Reset achievements to initial state
         notifications: [{
           id: Date.now().toString(),
           type: 'reset',
           message: '🧨 All data has been reset! Ready for a fresh adventure!',
           timestamp: new Date().toISOString()
         }]
+      };
+    
+    case 'LOAD_STATE':
+      // Load state from localStorage and ensure achievements are properly initialized
+      const loadedState = action.payload;
+      return {
+        ...loadedState,
+        achievements: initializeAchievements(loadedState.achievements || [])
       };
     
     case 'DISMISS_NOTIFICATION':
