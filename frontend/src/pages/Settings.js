@@ -124,7 +124,7 @@ const Settings = () => {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <span>⚙️</span>
-            <span>Quest Log Settings</span>
+            <span>Rules & Settings</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
