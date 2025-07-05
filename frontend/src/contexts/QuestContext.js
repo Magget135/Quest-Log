@@ -11,6 +11,7 @@ import {
 } from '../data/mock';
 import { getXPSystem, getCurrentLevel, getLevelProgress } from '../data/xpSystems';
 import { isCurrentMonth } from '../utils/timeUtils';
+import { checkAchievements, initializeAchievements } from '../utils/achievementLogic';
 
 const QuestContext = createContext();
 
