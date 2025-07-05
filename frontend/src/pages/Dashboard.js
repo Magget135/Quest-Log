@@ -30,6 +30,9 @@ const Dashboard = () => {
   });
   
   const [editingQuest, setEditingQuest] = useState(null);
+  const [sortOption, setSortOption] = useState(() => {
+    return localStorage.getItem('questSortOption') || 'due_date_asc';
+  });
   
   const currentLevel = getCurrentLevelInfo();
   const levelProgress = getLevelProgressInfo();
