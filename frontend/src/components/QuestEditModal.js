@@ -246,18 +246,6 @@ const QuestEditModal = ({ quest, isOpen, onClose, onSave, xpSystem }) => {
             )}
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="edit-important"
-              checked={editedQuest.isImportant}
-              onCheckedChange={(checked) => setEditedQuest({ ...editedQuest, isImportant: checked })}
-            />
-            <Label htmlFor="edit-important">Mark as Important</Label>
-            <Badge variant="outline" className="border-yellow-400 text-yellow-700">
-              ⭐ Protected from auto-cleanup
-            </Badge>
-          </div>
-
           <div className="flex justify-end space-x-2 pt-4">
             <Button variant="outline" onClick={onClose}>
               Cancel
