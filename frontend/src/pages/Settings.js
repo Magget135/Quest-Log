@@ -9,13 +9,16 @@ import { Label } from '../components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { useToast } from '../hooks/use-toast';
 import { XP_SYSTEMS, AUTO_CLEANUP_OPTIONS } from '../data/xpSystems';
+import { isCurrentMonth, formatMonthYear } from '../utils/timeUtils';
 
 const Settings = () => {
-  const { state, dispatch, getXPSystemInfo } = useQuest();
+  const { state, dispatch, getXPSystemInfo, canClaimMonthlyBonus } = useQuest();
   const { toast } = useToast();
   const [confirmXPChange, setConfirmXPChange] = useState(null);
+  const [showResetDialog, setShowResetDialog] = useState(false);
   
   const currentXPSystem = getXPSystemInfo();
+  const canClaimBonus = canClaimMonthlyBonus();
   
   const handleXPSystemChange = (newSystemId) => {
     if (newSystemId !== state.settings.xpSystem) {
@@ -53,18 +56,38 @@ const Settings = () => {
   };
   
   const applyMonthlyBonus = () => {
-    dispatch({ type: 'APPLY_MONTHLY_BONUS' });
-  };
-  
-  const resetAllData = () => {
-    if (window.confirm('Are you sure you want to reset ALL data? This cannot be undone!')) {
-      dispatch({ type: 'RESET_ALL' });
+    if (!canClaimBonus) {
       toast({
-        title: "Data Reset",
-        description: "All data has been reset to default values.",
+        title: "Already Claimed",
+        description: "You've already claimed your monthly bonus this month. Try again next month!",
         variant: "destructive"
       });
+      return;
     }
+    
+    dispatch({ type: 'APPLY_MONTHLY_BONUS' });
+    toast({
+      title: "Monthly Bonus Applied! 🎁",
+      description: "Your monthly XP bonus has been added to your total!",
+      duration: 5000
+    });
+  };
+  
+  const confirmResetEverything = () => {
+    dispatch({ type: 'RESET_EVERYTHING' });
+    setShowResetDialog(false);
+    toast({
+      title: "Everything Reset! 🧨",
+      description: "All your data has been reset. Welcome to your fresh adventure!",
+      duration: 5000
+    });
+  };
+  
+  const getMonthlyBonusAmount = () => {
+    const userLevel = state.xp.totalEarned;
+    const level = currentXPSystem.levelThresholds.findIndex(threshold => userLevel < threshold);
+    const actualLevel = level === -1 ? currentXPSystem.levelThresholds.length : level;
+    return currentXPSystem.monthlyBonusXP[Math.min(actualLevel - 1, currentXPSystem.monthlyBonusXP.length - 1)] || 0;
   };
   
   return (
@@ -248,18 +271,45 @@ const Settings = () => {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <span>🎁</span>
-              <span>Monthly Bonus</span>
+              <span>Monthly XP Bonus</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-gray-600">
-              Apply your monthly XP bonus based on your current level and XP system.
-            </p>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600">
+                Apply your monthly XP bonus based on your current level and XP system.
+              </p>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                <div className="text-sm space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Available Bonus:</span>
+                    <span className="font-semibold text-green-700">{getMonthlyBonusAmount()} XP</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Last Claimed:</span>
+                    <span className="text-gray-700">
+                      {formatMonthYear(state.xp.lastMonthlyBonus)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Status:</span>
+                    <Badge className={canClaimBonus ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}>
+                      {canClaimBonus ? '✅ Available' : '⏳ Claimed this month'}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            </div>
             <Button 
               onClick={applyMonthlyBonus}
-              className="w-full bg-green-600 hover:bg-green-700"
+              disabled={!canClaimBonus}
+              className={`w-full ${
+                canClaimBonus 
+                  ? 'bg-green-600 hover:bg-green-700' 
+                  : 'bg-gray-400 cursor-not-allowed'
+              }`}
             >
-              🎁 Apply Monthly Bonus
+              🎁 {canClaimBonus ? 'Claim Monthly Bonus' : 'Already Claimed'}
             </Button>
           </CardContent>
         </Card>
@@ -276,11 +326,11 @@ const Settings = () => {
               Reset all quest log data to start fresh. This action cannot be undone.
             </p>
             <Button 
-              onClick={resetAllData}
+              onClick={() => setShowResetDialog(true)}
               variant="destructive"
               className="w-full"
             >
-              🗑️ Reset All Data
+              🧨 Reset Everything
             </Button>
           </CardContent>
         </Card>
@@ -327,6 +377,67 @@ const Settings = () => {
                   className="bg-red-600 hover:bg-red-700"
                 >
                   Confirm Change
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
+      
+      {/* Reset Everything Confirmation */}
+      {showResetDialog && (
+        <Dialog open={showResetDialog} onOpenChange={() => setShowResetDialog(false)}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-2">
+                <span>🧨</span>
+                <span>Reset Everything</span>
+              </DialogTitle>
+            </DialogHeader>
+            
+            <div className="space-y-4">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 className="font-medium text-red-800 mb-2">⚠️ Are you sure?</h4>
+                <p className="text-sm text-red-700">
+                  This will permanently erase all your quests, XP progress, rewards, and recurring tasks. 
+                  Only default system settings and XP system presets will be kept.
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-medium text-red-800">This will delete:</h4>
+                <div className="text-sm text-gray-700 space-y-1">
+                  <p>• All active quests</p>
+                  <p>• All completed quests</p>
+                  <p>• All recurring tasks</p>
+                  <p>• All claimed rewards</p>
+                  <p>• All user-created rewards</p>
+                  <p>• Total XP earned/spent</p>
+                  <p>• Level progress (reset to Level 1)</p>
+                  <p>• Inventory contents</p>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-medium text-green-800">This will keep:</h4>
+                <div className="text-sm text-gray-700 space-y-1">
+                  <p>• Default XP Systems</p>
+                  <p>• Default Rank/Reward suggestions</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowResetDialog(false)}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={confirmResetEverything}
+                  variant="destructive"
+                >
+                  🧨 Yes, Reset Everything
                 </Button>
               </div>
             </div>
