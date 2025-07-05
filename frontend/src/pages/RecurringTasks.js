@@ -315,7 +315,7 @@ const RecurringTasks = () => {
                 
                 <div>
                   <Label htmlFor="task-frequency">Frequency</Label>
-                  <Select value={newTask.frequency} onValueChange={(value) => setNewTask({ ...newTask, frequency: value })}>
+                  <Select value={newTask.frequency} onValueChange={handleFrequencyChange}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -325,6 +325,28 @@ const RecurringTasks = () => {
                           {getFrequencyIcon(freq.value)} {freq.label}
                         </SelectItem>
                       ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="start-before-due">Add to Active Quests</Label>
+                  <Select 
+                    value={newTask.startBeforeDue.toString()} 
+                    onValueChange={(value) => setNewTask({ ...newTask, startBeforeDue: parseInt(value) })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">On due date</SelectItem>
+                      <SelectItem value="1">1 day before due</SelectItem>
+                      <SelectItem value="2">2 days before due</SelectItem>
+                      <SelectItem value="3">3 days before due</SelectItem>
+                      <SelectItem value="4">4 days before due</SelectItem>
+                      <SelectItem value="5">5 days before due</SelectItem>
+                      <SelectItem value="6">6 days before due</SelectItem>
+                      <SelectItem value="7">7 days before due</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
