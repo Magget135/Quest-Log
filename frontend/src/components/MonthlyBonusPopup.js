@@ -47,7 +47,21 @@ const MonthlyBonusPopup = () => {
     const currentMonth = getCurrentMonth();
     const dismissed = localStorage.getItem('monthlyBonusDismissed');
     
-    // Show popup if:
+    // Show popup only if:
+    // 1. Can claim bonus
+    // 2. Not dismissed for this month
+    // 3. User has completed at least 1 quest (to avoid showing to new users immediately)
+    if (canClaimMonthlyBonus() && 
+        dismissed !== currentMonth && 
+        state.xp.completedQuests > 0) {
+      // Delay showing popup by 3 seconds for better UX
+      const timer = setTimeout(() => {
+        setShowPopup(true);
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [canClaimMonthlyBonus, state.xp.completedQuests]);
     // 1. User can claim monthly bonus
     // 2. Not dismissed for this month
     // 3. Has XP (not a brand new user)
