@@ -502,12 +502,15 @@ const RecurringTasks = () => {
                   </div>
                   
                   <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <span>{getFrequencyIcon(task.frequency)} {task.frequency}</span>
+                    <span>{getFrequencyIcon(task.frequency)} {getFrequencyDescription(task)}</span>
                     <span>✨ {task.xpReward} XP</span>
+                    {task.startBeforeDue > 0 && (
+                      <span>⏰ Starts {task.startBeforeDue} day{task.startBeforeDue > 1 ? 's' : ''} early</span>
+                    )}
                     {task.lastAdded && (
                       <span>📅 Last added: {new Date(task.lastAdded).toLocaleDateString()}</span>
                     )}
-                    {task.days && task.days.length < 7 && (
+                    {task.days && task.days.length < 7 && task.frequency !== 'Custom' && task.frequency !== 'Weekends' && (
                       <span>📌 {task.days.join(', ')}</span>
                     )}
                   </div>
