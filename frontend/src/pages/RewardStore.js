@@ -113,6 +113,62 @@ const RewardStore = () => {
     });
   };
   
+  const handleAddCategory = () => {
+    if (!newCategory.trim()) return;
+    
+    if (categories.includes(newCategory)) {
+      toast({
+        title: "Category Exists",
+        description: "This category already exists.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    const updatedCustomCategories = [...customCategories, newCategory];
+    setCustomCategories(updatedCustomCategories);
+    localStorage.setItem('customCategories', JSON.stringify(updatedCustomCategories));
+    setNewCategory('');
+    setShowCategoryForm(false);
+    
+    toast({
+      title: "Category Added! 🏷️",
+      description: `"${newCategory}" has been added to your categories.`
+    });
+  };
+  
+  const handleDeleteCategory = (categoryToDelete) => {
+    // Check if category has rewards
+    const hasRewards = state.rewards.some(reward => reward.category === categoryToDelete);
+    if (hasRewards) {
+      toast({
+        title: "Cannot Delete Category",
+        description: "This category contains rewards. Please remove all rewards first.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Remove from custom categories
+    if (customCategories.includes(categoryToDelete)) {
+      const updatedCustomCategories = customCategories.filter(cat => cat !== categoryToDelete);
+      setCustomCategories(updatedCustomCategories);
+      localStorage.setItem('customCategories', JSON.stringify(updatedCustomCategories));
+    }
+    
+    // Remove from active categories (for defaults)
+    if (activeCategories.includes(categoryToDelete)) {
+      const updatedActiveCategories = activeCategories.filter(cat => cat !== categoryToDelete);
+      setActiveCategories(updatedActiveCategories);
+      localStorage.setItem('activeCategories', JSON.stringify(updatedActiveCategories));
+    }
+    
+    toast({
+      title: "Category Deleted",
+      description: `"${categoryToDelete}" has been removed from your categories.`
+    });
+  };
+  
   const getCategoryColor = (category) => {
     const colors = {
       'Entertainment': 'bg-purple-100 text-purple-800',
