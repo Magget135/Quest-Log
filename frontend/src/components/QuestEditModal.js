@@ -7,6 +7,7 @@ import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Switch } from './ui/switch';
 import { Badge } from './ui/badge';
+import { TASK_PROGRESS_STATUS, getTaskProgressStatus } from '../data/xpSystems';
 
 const QuestEditModal = ({ quest, isOpen, onClose, onSave, xpSystem }) => {
   const [editedQuest, setEditedQuest] = useState({
