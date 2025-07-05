@@ -162,9 +162,86 @@ const RecurringTasks = () => {
       'Daily': '📅',
       'Weekly': '📆',
       'Monthly': '🗓️',
-      'Weekdays': '💼'
+      'Weekdays': '💼',
+      'Yearly': '🎂',
+      'Weekends': '🎮',
+      'Custom': '🔧'
     };
     return icons[frequency] || '🔄';
+  };
+
+  const getFrequencyDescription = (task) => {
+    const { frequency, customFrequency, yearlyDate, days } = task;
+    
+    switch (frequency) {
+      case 'Yearly':
+        return yearlyDate ? `Every ${yearlyDate} (${getMonthDayName(yearlyDate)})` : 'Yearly';
+      case 'Weekends':
+        return 'Saturday & Sunday';
+      case 'Custom':
+        if (!customFrequency) return 'Custom';
+        const { interval, unit, weeklyDays, endCondition, endAfter, endDate } = customFrequency;
+        let desc = `Every ${interval} ${interval === 1 ? unit.slice(0, -1) : unit}`;
+        if (unit === 'weeks' && weeklyDays?.length > 0) {
+          desc += ` on ${weeklyDays.join(', ')}`;
+        }
+        if (endCondition === 'after') {
+          desc += ` (${endAfter} times)`;
+        } else if (endCondition === 'on' && endDate) {
+          desc += ` until ${new Date(endDate).toLocaleDateString()}`;
+        }
+        return desc;
+      default:
+        return frequency;
+    }
+  };
+
+  const getMonthDayName = (yearlyDate) => {
+    if (!yearlyDate) return '';
+    try {
+      const [month, day] = yearlyDate.split('-');
+      const date = new Date(2024, parseInt(month) - 1, parseInt(day));
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    } catch {
+      return yearlyDate;
+    }
+  };
+
+  const handleFrequencyChange = (frequency) => {
+    if (frequency === 'Custom') {
+      setShowCustomFrequency(true);
+    } else if (frequency === 'Weekends') {
+      setNewTask(prev => ({ 
+        ...prev, 
+        frequency, 
+        days: ['Sat', 'Sun'],
+        customFrequency: null,
+        yearlyDate: ''
+      }));
+    } else if (frequency === 'Yearly') {
+      setNewTask(prev => ({ 
+        ...prev, 
+        frequency, 
+        days: [],
+        customFrequency: null
+      }));
+    } else {
+      setNewTask(prev => ({ 
+        ...prev, 
+        frequency,
+        customFrequency: null,
+        yearlyDate: ''
+      }));
+    }
+  };
+
+  const handleCustomFrequencyChange = (customFrequency) => {
+    setNewTask(prev => ({ 
+      ...prev, 
+      frequency: 'Custom',
+      customFrequency,
+      days: customFrequency.unit === 'weeks' ? customFrequency.weeklyDays : []
+    }));
   };
   
   const getStatusColor = (status) => {
