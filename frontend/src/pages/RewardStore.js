@@ -218,6 +218,51 @@ const RewardStore = () => {
           </CardTitle>
         </CardHeader>
         
+        {showCategoryForm && (
+          <CardContent className="border-t border-purple-200 mt-4 pt-4">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Manage Categories</h3>
+                <div className="flex space-x-2">
+                  <Input
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="New category name"
+                    className="w-48"
+                  />
+                  <Button onClick={handleAddCategory} className="bg-green-600 hover:bg-green-700">
+                    Add
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {categories.map((category) => (
+                  <div key={category} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    <Badge className={getCategoryColor(category)}>
+                      {category}
+                    </Badge>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleDeleteCategory(category)}
+                      className="ml-2 border-red-200 text-red-600 hover:bg-red-50"
+                    >
+                      🗑️
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex justify-end">
+                <Button variant="outline" onClick={() => setShowCategoryForm(false)}>
+                  Close
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        )}
+        
         {showAddForm && (
           <CardContent className="border-t border-purple-200 mt-4 pt-4">
             <div className="space-y-4">
