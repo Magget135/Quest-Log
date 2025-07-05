@@ -177,19 +177,6 @@ const Settings = () => {
             </div>
           </div>
           
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <div className="flex items-start space-x-2">
-              <span className="text-lg">💡</span>
-              <div>
-                <h4 className="font-medium text-yellow-800">Fair Play Tip</h4>
-                <p className="text-sm text-yellow-700">
-                  Choose a system that fits your lifestyle. Lower XP systems are easier to manage. 
-                  Higher XP systems give you more customization.
-                </p>
-              </div>
-            </div>
-          </div>
-          
           <CloseableTip 
             id="xp-system-tip"
             icon="💡"
