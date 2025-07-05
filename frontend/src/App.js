@@ -27,6 +27,7 @@ function App() {
                 <Route path="/rewards" element={<RewardStore />} />
                 <Route path="/inventory" element={<Inventory />} />
                 <Route path="/recurring" element={<RecurringTasks />} />
+                <Route path="/achievements" element={<Achievements />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>
