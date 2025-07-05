@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "🛠️ Implement dynamic XP system confirmation window update: When user opens the 'Confirm XP System Change' modal, auto-fill the New System Details section with content based on the XP system selected. Replace placeholder fields with Name, Description, and Reward Range for all 5 XP systems (Default, Simple Starter, Epic Precision, Heroic Grind, Relaxed Explorer). Optional: Style the warning box with an icon or mild animation for emphasis."
+user_problem_statement: "🛠️ Implement the following enhancements for Quest Log: 1. 🔥 Data Reset Update in Settings - Add toggle to 'Erase All Rewards' when performing a full data reset with confirmation popup for clear warning. 2. 🛡️ Add Task Progress Tracker for Each Quest - Add rounded rectangle badge to each task showing task progress status (Not Started, Pending, In Progress, Delaying, On Hold, Almost Done, Abandoned) with dropdown/selector to update status manually. Status changes saved in localStorage and persist after refresh. Only 'Completed' tasks reward XP."
 
 backend:
   - task: "Backend API health check and status endpoints"
