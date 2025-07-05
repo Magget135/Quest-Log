@@ -276,6 +276,54 @@ const Settings = () => {
         </CardContent>
       </Card>
       
+      {/* Calendar View Settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <span>📅</span>
+            <span>Calendar View Settings</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <Label htmlFor="calendar-enabled" className="text-base font-medium">
+                Enable Calendar View
+              </Label>
+              <p className="text-sm text-gray-600">
+                Show quest calendar below the Active Quest Log on Dashboard
+              </p>
+            </div>
+            <Switch
+              id="calendar-enabled"
+              checked={state.settings.calendarView.enabled}
+              onCheckedChange={(checked) => handleCalendarViewChange('enabled', checked)}
+            />
+          </div>
+          
+          {state.settings.calendarView.enabled && (
+            <div className="pl-4 border-l-2 border-gray-200">
+              <div>
+                <Label htmlFor="default-view">Default Calendar View</Label>
+                <Select 
+                  value={state.settings.calendarView.defaultView} 
+                  onValueChange={(value) => handleCalendarViewChange('defaultView', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="day">Day View</SelectItem>
+                    <SelectItem value="week">Week View</SelectItem>
+                    <SelectItem value="month">Month View</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
       {/* Monthly Bonus & Data Management */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
