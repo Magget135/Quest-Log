@@ -252,7 +252,8 @@ function questReducer(state, action) {
             enabled: false,
             frequency: '1month',
             recurringOnly: false,
-            keepImportant: true
+            keepImportant: true,
+            includeRewards: false
           },
           notifications: {
             levelUp: true,
