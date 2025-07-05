@@ -104,6 +104,8 @@ const Dashboard = () => {
   
   return (
     <div className="space-y-6">
+      <MonthlyBonusPopup />
+      
       {/* Level & XP Summary */}
       <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
         <CardHeader>
