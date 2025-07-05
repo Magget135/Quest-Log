@@ -191,6 +191,10 @@ export const mockSettings = {
     levelUp: true,
     questDue: true,
     rewardClaimed: true
+  },
+  calendarView: {
+    enabled: true,
+    defaultView: 'month'
   }
 };
 
