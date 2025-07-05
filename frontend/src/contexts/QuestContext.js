@@ -320,20 +320,43 @@ function questReducer(state, action) {
       const bonusXP = xpSystem.monthlyBonusXP[userLevel.level - 1] || 0;
       
       if (bonusXP > 0) {
-        return {
+        // Create intermediate state for achievement checking
+        const intermediateMonthlyState = {
           ...state,
           xp: {
             ...state.xp,
             currentXP: state.xp.currentXP + bonusXP,
             totalEarned: state.xp.totalEarned + bonusXP,
             lastMonthlyBonus: new Date().toISOString()
-          },
-          notifications: [...state.notifications, {
-            id: Date.now().toString(),
-            type: 'monthly_bonus',
-            message: `🎁 Monthly Bonus! +${bonusXP} XP earned!`,
+          }
+        };
+        
+        // Check for achievements
+        const monthlyAchievementResult = checkAchievements(intermediateMonthlyState, { type: 'APPLY_MONTHLY_BONUS' });
+        
+        // Create notifications
+        const monthlyNotifications = [{
+          id: Date.now().toString(),
+          type: 'monthly_bonus',
+          message: `🎁 Monthly Bonus! +${bonusXP} XP earned!`,
+          timestamp: new Date().toISOString()
+        }];
+        
+        // Add achievement unlock notifications
+        monthlyAchievementResult.newlyUnlocked.forEach(achievement => {
+          monthlyNotifications.push({
+            id: `achievement_${Date.now()}_${achievement.id}`,
+            type: 'achievement_unlock',
+            message: `🎉 Achievement Unlocked: ${achievement.name}!`,
+            achievement: achievement,
             timestamp: new Date().toISOString()
-          }]
+          });
+        });
+        
+        return {
+          ...intermediateMonthlyState,
+          achievements: monthlyAchievementResult.achievements,
+          notifications: [...state.notifications, ...monthlyNotifications]
         };
       }
       return state;
