@@ -146,6 +146,41 @@ const QuestEditModal = ({ quest, isOpen, onClose, onSave, xpSystem }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
+              <Label htmlFor="edit-progress">Progress Status</Label>
+              <Select 
+                value={editedQuest.progressStatus} 
+                onValueChange={(value) => setEditedQuest({ ...editedQuest, progressStatus: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select progress status" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(TASK_PROGRESS_STATUS).map(status => (
+                    <SelectItem key={status.id} value={status.id}>
+                      <div className="flex items-center space-x-2">
+                        <span>{status.emoji}</span>
+                        <span>{status.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-end">
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="edit-important"
+                  checked={editedQuest.isImportant}
+                  onCheckedChange={(checked) => setEditedQuest({ ...editedQuest, isImportant: checked })}
+                />
+                <Label htmlFor="edit-important">Mark as Important</Label>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <Label htmlFor="edit-date">Due Date</Label>
               <Input
                 id="edit-date"
