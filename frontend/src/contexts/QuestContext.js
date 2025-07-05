@@ -233,6 +233,8 @@ function questReducer(state, action) {
     
     case 'RESET_EVERYTHING':
       // Keep only default systems and settings structure
+      const { eraseRewards = true, resetXPSystem = false } = action.payload || {};
+      
       return {
         xp: {
           currentXP: 0,
@@ -243,11 +245,11 @@ function questReducer(state, action) {
         },
         quests: [],
         completedQuests: [],
-        rewards: mockRewards.filter(r => !r.isCustom), // Keep only default rewards
+        rewards: eraseRewards ? mockRewards.filter(r => !r.isCustom) : state.rewards,
         inventory: [],
-        claimedRewards: [],
+        claimedRewards: eraseRewards ? [] : state.claimedRewards,
         settings: {
-          xpSystem: 'default',
+          xpSystem: resetXPSystem ? 'default' : state.settings.xpSystem,
           autoCleanup: {
             enabled: false,
             frequency: '1month',
