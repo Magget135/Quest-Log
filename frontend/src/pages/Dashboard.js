@@ -302,6 +302,12 @@ const Dashboard = () => {
                         <Badge className={getRankColor(quest.rank)}>
                           {quest.rank}
                         </Badge>
+                        <TaskProgressBadge
+                          questId={quest.id}
+                          currentStatus={quest.progressStatus || 'not_started'}
+                          onStatusChange={handleProgressChange}
+                          size="sm"
+                        />
                         {quest.isImportant && (
                           <Badge variant="outline" className="border-yellow-400 text-yellow-700">
                             ⭐ Important
