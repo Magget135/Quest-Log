@@ -21,6 +21,12 @@ const Layout = ({ children }) => {
       badge: state.inventory.length > 0 ? state.inventory.length : null
     },
     { path: '/recurring', label: 'Recurring Tasks', icon: '🔄' },
+    { 
+      path: '/achievements', 
+      label: 'Achievements', 
+      icon: '🏆',
+      badge: state.achievements ? state.achievements.filter(a => a.unlocked).length : null
+    },
     { path: '/settings', label: 'Settings', icon: '⚙️' }
   ];
   
