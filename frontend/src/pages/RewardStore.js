@@ -203,6 +203,12 @@ const RewardStore = () => {
                 💰 {state.xp.currentXP} XP
               </Badge>
               <Button 
+                onClick={() => setShowCategoryForm(!showCategoryForm)}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                🏷️ Manage Categories
+              </Button>
+              <Button 
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="bg-purple-600 hover:bg-purple-700"
               >
