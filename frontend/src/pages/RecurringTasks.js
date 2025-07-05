@@ -379,6 +379,68 @@ const RecurringTasks = () => {
                   </div>
                 </div>
               )}
+
+              {newTask.frequency === 'Yearly' && (
+                <div>
+                  <Label htmlFor="yearly-date">Yearly Date (MM-DD)</Label>
+                  <Input
+                    id="yearly-date"
+                    type="date"
+                    value={newTask.yearlyDate ? `2024-${newTask.yearlyDate}` : ''}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        const date = new Date(e.target.value);
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        setNewTask({ ...newTask, yearlyDate: `${month}-${day}` });
+                      } else {
+                        setNewTask({ ...newTask, yearlyDate: '' });
+                      }
+                    }}
+                    className="border-blue-200 focus:border-blue-500"
+                  />
+                  <p className="text-xs text-gray-600 mt-1">
+                    This task will repeat on this date every year
+                  </p>
+                </div>
+              )}
+
+              {newTask.frequency === 'Custom' && newTask.customFrequency && (
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-purple-900">Custom Frequency Set</h4>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => setShowCustomFrequency(true)}
+                      className="text-purple-600 border-purple-300"
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                  <p className="text-sm text-purple-800">
+                    {getFrequencyDescription({ frequency: 'Custom', customFrequency: newTask.customFrequency })}
+                  </p>
+                </div>
+              )}
+
+              {newTask.frequency === 'Custom' && !newTask.customFrequency && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-medium text-yellow-900">Custom Frequency Required</h4>
+                      <p className="text-sm text-yellow-800">Configure your custom recurrence pattern</p>
+                    </div>
+                    <Button 
+                      size="sm"
+                      onClick={() => setShowCustomFrequency(true)}
+                      className="bg-yellow-600 hover:bg-yellow-700"
+                    >
+                      Configure
+                    </Button>
+                  </div>
+                </div>
+              )}
               
               <div className="flex justify-end space-x-2">
                 <Button variant="outline" onClick={() => setShowAddForm(false)}>
