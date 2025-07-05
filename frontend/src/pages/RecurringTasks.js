@@ -63,10 +63,10 @@ const RecurringTasks = () => {
     });
   };
   
-  const handleToggleTask = (taskId) => {
+  const handleToggleStatus = (taskId) => {
     const task = state.recurringTasks.find(t => t.id === taskId);
     if (task) {
-      const newStatus = task.status === 'Active' ? 'Inactive' : 'Active';
+      const newStatus = task.status === 'Active' ? 'Paused' : 'Active';
       dispatch({ 
         type: 'UPDATE_RECURRING_TASK', 
         payload: { ...task, status: newStatus }
@@ -80,11 +80,16 @@ const RecurringTasks = () => {
   };
   
   const handleDeleteTask = (taskId) => {
-    dispatch({ type: 'DELETE_RECURRING_TASK', payload: taskId });
-    toast({
-      title: "Task Removed",
-      description: "Recurring task has been deleted."
-    });
+    const task = state.recurringTasks.find(t => t.id === taskId);
+    if (task) {
+      if (window.confirm(`Are you sure you want to permanently delete "${task.name}"? This cannot be undone.`)) {
+        dispatch({ type: 'DELETE_RECURRING_TASK', payload: taskId });
+        toast({
+          title: "Task Permanently Deleted",
+          description: `"${task.name}" has been removed from your recurring tasks.`
+        });
+      }
+    }
   };
   
   const handleAddToQuests = (task) => {
@@ -92,7 +97,6 @@ const RecurringTasks = () => {
       name: task.name,
       rank: task.rank,
       dueDate: new Date().toISOString().split('T')[0],
-      reward: '',
       description: 'Auto-generated from recurring task',
       xpReward: task.xpReward,
       isImportant: task.isImportant,
@@ -126,6 +130,14 @@ const RecurringTasks = () => {
       'Weekdays': '💼'
     };
     return icons[frequency] || '🔄';
+  };
+  
+  const getStatusColor = (status) => {
+    return status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800';
+  };
+  
+  const getStatusIcon = (status) => {
+    return status === 'Active' ? '🟢' : '⏸️';
   };
   
   const handleDayToggle = (day) => {
@@ -247,6 +259,23 @@ const RecurringTasks = () => {
         )}
       </Card>
       
+      {/* Status Filter Info */}
+      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+        <CardContent className="pt-6">
+          <div className="flex items-center space-x-4">
+            <div className="text-2xl">ℹ️</div>
+            <div>
+              <h3 className="font-semibold text-gray-900">Status Guide</h3>
+              <div className="text-sm text-gray-700 space-y-1">
+                <p><strong>🟢 Active:</strong> Task will regenerate automatically in daily cycles</p>
+                <p><strong>⏸️ Paused:</strong> Task is temporarily disabled and won't regenerate</p>
+                <p><strong>🗑️ Delete:</strong> Permanently removes the task (cannot be undone)</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
       {/* Recurring Tasks List */}
       <div className="space-y-4">
         {state.recurringTasks.map((task) => (
@@ -255,7 +284,7 @@ const RecurringTasks = () => {
             className={`transition-all duration-200 ${
               task.status === 'Active' 
                 ? 'border-green-200 bg-gradient-to-r from-white to-green-50' 
-                : 'border-gray-200 bg-gradient-to-r from-white to-gray-50 opacity-75'
+                : 'border-orange-200 bg-gradient-to-r from-white to-orange-50'
             }`}
           >
             <CardContent className="p-4">
@@ -266,8 +295,8 @@ const RecurringTasks = () => {
                     <Badge className={getRankColor(task.rank)}>
                       {task.rank}
                     </Badge>
-                    <Badge className={task.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
-                      {task.status === 'Active' ? '🟢 Active' : '⚪ Inactive'}
+                    <Badge className={getStatusColor(task.status)}>
+                      {getStatusIcon(task.status)} {task.status}
                     </Badge>
                     {task.isImportant && (
                       <Badge variant="outline" className="border-yellow-400 text-yellow-700">
@@ -302,7 +331,7 @@ const RecurringTasks = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => handleToggleTask(task.id)}
+                    onClick={() => handleToggleStatus(task.id)}
                     className={task.status === 'Active' 
                       ? 'border-orange-200 text-orange-600 hover:bg-orange-50'
                       : 'border-green-200 text-green-600 hover:bg-green-50'
@@ -317,7 +346,7 @@ const RecurringTasks = () => {
                     onClick={() => handleDeleteTask(task.id)}
                     className="border-red-200 text-red-600 hover:bg-red-50"
                   >
-                    🗑️
+                    🗑️ Delete
                   </Button>
                 </div>
               </div>
@@ -340,7 +369,7 @@ const RecurringTasks = () => {
       </div>
       
       {/* Usage Tips */}
-      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+      <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <span>💡</span>
@@ -354,6 +383,7 @@ const RecurringTasks = () => {
             <p><strong>🗓️ Monthly:</strong> Ideal for goal setting, planning, or major tasks</p>
             <p><strong>💼 Weekdays:</strong> Work-related tasks that only happen on business days</p>
             <p><strong>⭐ Important:</strong> Marked tasks are protected from auto-cleanup</p>
+            <p><strong>🟢 Active vs ⏸️ Paused:</strong> Only active tasks regenerate in daily cycles</p>
           </div>
         </CardContent>
       </Card>
