@@ -349,24 +349,21 @@ const RewardStore = () => {
       </Card>
       
       {/* XP System Info */}
-      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="text-2xl">⚠️</div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Fair Play Reminder</h3>
-                <p className="text-sm text-gray-600">
-                  Be fair with your XP reward values. Setting unrealistic XP can break your system and reduce motivation.
-                </p>
-              </div>
-            </div>
-            <Badge className="bg-blue-100 text-blue-800">
-              Current System: {xpSystem.name}
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
+      <CloseableTip 
+        id="fairplay-reminder"
+        icon="⚠️"
+        title="Fair Play Reminder"
+        className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200"
+      >
+        <div className="flex items-center justify-between">
+          <p className="text-gray-600">
+            Be fair with your XP reward values. Setting unrealistic XP can break your system and reduce motivation.
+          </p>
+          <Badge className="bg-blue-100 text-blue-800 ml-4">
+            Current System: {xpSystem.name}
+          </Badge>
+        </div>
+      </CloseableTip>
       
       {/* Reward Categories */}
       <div className="space-y-6">
