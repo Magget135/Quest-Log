@@ -175,8 +175,7 @@ export const mockXPData = {
   totalEarned: 650,
   totalSpent: 475,
   completedQuests: 8,
-  currentLevel: 2,
-  lastMonthlyBonus: '2025-01-01'
+  lastMonthlyBonus: '2024-12-01T00:00:00Z' // Set to last month so bonus is available
 };
 
 export const mockSettings = {
