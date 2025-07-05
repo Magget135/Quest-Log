@@ -483,12 +483,41 @@ const Settings = () => {
             </DialogHeader>
             
             <div className="space-y-4">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 mb-2">⚠️ Are you sure?</h4>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 animate-pulse">
+                <div className="flex items-center space-x-2 mb-2">
+                  <span className="text-xl">⚠️</span>
+                  <h4 className="font-medium text-red-800">Are you sure?</h4>
+                </div>
                 <p className="text-sm text-red-700">
-                  This will permanently erase all your quests, XP progress, rewards, and recurring tasks. 
-                  Only default system settings and XP system presets will be kept.
+                  This will erase your entire progress, rewards, and tasks. This cannot be undone.
                 </p>
+              </div>
+              
+              {/* Reset Options */}
+              <div className="space-y-3 bg-gray-50 rounded-lg p-4">
+                <h4 className="font-medium text-gray-800">Reset Options:</h4>
+                
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="erase-rewards" className="text-sm font-medium">
+                    🔥 Erase All Rewards
+                  </Label>
+                  <Switch
+                    id="erase-rewards"
+                    checked={resetOptions.eraseRewards}
+                    onCheckedChange={(checked) => setResetOptions(prev => ({ ...prev, eraseRewards: checked }))}
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="reset-xp-system" className="text-sm font-medium">
+                    🧪 Reset XP System to Default
+                  </Label>
+                  <Switch
+                    id="reset-xp-system"
+                    checked={resetOptions.resetXPSystem}
+                    onCheckedChange={(checked) => setResetOptions(prev => ({ ...prev, resetXPSystem: checked }))}
+                  />
+                </div>
               </div>
               
               <div className="space-y-2">
@@ -497,19 +526,22 @@ const Settings = () => {
                   <p>• All active quests</p>
                   <p>• All completed quests</p>
                   <p>• All recurring tasks</p>
-                  <p>• All claimed rewards</p>
-                  <p>• All user-created rewards</p>
+                  {resetOptions.eraseRewards && <p>• All claimed rewards</p>}
+                  {resetOptions.eraseRewards && <p>• All user-created rewards</p>}
                   <p>• Total XP earned/spent</p>
                   <p>• Level progress (reset to Level 1)</p>
                   <p>• Inventory contents</p>
+                  {resetOptions.eraseRewards && <p>• All reward logs</p>}
                 </div>
               </div>
               
               <div className="space-y-2">
                 <h4 className="font-medium text-green-800">This will keep:</h4>
                 <div className="text-sm text-gray-700 space-y-1">
+                  {!resetOptions.resetXPSystem && <p>• Current XP System setting</p>}
                   <p>• Default XP Systems</p>
                   <p>• Default Rank/Reward suggestions</p>
+                  {!resetOptions.eraseRewards && <p>• Default Rewards (not custom ones)</p>}
                 </div>
               </div>
               
