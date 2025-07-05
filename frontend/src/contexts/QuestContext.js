@@ -242,7 +242,8 @@ function questReducer(state, action) {
       };
     
     case 'ADD_RECURRING_TASK':
-      return {
+      // Create intermediate state for achievement checking
+      const intermediateRecurringState = {
         ...state,
         recurringTasks: [...state.recurringTasks, { 
           ...action.payload, 
@@ -251,6 +252,27 @@ function questReducer(state, action) {
           customFrequency: action.payload.customFrequency || null,
           yearlyDate: action.payload.yearlyDate || null
         }]
+      };
+      
+      // Check for achievements
+      const recurringAchievementResult = checkAchievements(intermediateRecurringState, { type: 'ADD_RECURRING_TASK' });
+      
+      // Add achievement unlock notifications
+      const recurringNotifications = [];
+      recurringAchievementResult.newlyUnlocked.forEach(achievement => {
+        recurringNotifications.push({
+          id: `achievement_${Date.now()}_${achievement.id}`,
+          type: 'achievement_unlock',
+          message: `🎉 Achievement Unlocked: ${achievement.name}!`,
+          achievement: achievement,
+          timestamp: new Date().toISOString()
+        });
+      });
+      
+      return {
+        ...intermediateRecurringState,
+        achievements: recurringAchievementResult.achievements,
+        notifications: [...state.notifications, ...recurringNotifications]
       };
     
     case 'UPDATE_RECURRING_TASK':
