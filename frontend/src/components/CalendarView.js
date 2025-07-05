@@ -101,7 +101,7 @@ const CalendarView = ({ onEditQuest }) => {
             <h4 className="font-medium text-gray-600 mb-2">All Day</h4>
             <div className="space-y-2">
               {allDayQuests.map(quest => (
-                <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} />
+                <QuestBlock key={quest.id} quest={quest} onClick={() => onEditQuest(quest)} onProgressChange={handleProgressChange} />
               ))}
             </div>
           </div>
