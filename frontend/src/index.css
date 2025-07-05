@@ -28,78 +28,255 @@
   --medieval-shadow-xl: 0 20px 25px -5px rgba(60, 36, 20, 0.1), 0 10px 10px -5px rgba(60, 36, 20, 0.04);
 }
 
-/* Parchment texture background */
+/* Enhanced parchment texture background */
 .parchment-bg {
   background-image: 
     radial-gradient(circle at 20% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 20%),
     radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 40% 40%, rgba(245, 245, 220, 0.1) 0%, transparent 20%);
+    radial-gradient(circle at 40% 40%, rgba(245, 245, 220, 0.1) 0%, transparent 20%),
+    linear-gradient(45deg, transparent 30%, rgba(218, 165, 32, 0.05) 40%, transparent 50%);
   background-color: var(--medieval-parchment);
+  position: relative;
 }
 
-/* Wood grain texture */
+.parchment-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(139, 69, 19, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 85% 85%, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px, 30px 30px;
+  pointer-events: none;
+}
+
+/* Enhanced wood grain texture */
 .wood-bg {
   background-image: 
-    linear-gradient(90deg, rgba(101, 67, 33, 0.1) 0%, transparent 50%, rgba(101, 67, 33, 0.1) 100%),
-    linear-gradient(0deg, rgba(139, 69, 19, 0.05) 0%, transparent 50%, rgba(139, 69, 19, 0.05) 100%);
+    linear-gradient(90deg, rgba(101, 67, 33, 0.2) 0%, transparent 50%, rgba(101, 67, 33, 0.2) 100%),
+    linear-gradient(0deg, rgba(139, 69, 19, 0.1) 0%, transparent 50%, rgba(139, 69, 19, 0.1) 100%),
+    linear-gradient(45deg, rgba(160, 82, 45, 0.1) 25%, transparent 25%, transparent 75%, rgba(160, 82, 45, 0.1) 75%);
   background-color: var(--medieval-brown-lighter);
+  background-size: 80px 80px, 60px 60px, 40px 40px;
 }
 
 /* Stone texture */
 .stone-bg {
   background-image: 
     radial-gradient(circle at 25% 25%, rgba(105, 105, 105, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(105, 105, 105, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 75% 75%, rgba(105, 105, 105, 0.1) 0%, transparent 50%),
+    linear-gradient(45deg, rgba(128, 128, 128, 0.05) 25%, transparent 25%);
   background-color: #8B8B8B;
+  background-size: 60px 60px, 40px 40px, 20px 20px;
 }
 
-/* Scroll/Parchment card style */
+/* Enhanced Scroll/Parchment card style with decorative borders */
 .medieval-card {
   background: linear-gradient(135deg, var(--medieval-parchment) 0%, var(--medieval-cream) 100%);
-  border: 2px solid var(--medieval-gold-dark);
-  border-radius: 8px;
+  border: 3px solid var(--medieval-gold-dark);
+  border-radius: 12px;
   box-shadow: var(--medieval-shadow-lg);
   position: relative;
+  overflow: hidden;
 }
 
 .medieval-card::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, var(--medieval-gold), var(--medieval-gold-dark));
-  border-radius: 10px;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, var(--medieval-gold), var(--medieval-gold-dark), var(--medieval-gold));
+  border-radius: 15px;
   z-index: -1;
 }
 
-/* Medieval button styles */
+.medieval-card::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid var(--medieval-gold);
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Decorative corner elements */
+.medieval-corners::before {
+  content: '❦';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: var(--medieval-gold-dark);
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.medieval-corners::after {
+  content: '❦';
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  color: var(--medieval-gold-dark);
+  font-size: 16px;
+  opacity: 0.6;
+  transform: rotate(180deg);
+}
+
+/* Enhanced medieval button styles */
 .medieval-button {
   background: linear-gradient(135deg, var(--medieval-amber) 0%, var(--medieval-brown-lighter) 100%);
-  border: 2px solid var(--medieval-gold-dark);
+  border: 3px solid var(--medieval-gold-dark);
   color: var(--medieval-parchment);
-  font-weight: 600;
-  text-shadow: 1px 1px 2px rgba(60, 36, 20, 0.5);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(60, 36, 20, 0.7);
   transition: all 0.3s ease;
   font-family: 'Cinzel', serif;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.medieval-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.medieval-button:hover::before {
+  left: 100%;
 }
 
 .medieval-button:hover {
   background: linear-gradient(135deg, var(--medieval-gold) 0%, var(--medieval-amber) 100%);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow: var(--medieval-shadow-xl);
+  border-color: var(--medieval-gold);
 }
 
-/* Medieval scroll navigation */
+.medieval-button:active {
+  transform: translateY(0px);
+  box-shadow: var(--medieval-shadow);
+}
+
+/* Enhanced medieval scroll navigation */
 .medieval-scroll {
   background: linear-gradient(135deg, var(--medieval-parchment-light) 0%, var(--medieval-parchment) 100%);
   border: 2px solid var(--medieval-gold-dark);
-  border-radius: 6px;
+  border-radius: 8px;
   box-shadow: var(--medieval-shadow);
   position: relative;
 }
 
+.medieval-scroll::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px solid var(--medieval-gold);
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Medieval divider */
+.medieval-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--medieval-gold), transparent);
+  margin: 20px 0;
+  position: relative;
+}
+
+.medieval-divider::before {
+  content: '⚜';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--medieval-parchment);
+  color: var(--medieval-gold-dark);
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+/* Medieval quest item styling */
+.quest-parchment {
+  background: linear-gradient(135deg, var(--medieval-parchment-light) 0%, var(--medieval-parchment) 100%);
+  border-left: 4px solid var(--medieval-gold-dark);
+  border-radius: 8px;
+  box-shadow: var(--medieval-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.quest-parchment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(-45deg, var(--medieval-gold-dark) 50%, transparent 50%);
+}
+
+/* Medieval input styling */
+.medieval-input {
+  background: var(--medieval-parchment-light);
+  border: 2px solid var(--medieval-gold-dark);
+  border-radius: 6px;
+  color: var(--medieval-brown-dark);
+  font-family: 'Libre Baskerville', serif;
+}
+
+.medieval-input:focus {
+  border-color: var(--medieval-gold);
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+  outline: none;
+}
+
+/* Medieval text styling */
+.medieval-text-title {
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--medieval-brown-dark);
+  text-shadow: 1px 1px 2px rgba(218, 165, 32, 0.3);
+}
+
+.medieval-text-header {
+  font-family: 'Cinzel', serif;
+  color: var(--medieval-brown-dark);
+  font-weight: 600;
+}
+
+.medieval-text-body {
+  font-family: 'Libre Baskerville', serif;
+  color: var(--medieval-brown);
+}
+
+/* Glow effect for important elements */
+.medieval-glow {
+  animation: medieval-glow 3s ease-in-out infinite;
+}
+
+@keyframes medieval-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(218, 165, 32, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(218, 165, 32, 0.6), 0 0 30px rgba(218, 165, 32, 0.4); }
+}
+
+/* Enhanced body styling */
 body {
     margin: 0;
     font-family: 'Libre Baskerville', serif;
@@ -107,10 +284,42 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, var(--medieval-brown-light) 0%, var(--medieval-amber-light) 100%);
     min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(218, 165, 32, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.05) 1px, transparent 1px);
+    background-size: 100px 100px, 150px 150px;
+    pointer-events: none;
+    z-index: -1;
 }
 
 code {
     font-family: 'Courier New', monospace;
+}
+
+/* Responsive medieval design */
+@media (max-width: 768px) {
+  .medieval-card {
+    border-radius: 8px;
+  }
+  
+  .medieval-card::before {
+    border-radius: 10px;
+  }
+  
+  .medieval-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 }
 
 
