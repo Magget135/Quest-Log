@@ -96,8 +96,12 @@ const Settings = () => {
   };
   
   const confirmResetEverything = () => {
-    dispatch({ type: 'RESET_EVERYTHING' });
+    dispatch({ 
+      type: 'RESET_EVERYTHING', 
+      payload: resetOptions 
+    });
     setShowResetDialog(false);
+    setResetOptions({ eraseRewards: true, resetXPSystem: false });
     toast({
       title: "Everything Reset! 🧨",
       description: "All your data has been reset. Welcome to your fresh adventure!",
