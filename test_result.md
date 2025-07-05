@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Continuation Task: 1) Make All Rewards Editable & Deletable - Allow all rewards (including defaults) to be fully editable and deletable. 2) Custom Reward Categories - Add ability to create custom categories and delete default categories. 3) Scrollable Panels for Long Lists - Make Active Quest List, History Timeline, and Recent Reward Usage scrollable with fixed height. 4) Auto XP Bonus Popup (Monthly Reward) - Generate monthly bonus XP popup on Dashboard automatically. 5) Auto Cleanup Controls - Add Recent Reward Usage to auto cleanup options. 6) Closeable Tips/Info Boxes - Add close icons to all tip/info boxes."
+user_problem_statement: "Add Calendar View Below Active Quest Log - Implement a Calendar View component beneath the Active Quest Log List on the Dashboard page with Day/Week/Month views, quest integration with color coding, editing functionality, and settings toggle."
 
 backend:
   - task: "Backend API health check and status endpoints"
