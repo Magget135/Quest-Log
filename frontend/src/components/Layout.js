@@ -141,7 +141,7 @@ const Layout = ({ children }) => {
               <span className="font-medium">Inventory</span>
               {state.inventory.length > 0 && (
                 <div className="medieval-scroll px-2 py-1">
-                  <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
+                  <Badge className="bg-blue-600 text-white text-xs font-bold">
                     {state.inventory.length}
                   </Badge>
                 </div>
