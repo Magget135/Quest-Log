@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { LEVEL_TITLES } from '../data/xpSystems';
 
 const LevelTooltip = ({ children, xpSystem, currentLevel }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const timeoutRef = useRef(null);
 
   const getLevelData = () => {
     return LEVEL_TITLES.map((levelInfo, index) => {
@@ -20,11 +21,37 @@ const LevelTooltip = ({ children, xpSystem, currentLevel }) => {
     });
   };
 
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 150); // Small delay to prevent flickering
+  };
+
+  const handleTooltipMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
+  const handleTooltipMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 150);
+  };
+
   return (
     <div className="relative inline-block">
       <div
-        onMouseEnter={() => setIsVisible(true)}
-        onMouseLeave={() => setIsVisible(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => setIsVisible(!isVisible)} // Mobile support
         className="cursor-help"
       >
         {children}
