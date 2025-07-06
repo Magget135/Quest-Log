@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
       path: '/stats', 
       label: 'Journey Journal', 
       icon: '📊',
-      description: 'Statistics and progress tracking'
+      description: 'Stats like total quests completed, rewards claimed, average XP per task'
     }
   ];
 
@@ -44,13 +44,13 @@ const Layout = ({ children }) => {
       path: '/rewards', 
       label: 'Enter Shop', 
       icon: '🏪',
-      description: 'Browse and purchase rewards'
+      description: 'Opens the RPG-style reward store'
     },
     { 
       path: '/rewards/add', 
       label: 'Add Reward', 
       icon: '➕',
-      description: 'Create custom rewards'
+      description: 'Lets users manually create a new reward'
     }
   ];
   
