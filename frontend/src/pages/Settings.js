@@ -133,6 +133,34 @@ const Settings = () => {
         </p>
       </div>
 
+      {/* Horizontal Tabs */}
+      <div className="medieval-card p-2 shadow-lg">
+        <div className="flex space-x-2 overflow-x-auto">
+          {[
+            { id: 'rules', label: 'Rules & Tips', icon: '📜' },
+            { id: 'xp', label: 'Experience System', icon: '⚙️' },
+            { id: 'cleanup', label: 'Archive Management', icon: '🗃' },
+            { id: 'quests', label: 'Quest Customization', icon: '🎯' },
+            { id: 'merchant', label: 'Merchant & Tribute', icon: '💰' },
+            { id: 'danger', label: 'Danger Zone', icon: '☠️' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all duration-200 whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-yellow-600 text-yellow-100 shadow-lg'
+                  : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span>{tab.icon}</span>
+              <span className="font-medium">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Ancient Guild Rules & Guidelines Panel */}
       <CollapsiblePanel 
         icon="📜" 
