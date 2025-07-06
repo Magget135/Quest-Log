@@ -118,7 +118,7 @@ const NavigationDropdown = ({
                 key={index}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center space-x-3 px-4 py-3 transition-all duration-200 ${
+                className={`flex items-center space-x-3 px-4 py-3 transition-colors duration-200 ${
                   location.pathname === item.path
                     ? 'bg-blue-100 text-blue-800 border-r-4 border-blue-600'
                     : 'text-gray-700 hover:bg-blue-50 hover:text-blue-800'
