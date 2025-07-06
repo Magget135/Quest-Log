@@ -18,6 +18,7 @@ const Settings = () => {
   const { toast } = useToast();
   const [confirmXPChange, setConfirmXPChange] = useState(null);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [activeTab, setActiveTab] = useState('rules');
   const [resetOptions, setResetOptions] = useState({
     eraseRewards: true,
     resetXPSystem: false
