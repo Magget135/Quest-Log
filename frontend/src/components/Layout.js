@@ -102,7 +102,7 @@ const Layout = ({ children }) => {
       </header>
       
       {/* Medieval Navigation */}
-      <nav className="parchment-bg border-b-2 border-yellow-800 shadow-lg">
+      <nav className="parchment-bg border-b-2 border-blue-600 shadow-lg">
         <div className="container mx-auto px-4">
           <div className="flex space-x-2">
             {/* Main Hall */}
