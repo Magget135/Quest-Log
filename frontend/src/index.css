@@ -171,12 +171,12 @@
   box-shadow: var(--clean-shadow);
 }
 
-/* Enhanced medieval scroll navigation */
+/* Clean modern scroll navigation */
 .medieval-scroll {
-  background: linear-gradient(135deg, var(--medieval-parchment-light) 0%, var(--medieval-parchment) 100%);
-  border: 2px solid var(--medieval-gold-dark);
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--warm-yellow-light) 100%);
+  border: 2px solid var(--light-blue-dark);
   border-radius: 8px;
-  box-shadow: var(--medieval-shadow);
+  box-shadow: var(--clean-shadow);
   position: relative;
 }
 
@@ -187,16 +187,16 @@
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid var(--medieval-gold);
+  border: 1px solid var(--warm-yellow);
   border-radius: 6px;
   pointer-events: none;
   opacity: 0.4;
 }
 
-/* Medieval divider */
+/* Modern divider */
 .medieval-divider {
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--medieval-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--light-blue), transparent);
   margin: 20px 0;
   position: relative;
 }
@@ -207,18 +207,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--medieval-parchment);
-  color: var(--medieval-gold-dark);
+  background: var(--primary-white);
+  color: var(--light-blue-dark);
   padding: 0 12px;
   font-size: 14px;
 }
 
-/* Medieval quest item styling */
+/* Clean quest item styling */
 .quest-parchment {
-  background: linear-gradient(135deg, var(--medieval-parchment-light) 0%, var(--medieval-parchment) 100%);
-  border-left: 4px solid var(--medieval-gold-dark);
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--warm-yellow-light) 100%);
+  border-left: 4px solid var(--light-blue-dark);
   border-radius: 8px;
-  box-shadow: var(--medieval-shadow);
+  box-shadow: var(--clean-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -230,7 +230,7 @@
   right: 0;
   width: 20px;
   height: 20px;
-  background: linear-gradient(-45deg, var(--medieval-gold-dark) 50%, transparent 50%);
+  background: linear-gradient(-45deg, var(--warm-yellow) 50%, transparent 50%);
 }
 
 /* Medieval input styling */
