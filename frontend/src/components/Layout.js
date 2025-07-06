@@ -78,10 +78,10 @@ const Layout = ({ children }) => {
             {/* Adventurer Status */}
             <div className="flex items-center space-x-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-100" style={{ fontFamily: 'Cinzel, serif' }}>
+                <div className="text-2xl font-bold text-blue-800" style={{ fontFamily: 'Cinzel, serif' }}>
                   {state.xp.currentXP} XP
                 </div>
-                <div className="text-sm text-yellow-200" style={{ fontFamily: 'Cinzel, serif' }}>Gold Pieces</div>
+                <div className="text-sm text-blue-600" style={{ fontFamily: 'Cinzel, serif' }}>Gold Pieces</div>
               </div>
               
               <div className="flex items-center space-x-3">
