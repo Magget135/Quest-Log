@@ -584,6 +584,7 @@ const Settings = () => {
           </div>
         </div>
       </CollapsiblePanel>
+      )}
       
       {/* XP System Change Confirmation */}
       {confirmXPChange && (
