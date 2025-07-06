@@ -102,7 +102,7 @@ const NavigationDropdown = ({
             </Badge>
           </div>
         )}
-        <span className={`text-xs text-yellow-600 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+        <span className={`text-xs text-blue-600 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
       </div>
 
       {/* Dropdown Menu */}
