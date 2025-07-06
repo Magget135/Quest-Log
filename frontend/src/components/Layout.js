@@ -14,7 +14,6 @@ const Layout = ({ children }) => {
   
   const navItems = [
     { path: '/', label: 'Main Hall', icon: '🏰' },
-    { path: '/recurring', label: 'Daily Tasks', icon: '🔄' },
     { 
       path: '/inventory', 
       label: 'Inventory', 
@@ -24,22 +23,7 @@ const Layout = ({ children }) => {
     { path: '/settings', label: 'Settings', icon: '⚙️' }
   ];
 
-  const chroniclesItems = [
-    { 
-      path: '/archive', 
-      label: 'Adventure Archive', 
-      icon: '🧭',
-      description: 'Completed quests and reward claims'
-    },
-    { 
-      path: '/stats', 
-      label: 'Journey Journal', 
-      icon: '📊',
-      description: 'Stats like total quests completed, rewards claimed, average XP per task'
-    }
-  ];
-
-  const merchantItems = [
+  const shopItems = [
     { 
       path: '/rewards', 
       label: 'Enter Shop', 
@@ -51,6 +35,21 @@ const Layout = ({ children }) => {
       label: 'Add Reward', 
       icon: '➕',
       description: 'Lets users manually create a new reward'
+    }
+  ];
+
+  const historyItems = [
+    { 
+      path: '/archive', 
+      label: 'Adventure Archive', 
+      icon: '🧭',
+      description: 'Completed quests and reward claims'
+    },
+    { 
+      path: '/stats', 
+      label: 'Journey Journal', 
+      icon: '📊',
+      description: 'Stats like total quests completed, rewards claimed, average XP per task'
     }
   ];
   
