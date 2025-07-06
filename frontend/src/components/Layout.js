@@ -60,7 +60,7 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen">
       {/* Medieval Header */}
-      <header className="wood-bg border-b-4 border-yellow-600 shadow-2xl">
+      <header className="wood-bg border-b-4 border-blue-600 shadow-2xl">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
