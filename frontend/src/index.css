@@ -73,12 +73,12 @@
   background-size: 60px 60px, 40px 40px, 20px 20px;
 }
 
-/* Enhanced Scroll/Parchment card style with decorative borders */
+/* Modern clean card style with new color theme */
 .medieval-card {
-  background: linear-gradient(135deg, var(--medieval-parchment) 0%, var(--medieval-cream) 100%);
-  border: 3px solid var(--medieval-gold-dark);
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--warm-yellow-light) 100%);
+  border: 3px solid var(--light-blue-dark);
   border-radius: 12px;
-  box-shadow: var(--medieval-shadow-lg);
+  box-shadow: var(--clean-shadow-lg);
   position: relative;
   overflow: hidden;
 }
@@ -90,7 +90,7 @@
   left: -3px;
   right: -3px;
   bottom: -3px;
-  background: linear-gradient(45deg, var(--medieval-gold), var(--medieval-gold-dark), var(--medieval-gold));
+  background: linear-gradient(45deg, var(--light-blue), var(--light-blue-dark), var(--light-blue));
   border-radius: 15px;
   z-index: -1;
 }
@@ -102,7 +102,7 @@
   left: 8px;
   right: 8px;
   bottom: 8px;
-  border: 1px solid var(--medieval-gold);
+  border: 1px solid var(--warm-yellow);
   border-radius: 8px;
   pointer-events: none;
   opacity: 0.3;
