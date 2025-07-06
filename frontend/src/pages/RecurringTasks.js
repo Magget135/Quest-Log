@@ -590,29 +590,59 @@ const RecurringTasks = () => {
         )}
       </div>
       
+      {/* Status Guide */}
+      <CollapsibleSection
+        title="Status Guide"
+        icon="📋"
+        className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200"
+        defaultExpanded={false}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
+            <h4 className="font-bold text-gray-900" style={{ fontFamily: 'Cinzel, serif' }}>Task Status Types</h4>
+            <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+              <p><span className="font-bold text-green-600">🟢 Active:</span> Task will regenerate according to schedule</p>
+              <p><span className="font-bold text-orange-600">⏸️ Paused:</span> Task is temporarily disabled</p>
+              <p><span className="font-bold text-blue-600">➕ Add to Quests:</span> Manually add task to active quest log</p>
+              <p><span className="font-bold text-purple-600">⭐ Important:</span> Protected from auto-cleanup</p>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <h4 className="font-bold text-gray-900" style={{ fontFamily: 'Cinzel, serif' }}>Quick Actions</h4>
+            <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+              <p><span className="font-bold text-blue-600">⏸️ Pause:</span> Temporarily stop generating this task</p>
+              <p><span className="font-bold text-green-600">▶️ Resume:</span> Reactivate a paused task</p>
+              <p><span className="font-bold text-red-600">🗑️ Delete:</span> Permanently remove task (cannot be undone)</p>
+              <p><span className="font-bold text-purple-600">🔍 Search:</span> Filter tasks by name, rank, or frequency</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+      
       {/* Usage Tips */}
-      <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <span>💡</span>
-            <span>Recurring Tasks Tips</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-sm text-gray-700">
+      <CollapsibleSection
+        title="Recurring Tasks Tips"
+        icon="💡"
+        className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200"
+        defaultExpanded={false}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
             <p><strong>📅 Daily:</strong> Perfect for habits like exercise, reading, or meditation</p>
             <p><strong>📆 Weekly:</strong> Great for weekly reviews, cleaning, or skill practice</p>
             <p><strong>🗓️ Monthly:</strong> Ideal for goal setting, planning, or major tasks</p>
             <p><strong>💼 Weekdays:</strong> Work-related tasks that only happen on business days</p>
             <p><strong>🎂 Yearly:</strong> Annual events like birthdays, anniversaries, or renewals</p>
+          </div>
+          <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
             <p><strong>🎮 Weekends Only:</strong> Leisure activities for Saturday and Sunday</p>
             <p><strong>🔧 Custom Frequency:</strong> Advanced patterns like "every 2 weeks on Monday and Friday"</p>
             <p><strong>⏰ Start Before Due:</strong> Add tasks to quest log days before they're actually due</p>
             <p><strong>⭐ Important:</strong> Marked tasks are protected from auto-cleanup</p>
             <p><strong>🟢 Active vs ⏸️ Paused:</strong> Only active tasks regenerate in daily cycles</p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </CollapsibleSection>
       
       {/* Custom Frequency Builder Dialog */}
       {showCustomFrequency && (
