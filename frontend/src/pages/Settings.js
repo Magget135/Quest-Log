@@ -394,6 +394,7 @@ const Settings = () => {
           )}
         </div>
       </CollapsiblePanel>
+      )}
 
       {/* Quest Customization Panel */}
       {activeTab === 'quests' && (
