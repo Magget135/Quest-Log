@@ -28,14 +28,14 @@
   --clean-shadow-xl: 0 20px 25px -5px rgba(44, 62, 80, 0.1), 0 10px 10px -5px rgba(44, 62, 80, 0.04);
 }
 
-/* Enhanced parchment texture background */
+/* Clean white and light blue background */
 .parchment-bg {
   background-image: 
-    radial-gradient(circle at 20% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 40% 40%, rgba(245, 245, 220, 0.1) 0%, transparent 20%),
-    linear-gradient(45deg, transparent 30%, rgba(218, 165, 32, 0.05) 40%, transparent 50%);
-  background-color: var(--medieval-parchment);
+    radial-gradient(circle at 20% 20%, rgba(135, 206, 235, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+    linear-gradient(45deg, transparent 30%, rgba(135, 206, 235, 0.05) 40%, transparent 50%);
+  background-color: var(--primary-white);
   position: relative;
 }
 
@@ -47,19 +47,19 @@
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(139, 69, 19, 0.03) 1px, transparent 1px),
-    radial-gradient(circle at 85% 85%, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
+    radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 85% 85%, rgba(135, 206, 235, 0.03) 1px, transparent 1px);
   background-size: 50px 50px, 30px 30px;
   pointer-events: none;
 }
 
-/* Enhanced wood grain texture */
+/* Soft blue and white gradient background */
 .wood-bg {
   background-image: 
-    linear-gradient(90deg, rgba(101, 67, 33, 0.2) 0%, transparent 50%, rgba(101, 67, 33, 0.2) 100%),
-    linear-gradient(0deg, rgba(139, 69, 19, 0.1) 0%, transparent 50%, rgba(139, 69, 19, 0.1) 100%),
-    linear-gradient(45deg, rgba(160, 82, 45, 0.1) 25%, transparent 25%, transparent 75%, rgba(160, 82, 45, 0.1) 75%);
-  background-color: var(--medieval-brown-lighter);
+    linear-gradient(90deg, rgba(135, 206, 235, 0.2) 0%, transparent 50%, rgba(135, 206, 235, 0.2) 100%),
+    linear-gradient(0deg, rgba(255, 215, 0, 0.1) 0%, transparent 50%, rgba(255, 215, 0, 0.1) 100%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+  background-color: var(--light-blue-soft);
   background-size: 80px 80px, 60px 60px, 40px 40px;
 }
 
