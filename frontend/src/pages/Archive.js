@@ -94,7 +94,18 @@ const Archive = () => {
   
   return (
     <div className="space-y-6">
-      {/* Archive Summary */}
+      {/* Adventure Archive Header */}
+      <div className="medieval-card p-6 shadow-xl">
+        <div className="flex items-center space-x-4 mb-4">
+          <span className="text-3xl">🧭</span>
+          <h1 className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel Decorative, serif' }}>
+            Adventure Archive
+          </h1>
+        </div>
+        <p className="text-yellow-700 font-medium" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+          Your complete adventure history including completed quests and reward claims. Every victory and treasure is recorded here.
+        </p>
+      </div>
       <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
