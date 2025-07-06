@@ -4,28 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Medieval Theme Variables */
+/* Modern Clean Theme Variables */
 :root {
-  /* Warm Medieval Colors */
-  --medieval-brown-dark: #3C2414;
-  --medieval-brown: #654321;
-  --medieval-brown-light: #8B4513;
-  --medieval-brown-lighter: #A0522D;
-  --medieval-amber: #D2691E;
-  --medieval-amber-light: #DEB887;
-  --medieval-parchment: #F5F5DC;
-  --medieval-parchment-light: #FFF8DC;
-  --medieval-cream: #FAEBD7;
-  --medieval-gold: #DAA520;
-  --medieval-gold-light: #FFD700;
-  --medieval-gold-dark: #B8860B;
-  --medieval-red: #A0522D;
-  --medieval-green: #556B2F;
+  /* New Color Palette: White, Warm Yellow, Light Blue */
+  --primary-white: #FFFFFF;
+  --primary-white-soft: #FEFEFE;
+  --warm-yellow: #FFD700;
+  --warm-yellow-light: #FFF8DC;
+  --warm-yellow-bright: #FFED4E;
+  --warm-yellow-dark: #F1C40F;
+  --light-blue: #87CEEB;
+  --light-blue-soft: #B0E0E6;
+  --light-blue-dark: #4682B4;
+  --light-blue-darker: #2E86AB;
+  --accent-gray: #F8F9FA;
+  --text-dark: #2C3E50;
+  --text-medium: #5D6D7E;
+  --text-light: #85929E;
   
-  /* Textures and Shadows */
-  --medieval-shadow: 0 4px 6px -1px rgba(60, 36, 20, 0.1), 0 2px 4px -1px rgba(60, 36, 20, 0.06);
-  --medieval-shadow-lg: 0 10px 15px -3px rgba(60, 36, 20, 0.1), 0 4px 6px -2px rgba(60, 36, 20, 0.05);
-  --medieval-shadow-xl: 0 20px 25px -5px rgba(60, 36, 20, 0.1), 0 10px 10px -5px rgba(60, 36, 20, 0.04);
+  /* Textures and Shadows with new color base */
+  --clean-shadow: 0 4px 6px -1px rgba(44, 62, 80, 0.1), 0 2px 4px -1px rgba(44, 62, 80, 0.06);
+  --clean-shadow-lg: 0 10px 15px -3px rgba(44, 62, 80, 0.1), 0 4px 6px -2px rgba(44, 62, 80, 0.05);
+  --clean-shadow-xl: 0 20px 25px -5px rgba(44, 62, 80, 0.1), 0 10px 10px -5px rgba(44, 62, 80, 0.04);
 }
 
 /* Enhanced parchment texture background */
