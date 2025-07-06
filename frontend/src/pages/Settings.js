@@ -553,9 +553,11 @@ const Settings = () => {
           </div>
         </div>
       </CollapsiblePanel>
+      )}
 
       {/* Danger Zone Panel */}
-      <CollapsiblePanel 
+      {activeTab === 'danger' && (
+        <CollapsiblePanel 
         icon="💥" 
         title="Danger Zone" 
         className="border-red-600 bg-gradient-to-r from-red-50 to-pink-50 medieval-card"
