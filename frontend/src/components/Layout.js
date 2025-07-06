@@ -159,7 +159,7 @@ const Layout = ({ children }) => {
             {/* Achievements */}
             <Link
               to="/achievements"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 ${
                 isActive('/achievements')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
