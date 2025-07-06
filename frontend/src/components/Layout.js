@@ -170,7 +170,7 @@ const Layout = ({ children }) => {
               <span className="font-medium">Achievements</span>
               {state.achievements && state.achievements.filter(a => a.unlocked).length > 0 && (
                 <div className="medieval-scroll px-2 py-1">
-                  <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
+                  <Badge className="bg-blue-600 text-white text-xs font-bold">
                     {state.achievements.filter(a => a.unlocked).length}
                   </Badge>
                 </div>
