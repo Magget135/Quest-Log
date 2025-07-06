@@ -114,7 +114,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  color: var(--medieval-gold-dark);
+  color: var(--light-blue-dark);
   font-size: 16px;
   opacity: 0.6;
 }
@@ -124,19 +124,19 @@
   position: absolute;
   bottom: 12px;
   right: 12px;
-  color: var(--medieval-gold-dark);
+  color: var(--light-blue-dark);
   font-size: 16px;
   opacity: 0.6;
   transform: rotate(180deg);
 }
 
-/* Enhanced medieval button styles */
+/* Modern clean button styles */
 .medieval-button {
-  background: linear-gradient(135deg, var(--medieval-amber) 0%, var(--medieval-brown-lighter) 100%);
-  border: 3px solid var(--medieval-gold-dark);
-  color: var(--medieval-parchment);
+  background: linear-gradient(135deg, var(--warm-yellow) 0%, var(--warm-yellow-bright) 100%);
+  border: 3px solid var(--light-blue-dark);
+  color: var(--text-dark);
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(60, 36, 20, 0.7);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
   font-family: 'Cinzel', serif;
   border-radius: 8px;
@@ -151,7 +151,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s;
 }
 
@@ -160,15 +160,15 @@
 }
 
 .medieval-button:hover {
-  background: linear-gradient(135deg, var(--medieval-gold) 0%, var(--medieval-amber) 100%);
+  background: linear-gradient(135deg, var(--warm-yellow-bright) 0%, var(--warm-yellow) 100%);
   transform: translateY(-2px);
-  box-shadow: var(--medieval-shadow-xl);
-  border-color: var(--medieval-gold);
+  box-shadow: var(--clean-shadow-xl);
+  border-color: var(--light-blue);
 }
 
 .medieval-button:active {
   transform: translateY(0px);
-  box-shadow: var(--medieval-shadow);
+  box-shadow: var(--clean-shadow);
 }
 
 /* Enhanced medieval scroll navigation */
