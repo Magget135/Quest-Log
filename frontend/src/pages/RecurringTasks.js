@@ -19,6 +19,7 @@ const RecurringTasks = () => {
   
   const [showAddForm, setShowAddForm] = useState(false);
   const [showCustomFrequency, setShowCustomFrequency] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [newTask, setNewTask] = useState({
     name: '',
     rank: '',
