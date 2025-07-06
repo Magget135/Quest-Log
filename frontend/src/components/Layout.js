@@ -14,22 +14,44 @@ const Layout = ({ children }) => {
   
   const navItems = [
     { path: '/', label: 'Main Hall', icon: '🏰' },
-    { path: '/archive', label: 'Chronicles', icon: '📜' },
-    { path: '/rewards', label: 'Merchant', icon: '💰' },
+    { path: '/recurring', label: 'Daily Tasks', icon: '🔄' },
     { 
       path: '/inventory', 
       label: 'Inventory', 
       icon: '🎒',
       badge: state.inventory.length > 0 ? state.inventory.length : null
     },
-    { path: '/recurring', label: 'Daily Tasks', icon: '🔄' },
+    { path: '/settings', label: 'Settings', icon: '⚙️' }
+  ];
+
+  const chroniclesItems = [
     { 
-      path: '/achievements', 
-      label: 'Honors', 
-      icon: '🏆',
-      badge: state.achievements ? state.achievements.filter(a => a.unlocked).length : null
+      path: '/archive', 
+      label: 'Adventure Archive', 
+      icon: '🧭',
+      description: 'Completed quests and reward claims'
     },
-    { path: '/settings', label: 'Guild Hall', icon: '⚙️' }
+    { 
+      path: '/stats', 
+      label: 'Journey Journal', 
+      icon: '📊',
+      description: 'Statistics and progress tracking'
+    }
+  ];
+
+  const merchantItems = [
+    { 
+      path: '/rewards', 
+      label: 'Enter Shop', 
+      icon: '🏪',
+      description: 'Browse and purchase rewards'
+    },
+    { 
+      path: '/rewards/add', 
+      label: 'Add Reward', 
+      icon: '➕',
+      description: 'Create custom rewards'
+    }
   ];
   
   const isActive = (path) => {
