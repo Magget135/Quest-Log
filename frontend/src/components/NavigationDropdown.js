@@ -87,9 +87,9 @@ const NavigationDropdown = ({
       <div
         onClick={handleClick}
         className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 cursor-pointer ${
-          isActive || isAnyItemActive || isOpen
+          isActive || isAnyItemActive
             ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
-            : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
+            : 'border-transparent text-yellow-900 hover:text-yellow-700'
         } ${className}`}
         style={{ fontFamily: 'Cinzel, serif' }}
       >
