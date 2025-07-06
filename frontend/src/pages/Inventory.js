@@ -11,6 +11,7 @@ const Inventory = () => {
   const { state, dispatch } = useQuest();
   const { toast } = useToast();
   const [useItemDialog, setUseItemDialog] = useState(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const handleUseItem = (item) => {
     setUseItemDialog(item);
