@@ -127,6 +127,90 @@ backend:
         comment: "Re-tested all backend API endpoints on July 6, 2025. Health check endpoint returns 200 OK with 'Hello World' message, CORS headers are properly configured and working, MongoDB connection is stable (verified through successful POST and GET operations to /api/status endpoint), and all API responses are correctly formatted. The backend service is running properly according to supervisor status. All tests passed successfully with no issues found."
 
 frontend:
+  - task: "🧙‍♂️ User Level Hover Tooltip Enhancement"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/LevelTooltip.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Level tooltip already fully implemented with comprehensive XP table, monthly tribute, and parchment-style medieval theme. Shows all levels (1-5) with XP requirements and monthly bonus amounts."
+
+  - task: "📜 Chronicles Section Navigation Enhancement"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Layout.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Updated Chronicles dropdown descriptions: Adventure Archive shows 'Completed quests and reward claims', Journey Journal shows 'Stats like total quests completed, rewards claimed, average XP per task'. Hover menu already functional."
+
+  - task: "🛒 Merchant Section Dropdown Enhancement"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Layout.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Updated Merchant dropdown: Enter Shop opens 'RPG-style reward store', Add Reward 'lets users manually create a new reward'. Navigation dropdown already functional with proper descriptions."
+
+  - task: "🎒 Adventurer's Inventory UI Collapsible"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Inventory.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Inventory UI already has full collapsible functionality with prominent X button in top-right corner. When collapsed, shows as floating card in bottom-right. Fully functional with medieval theming."
+
+  - task: "📅 Daily Task Section Enhancements"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RecurringTasks.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Daily Tasks page already has search bar with live filtering by name/rank/frequency, and Status Guide & Recurring Tasks Tips are in collapsible sections with X buttons. All features working perfectly."
+
+  - task: "🏆 Achievements Section Enhancement"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/data/achievements.js, /app/frontend/src/pages/Achievements.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Enhanced achievements with new challenging RPG achievements: Iron Will (30 tasks without skipping), Lunar Ritualist (3 moon cycles), The Undaunted (complete task with XP < 0), Mystery Milestone (hidden), plus others. Achievement Statistics display already implemented."
+
+  - task: "🏰 Settings Page RPG Rules & Tips"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Settings.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Settings page already has horizontal tabs with comprehensive Rules & Tips section including the encouraging quote: 'Remember, your journey is uniquely yours. Set fair XP, challenge yourself, and enjoy the quest. Every hero starts small.' Complete medieval theming with collapsible panels."
+
   - task: "Enhanced Data Reset in Settings with Toggles"
     implemented: true
     working: true
