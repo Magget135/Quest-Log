@@ -486,7 +486,8 @@ const Settings = () => {
       </CollapsiblePanel>
 
       {/* Reward Settings & Monthly Bonus Panel */}
-      <CollapsiblePanel 
+      {activeTab === 'merchant' && (
+        <CollapsiblePanel 
         icon="🎁" 
         title="Merchant Settings & Monthly Tribute" 
         className="border-yellow-200 medieval-card"
