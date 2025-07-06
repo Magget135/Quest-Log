@@ -64,12 +64,12 @@ const Layout = ({ children }) => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <h1 className="text-3xl font-bold flex items-center text-yellow-100" style={{ fontFamily: 'Cinzel Decorative, serif' }}>
+              <h1 className="text-3xl font-bold flex items-center text-blue-800" style={{ fontFamily: 'Cinzel Decorative, serif' }}>
                 <span className="mr-3 text-4xl">⚔️</span>
                 Quest Tavern
               </h1>
               <div className="medieval-scroll px-3 py-1">
-                <Badge className="bg-yellow-600 text-yellow-100 border-yellow-800 font-medium" style={{ fontFamily: 'Cinzel, serif' }}>
+                <Badge className="bg-blue-600 text-white border-blue-800 font-medium" style={{ fontFamily: 'Cinzel, serif' }}>
                   {xpSystem.name}
                 </Badge>
               </div>
