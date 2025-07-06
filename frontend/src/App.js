@@ -4,6 +4,7 @@ import { Toaster } from './components/ui/toaster';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Archive from './pages/Archive';
+import Statistics from './pages/Statistics';
 import RewardStore from './pages/RewardStore';
 import Inventory from './pages/Inventory';
 import RecurringTasks from './pages/RecurringTasks';
