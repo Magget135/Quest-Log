@@ -106,11 +106,12 @@ const Archive = () => {
           Your complete adventure history including completed quests and reward claims. Every victory and treasure is recorded here.
         </p>
       </div>
+      {/* Archive Summary */}
       <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <span>📚</span>
-            <span>Adventure Archive</span>
+            <span>Archive Summary</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
