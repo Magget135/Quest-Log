@@ -124,7 +124,7 @@ const Settings = () => {
         <div className="flex items-center space-x-4 mb-4">
           <span className="text-3xl">🏛️</span>
           <h1 className="text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Cinzel Decorative, serif' }}>
-            Guild Hall & Rules
+            Settings
           </h1>
         </div>
         <p className="text-yellow-700 font-medium" style={{ fontFamily: 'Libre Baskerville, serif' }}>
