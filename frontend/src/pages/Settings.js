@@ -397,7 +397,7 @@ const Settings = () => {
 
       {/* Quest Customization Panel */}
       {activeTab === 'quests' && (
-      <CollapsiblePanel 
+        <CollapsiblePanel 
         icon="🎨" 
         title="Quest Customization" 
         className="border-green-200 medieval-card"
