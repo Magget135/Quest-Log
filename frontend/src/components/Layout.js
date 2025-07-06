@@ -105,46 +105,58 @@ const Layout = ({ children }) => {
       <nav className="parchment-bg border-b-2 border-yellow-800 shadow-lg">
         <div className="container mx-auto px-4">
           <div className="flex space-x-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
-                  isActive(item.path)
-                    ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
-                    : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
-                }`}
-                style={{ fontFamily: 'Cinzel, serif' }}
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span className="font-medium">{item.label}</span>
-                {item.badge && (
-                  <div className="medieval-scroll px-2 py-1">
-                    <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
-                      {item.badge}
-                    </Badge>
-                  </div>
-                )}
-              </Link>
-            ))}
+            {/* Main Hall */}
+            <Link
+              to="/"
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
+                isActive('/')
+                  ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
+                  : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span className="text-lg">🏰</span>
+              <span className="font-medium">Main Hall</span>
+            </Link>
             
-            {/* Chronicles Dropdown */}
+            {/* Shop Dropdown */}
             <NavigationDropdown
-              icon="📜"
-              label="Chronicles"
-              items={chroniclesItems}
-              isActive={isActive('/archive') || isActive('/stats')}
-            />
-            
-            {/* Merchant Dropdown */}
-            <NavigationDropdown
-              icon="💰"
-              label="Merchant"
-              items={merchantItems}
+              icon="🏪"
+              label="Shop"
+              items={shopItems}
               isActive={isActive('/rewards')}
             />
             
-            {/* Achievements Link */}
+            {/* Inventory */}
+            <Link
+              to="/inventory"
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
+                isActive('/inventory')
+                  ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
+                  : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span className="text-lg">🎒</span>
+              <span className="font-medium">Inventory</span>
+              {state.inventory.length > 0 && (
+                <div className="medieval-scroll px-2 py-1">
+                  <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
+                    {state.inventory.length}
+                  </Badge>
+                </div>
+              )}
+            </Link>
+            
+            {/* History Dropdown */}
+            <NavigationDropdown
+              icon="📜"
+              label="History"
+              items={historyItems}
+              isActive={isActive('/archive') || isActive('/stats')}
+            />
+            
+            {/* Achievements */}
             <Link
               to="/achievements"
               className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
@@ -163,6 +175,20 @@ const Layout = ({ children }) => {
                   </Badge>
                 </div>
               )}
+            </Link>
+            
+            {/* Settings */}
+            <Link
+              to="/settings"
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
+                isActive('/settings')
+                  ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
+                  : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span className="text-lg">⚙️</span>
+              <span className="font-medium">Settings</span>
             </Link>
           </div>
         </div>
