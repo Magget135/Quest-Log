@@ -53,6 +53,24 @@ const Inventory = () => {
     return '🎁';
   };
   
+  if (isCollapsed) {
+    return (
+      <div className="fixed bottom-4 right-4 z-50">
+        <Card className="bg-green-600 text-white shadow-2xl cursor-pointer" onClick={() => setIsCollapsed(false)}>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-xl">🎒</span>
+              <span className="font-bold">Inventory</span>
+              <Badge className="bg-white text-green-600 font-bold">
+                {state.inventory.length}
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Inventory Header */}
@@ -63,9 +81,19 @@ const Inventory = () => {
               <span>🎒</span>
               <span>Adventurer's Inventory</span>
             </div>
-            <Badge className="bg-green-100 text-green-800 text-lg px-3 py-1">
-              {state.inventory.length} item{state.inventory.length !== 1 ? 's' : ''}
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <Badge className="bg-green-100 text-green-800 text-lg px-3 py-1">
+                {state.inventory.length} item{state.inventory.length !== 1 ? 's' : ''}
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsCollapsed(true)}
+                className="text-green-800 hover:text-green-900 hover:bg-green-100"
+              >
+                ✕
+              </Button>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
