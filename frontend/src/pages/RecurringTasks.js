@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
 import { useToast } from '../hooks/use-toast';
 import { frequencies, dayOptions, customFrequencyUnits, endConditionTypes } from '../data/mock';
 import CustomFrequencyBuilder from '../components/CustomFrequencyBuilder';
+import CollapsibleSection from '../components/CollapsibleSection';
 
 const RecurringTasks = () => {
   const { state, dispatch, getXPSystemInfo } = useQuest();
