@@ -108,7 +108,7 @@ const NavigationDropdown = ({
       {/* Dropdown Menu */}
       {isOpen && (
         <div 
-          className="absolute top-full left-0 z-50 bg-white border-2 border-yellow-600 rounded-lg shadow-2xl min-w-64 medieval-scroll"
+          className="absolute top-full left-0 z-50 bg-white border-2 border-yellow-600 rounded-lg shadow-2xl min-w-64 medieval-scroll mt-1"
           onMouseEnter={handleDropdownMouseEnter}
           onMouseLeave={handleDropdownMouseLeave}
         >
