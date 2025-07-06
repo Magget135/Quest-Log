@@ -441,6 +441,7 @@ const Settings = () => {
           )}
         </div>
       </CollapsiblePanel>
+      )}
 
       {/* Daily Tasks Rules Panel */}
       <CollapsiblePanel 
