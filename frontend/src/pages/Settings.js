@@ -308,12 +308,15 @@ const Settings = () => {
           </CloseableTip>
         </div>
       </CollapsiblePanel>
+      )}
 
-      {/* Auto Cleanup Panel */}
+      {activeTab === 'cleanup' && (
       <CollapsiblePanel 
         icon="🗑️" 
         title="Archive Management" 
         className="border-orange-200 medieval-card"
+        defaultExpanded={true}
+        showCloseButton={false}
       >
         <div className="space-y-4">
           <div className="flex items-center justify-between">
