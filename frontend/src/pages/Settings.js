@@ -161,66 +161,70 @@ const Settings = () => {
         </div>
       </div>
 
-      {/* Ancient Guild Rules & Guidelines Panel */}
-      <CollapsiblePanel 
-        icon="📜" 
-        title="Ancient Guild Rules & Guidelines" 
-        className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 medieval-card"
-        defaultExpanded={false}
-      >
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="font-bold text-blue-900 flex items-center space-x-2" style={{ fontFamily: 'Cinzel, serif' }}>
-                <span>🎯</span>
-                <span>Gold & Quest Mastery</span>
-              </h3>
-              <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
-                <p><strong>✅ Gold Earning:</strong> Only completed quests earn gold pieces—progress status is visual only</p>
-                <p><strong>🔄 Daily Tasks:</strong> Only added to Active Quest Registry when within start-before-due range</p>
-                <p><strong>📈 Progress Status:</strong> "In Progress", "Delaying", etc. are for tracking only—no gold until "Completed"</p>
-                <p><strong>⚡ Quest Completion:</strong> Immediately awards gold and moves quest to chronicles</p>
-                <p><strong>🎁 Monthly Tribute:</strong> Auto-issued monthly gold bonus must be claimed via Guild Hall or popup</p>
+      {/* Tab Content */}
+      {activeTab === 'rules' && (
+        <CollapsiblePanel 
+          icon="📜" 
+          title="Ancient Guild Rules & Guidelines" 
+          className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 medieval-card"
+          defaultExpanded={true}
+          showCloseButton={false}
+        >
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h3 className="font-bold text-blue-900 flex items-center space-x-2" style={{ fontFamily: 'Cinzel, serif' }}>
+                  <span>🎯</span>
+                  <span>Gold & Quest Mastery</span>
+                </h3>
+                <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                  <p><strong>✅ Gold Earning:</strong> Only completed quests earn gold pieces—progress status is visual only</p>
+                  <p><strong>🔄 Daily Tasks:</strong> Only added to Active Quest Registry when within start-before-due range</p>
+                  <p><strong>📈 Progress Status:</strong> "In Progress", "Delaying", etc. are for tracking only—no gold until "Completed"</p>
+                  <p><strong>⚡ Quest Completion:</strong> Immediately awards gold and moves quest to chronicles</p>
+                  <p><strong>🎁 Monthly Tribute:</strong> Auto-issued monthly gold bonus must be claimed via Settings or popup</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="font-bold text-blue-900 flex items-center space-x-2" style={{ fontFamily: 'Cinzel, serif' }}>
+                  <span>⚠️</span>
+                  <span>Guild Warnings</span>
+                </h3>
+                <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                  <p><strong>🧪 XP System Changes:</strong> Changing XP system deletes previous ranks and adjusts reward range</p>
+                  <p><strong>🗑️ Data Loss:</strong> Deleted rewards, categories, or quests cannot be recovered</p>
+                  <p><strong>🧨 Reset Warning:</strong> "Reset Everything" permanently erases all progress and data</p>
+                  <p><strong>💾 Auto-Save:</strong> All changes are automatically saved to your local guild records</p>
+                  <p><strong>🔒 Privacy:</strong> Your quest data stays local on your device only</p>
+                </div>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <h3 className="font-bold text-blue-900 flex items-center space-x-2" style={{ fontFamily: 'Cinzel, serif' }}>
-                <span>⚠️</span>
-                <span>Guild Warnings</span>
-              </h3>
-              <div className="space-y-2 text-sm text-gray-700" style={{ fontFamily: 'Libre Baskerville, serif' }}>
-                <p><strong>🧪 XP System Changes:</strong> Changing XP system deletes previous ranks and adjusts reward range</p>
-                <p><strong>🗑️ Data Loss:</strong> Deleted rewards, categories, or quests cannot be recovered</p>
-                <p><strong>🧨 Reset Warning:</strong> "Reset Everything" permanently erases all progress and data</p>
-                <p><strong>💾 Auto-Save:</strong> All changes are automatically saved to your local guild records</p>
-                <p><strong>🔒 Privacy:</strong> Your quest data stays local on your device only</p>
+            <div className="bg-yellow-50 border-2 border-yellow-600 rounded-lg p-4 medieval-scroll">
+              <h4 className="font-bold text-yellow-900 mb-2" style={{ fontFamily: 'Cinzel, serif' }}>💡 Master's Wisdom</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-800" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                <div>
+                  <p><strong>🎮 Adventure:</strong> Use Urgent tags for high-priority quests</p>
+                  <p><strong>📅 Scheduling:</strong> Set daily tasks with appropriate start-before-due timing</p>
+                </div>
+                <div>
+                  <p><strong>🏆 Progression:</strong> Higher XP systems offer more customization but require more effort</p>
+                  <p><strong>🎁 Rewards:</strong> Balance gold costs with your completion rate for motivation</p>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-3 border-t border-yellow-500">
+                <p className="text-center text-yellow-800 font-medium italic" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                  🌟 "Remember, your journey is uniquely yours. Set fair XP, challenge yourself, and enjoy the quest. Every hero starts small." 🌟
+                </p>
               </div>
             </div>
           </div>
-          
-          <div className="bg-yellow-50 border-2 border-yellow-600 rounded-lg p-4 medieval-scroll">
-            <h4 className="font-bold text-yellow-900 mb-2" style={{ fontFamily: 'Cinzel, serif' }}>💡 Master's Wisdom</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-800" style={{ fontFamily: 'Libre Baskerville, serif' }}>
-              <div>
-                <p><strong>🎮 Adventure:</strong> Use Urgent tags for high-priority quests</p>
-                <p><strong>📅 Scheduling:</strong> Set daily tasks with appropriate start-before-due timing</p>
-              </div>
-              <div>
-                <p><strong>🏆 Progression:</strong> Higher XP systems offer more customization but require more effort</p>
-                <p><strong>🎁 Rewards:</strong> Balance gold costs with your completion rate for motivation</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CollapsiblePanel>
+        </CollapsiblePanel>
+      )}
 
-      {/* Experience System Panel */}
-      <CollapsiblePanel 
-        icon="🧪" 
-        title="Experience System Configuration" 
-        className="border-purple-200 medieval-card"
-      >
+      {activeTab === 'xp' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 bg-blue-50 border-2 border-blue-600 rounded-lg medieval-scroll">
             <div>
