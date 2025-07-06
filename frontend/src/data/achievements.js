@@ -209,6 +209,90 @@ export const ACHIEVEMENTS = [
     unlocked: false,
     dateUnlocked: null,
     hint: 'Add attachments to 5 different quests'
+  },
+
+  // New Challenging RPG Achievements
+  {
+    id: 'iron_will',
+    name: 'Iron Will',
+    description: 'Complete 30 tasks without skipping any for a week',
+    icon: '🛡️',
+    category: ACHIEVEMENT_CATEGORIES.DEDICATION,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Complete 30 consecutive tasks over 7 days without abandoning any'
+  },
+  {
+    id: 'lunar_ritualist',
+    name: 'Lunar Ritualist',
+    description: 'Complete a recurring task for 3 full moon cycles',
+    icon: '🌕',
+    category: ACHIEVEMENT_CATEGORIES.SPECIAL,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Maintain a recurring task for 3 consecutive months (moon cycles)'
+  },
+  {
+    id: 'the_undaunted',
+    name: 'The Undaunted',
+    description: 'Log in and complete a task on your worst day (XP < 0)',
+    icon: '💀',
+    category: ACHIEVEMENT_CATEGORIES.SPECIAL,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Complete a quest when your current XP is below 0',
+    isHidden: true
+  },
+  {
+    id: 'mystery_milestone',
+    name: 'Mystery Milestone',
+    description: 'Hidden achievement unlocked under secret conditions',
+    icon: '🔒',
+    category: ACHIEVEMENT_CATEGORIES.SPECIAL,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: '???',
+    isHidden: true
+  },
+  {
+    id: 'quest_completionist',
+    name: 'Quest Completionist',
+    description: 'Complete 100 total quests - a true legend!',
+    icon: '🏰',
+    category: ACHIEVEMENT_CATEGORIES.QUEST_COMPLETION,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Complete 100 quests total to become a living legend'
+  },
+  {
+    id: 'consistency_master',
+    name: 'Consistency Master',
+    description: 'Complete at least one quest every day for 30 days',
+    icon: '⚡',
+    category: ACHIEVEMENT_CATEGORIES.DEDICATION,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Complete at least one quest daily for a full month'
+  },
+  {
+    id: 'epic_collector',
+    name: 'Epic Collector',
+    description: 'Complete 10 Epic difficulty quests',
+    icon: '🎯',
+    category: ACHIEVEMENT_CATEGORIES.QUEST_COMPLETION,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Master the Epic difficulty by completing 10 Epic quests'
+  },
+  {
+    id: 'reward_connoisseur',
+    name: 'Reward Connoisseur',
+    description: 'Create and claim 5 custom rewards',
+    icon: '🎨',
+    category: ACHIEVEMENT_CATEGORIES.REWARDS,
+    unlocked: false,
+    dateUnlocked: null,
+    hint: 'Create 5 custom rewards and claim them from your inventory'
   }
 ];
 
