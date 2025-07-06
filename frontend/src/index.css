@@ -276,13 +276,13 @@
   50% { box-shadow: 0 0 20px rgba(135, 206, 235, 0.6), 0 0 30px rgba(135, 206, 235, 0.4); }
 }
 
-/* Enhanced body styling */
+/* Enhanced body styling with new theme */
 body {
     margin: 0;
     font-family: 'Libre Baskerville', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, var(--medieval-brown-light) 0%, var(--medieval-amber-light) 100%);
+    background: linear-gradient(135deg, var(--light-blue-soft) 0%, var(--warm-yellow-light) 100%);
     min-height: 100vh;
     position: relative;
 }
@@ -295,8 +295,8 @@ body::before {
     right: 0;
     bottom: 0;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(218, 165, 32, 0.05) 1px, transparent 1px),
-        radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.05) 1px, transparent 1px);
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(135, 206, 235, 0.05) 1px, transparent 1px);
     background-size: 100px 100px, 150px 150px;
     pointer-events: none;
     z-index: -1;
