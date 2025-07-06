@@ -128,6 +128,43 @@ const Layout = ({ children }) => {
                 )}
               </Link>
             ))}
+            
+            {/* Chronicles Dropdown */}
+            <NavigationDropdown
+              icon="📜"
+              label="Chronicles"
+              items={chroniclesItems}
+              isActive={isActive('/archive') || isActive('/stats')}
+            />
+            
+            {/* Merchant Dropdown */}
+            <NavigationDropdown
+              icon="💰"
+              label="Merchant"
+              items={merchantItems}
+              isActive={isActive('/rewards')}
+            />
+            
+            {/* Achievements Link */}
+            <Link
+              to="/achievements"
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-all duration-200 ${
+                isActive('/achievements')
+                  ? 'border-yellow-600 bg-yellow-50 text-yellow-800'
+                  : 'border-transparent text-yellow-900 hover:text-yellow-700 hover:bg-yellow-50'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span className="text-lg">🏆</span>
+              <span className="font-medium">Achievements</span>
+              {state.achievements && state.achievements.filter(a => a.unlocked).length > 0 && (
+                <div className="medieval-scroll px-2 py-1">
+                  <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
+                    {state.achievements.filter(a => a.unlocked).length}
+                  </Badge>
+                </div>
+              )}
+            </Link>
           </div>
         </div>
       </nav>
