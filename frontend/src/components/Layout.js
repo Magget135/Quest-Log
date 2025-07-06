@@ -86,11 +86,13 @@ const Layout = ({ children }) => {
               </div>
               
               <div className="flex items-center space-x-3">
-                <div className="medieval-scroll px-4 py-2">
-                  <Badge className={`${currentLevel.color} text-sm px-3 py-1 font-bold`} style={{ fontFamily: 'Cinzel, serif' }}>
-                    {currentLevel.icon} {currentLevel.title}
-                  </Badge>
-                </div>
+                <LevelTooltip xpSystem={xpSystem} currentLevel={currentLevel}>
+                  <div className="medieval-scroll px-4 py-2">
+                    <Badge className={`${currentLevel.color} text-sm px-3 py-1 font-bold`} style={{ fontFamily: 'Cinzel, serif' }}>
+                      {currentLevel.icon} {currentLevel.title}
+                    </Badge>
+                  </div>
+                </LevelTooltip>
                 <div className="text-sm text-yellow-200" style={{ fontFamily: 'Cinzel, serif' }}>
                   Level {currentLevel.level}
                 </div>
