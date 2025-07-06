@@ -58,7 +58,11 @@ const LevelTooltip = ({ children, xpSystem, currentLevel }) => {
       </div>
       
       {isVisible && (
-        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80">
+        <div 
+          className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80"
+          onMouseEnter={handleTooltipMouseEnter}
+          onMouseLeave={handleTooltipMouseLeave}
+        >
           <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border-4 border-yellow-600 rounded-lg shadow-2xl p-6 medieval-scroll">
             {/* Parchment Header */}
             <div className="text-center mb-4">
@@ -73,10 +77,10 @@ const LevelTooltip = ({ children, xpSystem, currentLevel }) => {
             {/* Levels Table */}
             <div className="space-y-2">
               <div className="grid grid-cols-4 gap-2 text-xs font-bold text-yellow-800 pb-2 border-b border-yellow-400" style={{ fontFamily: 'Cinzel, serif' }}>
-                <div>Rank</div>
+                <div>Level</div>
                 <div>Title</div>
-                <div>XP Req.</div>
-                <div>Monthly</div>
+                <div>XP Required</div>
+                <div>Monthly Bonus</div>
               </div>
               
               {getLevelData().map((level) => (
@@ -94,8 +98,8 @@ const LevelTooltip = ({ children, xpSystem, currentLevel }) => {
                     <span className="font-bold text-yellow-800">{level.level}</span>
                   </div>
                   <div className="font-medium text-yellow-900">{level.title}</div>
-                  <div className="font-bold text-green-700">{level.xpRequired}</div>
-                  <div className="font-bold text-purple-700">{level.monthlyTribute}</div>
+                  <div className="font-bold text-green-700">{level.xpRequired} XP</div>
+                  <div className="font-bold text-purple-700">+{level.monthlyTribute} XP</div>
                 </div>
               ))}
             </div>
