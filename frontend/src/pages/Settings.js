@@ -311,7 +311,7 @@ const Settings = () => {
       )}
 
       {activeTab === 'cleanup' && (
-      <CollapsiblePanel 
+        <CollapsiblePanel 
         icon="🗑️" 
         title="Archive Management" 
         className="border-orange-200 medieval-card"
