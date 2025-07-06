@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useQuest } from '../contexts/QuestContext';
 import { Badge } from './ui/badge';
+import LevelTooltip from './LevelTooltip';
+import NavigationDropdown from './NavigationDropdown';
 
 const Layout = ({ children }) => {
   const location = useLocation();
