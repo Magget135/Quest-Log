@@ -225,6 +225,13 @@ const Settings = () => {
       )}
 
       {activeTab === 'xp' && (
+        <CollapsiblePanel 
+          icon="🧪" 
+          title="Experience System Configuration" 
+          className="border-purple-200 medieval-card"
+          defaultExpanded={true}
+          showCloseButton={false}
+        >
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 bg-blue-50 border-2 border-blue-600 rounded-lg medieval-scroll">
             <div>
