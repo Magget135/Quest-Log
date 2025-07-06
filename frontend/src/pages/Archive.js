@@ -334,6 +334,47 @@ const Archive = () => {
           </Card>
         </div>
       )}
+
+      {/* Recent Reward Usage */}
+      {state.claimedRewards.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <span>🎁</span>
+              <span>Recent Reward Usage</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3 max-h-80 overflow-y-auto">
+              {state.claimedRewards
+                .sort((a, b) => new Date(b.dateUsed) - new Date(a.dateUsed))
+                .slice(0, 10)
+                .map((reward) => (
+                  <div 
+                    key={reward.id}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg">{getCategoryIcon(reward.rewardName)}</span>
+                      <div>
+                        <h4 className="font-medium text-gray-900">{reward.rewardName}</h4>
+                        <p className="text-sm text-gray-500">
+                          Used {formatCompletedTimestamp(reward.dateUsed)}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          Claimed {formatCompletedTimestamp(reward.dateClaimed)}
+                        </p>
+                      </div>
+                    </div>
+                    <Badge className="bg-yellow-100 text-yellow-800">
+                      💰 {reward.xpCost} XP
+                    </Badge>
+                  </div>
+                ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
