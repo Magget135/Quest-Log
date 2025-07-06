@@ -92,7 +92,7 @@ const Layout = ({ children }) => {
                     </Badge>
                   </div>
                 </LevelTooltip>
-                <div className="text-sm text-yellow-200" style={{ fontFamily: 'Cinzel, serif' }}>
+                <div className="text-sm text-blue-600" style={{ fontFamily: 'Cinzel, serif' }}>
                   Level {currentLevel.level}
                 </div>
               </div>
