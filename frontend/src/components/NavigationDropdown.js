@@ -134,7 +134,7 @@ const NavigationDropdown = ({
                 </div>
                 {item.badge && (
                   <div className="medieval-scroll px-2 py-1">
-                    <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
+                    <Badge className="bg-blue-600 text-white text-xs font-bold">
                       {item.badge}
                     </Badge>
                   </div>
