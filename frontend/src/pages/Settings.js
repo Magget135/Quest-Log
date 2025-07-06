@@ -128,7 +128,7 @@ const Settings = () => {
           </h1>
         </div>
         <p className="text-yellow-700 font-medium" style={{ fontFamily: 'Libre Baskerville, serif' }}>
-          Customize your Quest Tavern experience and review the ancient guild rules. Click on any section below to expand the scroll.
+          Customize your Quest Tavern experience and review the ancient guild rules. Use the tabs below to navigate different settings sections.
         </p>
       </div>
 
