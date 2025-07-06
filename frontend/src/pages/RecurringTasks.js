@@ -476,7 +476,28 @@ const RecurringTasks = () => {
       
       {/* Recurring Tasks List */}
       <div className="space-y-4">
-        {state.recurringTasks.map((task) => (
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-900">Your Recurring Tasks</h2>
+          
+          {/* Search Bar */}
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600">🔍</span>
+            <Input
+              placeholder="Search recurring tasks..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-64"
+            />
+          </div>
+        </div>
+        
+        {state.recurringTasks
+          .filter(task => 
+            task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            task.frequency.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            task.rank.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .map((task) => (
           <Card 
             key={task.id}
             className={`transition-all duration-200 ${
