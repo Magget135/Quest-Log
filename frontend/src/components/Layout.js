@@ -108,7 +108,7 @@ const Layout = ({ children }) => {
             {/* Main Hall */}
             <Link
               to="/"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 min-w-0 flex-shrink-0 ${
                 isActive('/')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -116,7 +116,7 @@ const Layout = ({ children }) => {
               style={{ fontFamily: 'Cinzel, serif' }}
             >
               <span className="text-lg">🏰</span>
-              <span className="font-medium">Main Hall</span>
+              <span className="font-medium whitespace-nowrap">Main Hall</span>
             </Link>
             
             {/* Shop Dropdown */}
