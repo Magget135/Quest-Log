@@ -86,15 +86,15 @@ const NavigationDropdown = ({
       {/* Main Navigation Item */}
       <div
         onClick={handleClick}
-        className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 cursor-pointer h-full ${
+        className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 cursor-pointer h-full min-w-0 flex-shrink-0 ${
           isActive || isAnyItemActive
             ? 'border-blue-600 bg-blue-50 text-blue-800'
-            : 'border-transparent text-gray-700 hover:text-blue-700'
+            : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
         } ${className}`}
         style={{ fontFamily: 'Cinzel, serif' }}
       >
         <span className="text-lg">{icon}</span>
-        <span className="font-medium">{label}</span>
+        <span className="font-medium whitespace-nowrap">{label}</span>
         {badge && (
           <div className="medieval-scroll px-2 py-1">
             <Badge className="bg-yellow-600 text-yellow-100 text-xs font-bold">
