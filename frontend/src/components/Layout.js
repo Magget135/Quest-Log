@@ -132,7 +132,7 @@ const Layout = ({ children }) => {
             {/* Inventory */}
             <Link
               to="/inventory"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 min-w-0 flex-shrink-0 ${
                 isActive('/inventory')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -140,7 +140,7 @@ const Layout = ({ children }) => {
               style={{ fontFamily: 'Cinzel, serif' }}
             >
               <span className="text-lg">🎒</span>
-              <span className="font-medium">Inventory</span>
+              <span className="font-medium whitespace-nowrap">Inventory</span>
               {state.inventory.length > 0 && (
                 <div className="medieval-scroll px-2 py-1">
                   <Badge className="bg-blue-600 text-white text-xs font-bold">
