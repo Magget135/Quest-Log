@@ -79,14 +79,14 @@ const NavigationDropdown = ({
   return (
     <div 
       ref={dropdownRef}
-      className="h-full"
+      className="h-full w-auto inline-block"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* Main Navigation Item */}
       <div
         onClick={handleClick}
-        className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 cursor-pointer h-full min-w-0 flex-shrink-0 ${
+        className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 cursor-pointer h-full min-w-0 flex-shrink-0 relative ${
           isActive || isAnyItemActive
             ? 'border-blue-600 bg-blue-50 text-blue-800'
             : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -109,6 +109,7 @@ const NavigationDropdown = ({
       {isOpen && (
         <div 
           className="absolute top-full left-0 z-50 bg-white border-2 border-blue-600 rounded-lg shadow-2xl w-64 medieval-scroll"
+          style={{ position: 'absolute' }}
           onMouseEnter={handleDropdownMouseEnter}
           onMouseLeave={handleDropdownMouseLeave}
         >
