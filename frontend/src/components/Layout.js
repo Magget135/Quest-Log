@@ -104,11 +104,11 @@ const Layout = ({ children }) => {
       {/* Medieval Navigation */}
       <nav className="parchment-bg border-b-2 border-blue-600 shadow-lg relative">
         <div className="container mx-auto px-4">
-          <div className="flex space-x-2 relative">
+          <div className="flex space-x-2 relative items-center">
             {/* Main Hall */}
             <Link
               to="/"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
                 isActive('/')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -120,7 +120,7 @@ const Layout = ({ children }) => {
             </Link>
             
             {/* Shop Dropdown */}
-            <div className="relative">
+            <div className="relative h-16">
               <NavigationDropdown
                 icon="🏪"
                 label="Shop"
@@ -132,7 +132,7 @@ const Layout = ({ children }) => {
             {/* Inventory */}
             <Link
               to="/inventory"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
                 isActive('/inventory')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -151,7 +151,7 @@ const Layout = ({ children }) => {
             </Link>
             
             {/* History Dropdown */}
-            <div className="relative">
+            <div className="relative h-16">
               <NavigationDropdown
                 icon="📜"
                 label="History"
@@ -163,7 +163,7 @@ const Layout = ({ children }) => {
             {/* Achievements */}
             <Link
               to="/achievements"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
                 isActive('/achievements')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
@@ -184,7 +184,7 @@ const Layout = ({ children }) => {
             {/* Settings */}
             <Link
               to="/settings"
-              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 ${
                 isActive('/settings')
                   ? 'border-blue-600 bg-blue-50 text-blue-800'
                   : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
