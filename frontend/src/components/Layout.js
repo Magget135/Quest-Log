@@ -102,9 +102,9 @@ const Layout = ({ children }) => {
       </header>
       
       {/* Medieval Navigation */}
-      <nav className="parchment-bg border-b-2 border-blue-600 shadow-lg">
+      <nav className="parchment-bg border-b-2 border-blue-600 shadow-lg relative">
         <div className="container mx-auto px-4">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 relative">
             {/* Main Hall */}
             <Link
               to="/"
@@ -120,12 +120,14 @@ const Layout = ({ children }) => {
             </Link>
             
             {/* Shop Dropdown */}
-            <NavigationDropdown
-              icon="🏪"
-              label="Shop"
-              items={shopItems}
-              isActive={isActive('/rewards')}
-            />
+            <div className="relative">
+              <NavigationDropdown
+                icon="🏪"
+                label="Shop"
+                items={shopItems}
+                isActive={isActive('/rewards')}
+              />
+            </div>
             
             {/* Inventory */}
             <Link
@@ -149,12 +151,14 @@ const Layout = ({ children }) => {
             </Link>
             
             {/* History Dropdown */}
-            <NavigationDropdown
-              icon="📜"
-              label="History"
-              items={historyItems}
-              isActive={isActive('/archive') || isActive('/stats')}
-            />
+            <div className="relative">
+              <NavigationDropdown
+                icon="📜"
+                label="History"
+                items={historyItems}
+                isActive={isActive('/archive') || isActive('/stats')}
+              />
+            </div>
             
             {/* Achievements */}
             <Link
