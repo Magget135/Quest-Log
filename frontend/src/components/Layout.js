@@ -120,7 +120,7 @@ const Layout = ({ children }) => {
             </Link>
             
             {/* Shop Dropdown */}
-            <div className="relative h-16">
+            <div className="relative h-16 w-auto">
               <NavigationDropdown
                 icon="🏪"
                 label="Shop"
