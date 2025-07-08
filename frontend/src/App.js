@@ -27,6 +27,7 @@ function App() {
                 <Route path="/archive" element={<Archive />} />
                 <Route path="/stats" element={<Statistics />} />
                 <Route path="/rewards" element={<RewardStore />} />
+                <Route path="/rewards/add" element={<RewardStore />} />
                 <Route path="/inventory" element={<Inventory />} />
                 <Route path="/recurring" element={<RecurringTasks />} />
                 <Route path="/achievements" element={<Achievements />} />
