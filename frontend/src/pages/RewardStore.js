@@ -15,6 +15,7 @@ import CloseableTip from '../components/CloseableTip';
 const RewardStore = () => {
   const { state, dispatch, canAffordReward, getXPSystemInfo } = useQuest();
   const { toast } = useToast();
+  const location = useLocation();
   
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingReward, setEditingReward] = useState(null);
@@ -25,6 +26,13 @@ const RewardStore = () => {
     icon: '🎁',
     category: 'Treats'
   });
+  
+  // Auto-open add form if on /rewards/add route
+  useEffect(() => {
+    if (location.pathname === '/rewards/add') {
+      setShowAddForm(true);
+    }
+  }, [location.pathname]);
   
   const xpSystem = getXPSystemInfo();
   
