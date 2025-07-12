@@ -66,6 +66,12 @@ function authReducer(state, action) {
         isNewRegistration: false
       };
     
+    case 'CLEAR_ERROR':
+      return {
+        ...state,
+        error: null
+      };
+    
     default:
       return state;
   }
