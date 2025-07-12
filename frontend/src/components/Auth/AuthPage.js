@@ -35,12 +35,6 @@ export default function AuthPage() {
       } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(formData.username)) {
         newErrors.username = 'Username must be 3-20 characters, alphanumeric and underscores only';
       }
-      
-      if (!formData.display_name.trim()) {
-        newErrors.display_name = 'Display name is required';
-      } else if (formData.display_name.trim().length < 2 || formData.display_name.trim().length > 50) {
-        newErrors.display_name = 'Display name must be 2-50 characters';
-      }
     }
     
     // Password validation for both login and register
