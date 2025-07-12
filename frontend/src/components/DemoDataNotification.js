@@ -19,11 +19,11 @@ export default function DemoDataNotification({ onClose }) {
   
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className={`bg-amber-50 border-4 border-amber-900 rounded-lg max-w-md w-full transform transition-all duration-300 ${
+      <div className={`bg-amber-50 border-4 border-amber-900 rounded-lg max-w-md w-full max-h-[70vh] flex flex-col transform transition-all duration-300 ${
         isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
       }`}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-800 to-amber-900 px-4 py-3 rounded-t">
+        <div className="bg-gradient-to-r from-amber-800 to-amber-900 px-4 py-3 rounded-t flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Info className="w-5 h-5 text-amber-200" />
@@ -38,8 +38,8 @@ export default function DemoDataNotification({ onClose }) {
           </div>
         </div>
         
-        {/* Content */}
-        <div className="p-6 space-y-4">
+        {/* Scrollable Content */}
+        <div className="p-6 space-y-4 overflow-y-auto flex-1">
           <div className="bg-blue-100 border-l-4 border-blue-500 p-4 rounded">
             <p className="text-blue-800 font-semibold mb-2">🎮 Sample Data Loaded</p>
             <p className="text-blue-700 text-sm">
@@ -83,7 +83,7 @@ export default function DemoDataNotification({ onClose }) {
         </div>
         
         {/* Footer */}
-        <div className="px-6 pb-4">
+        <div className="px-6 pb-4 flex-shrink-0">
           <button
             onClick={handleClose}
             className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold py-2 px-4 rounded transition duration-200"
