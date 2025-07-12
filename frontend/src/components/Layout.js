@@ -82,6 +82,26 @@ const Layout = ({ children }) => {
             
             {/* Adventurer Status */}
             <div className="flex items-center space-x-8">
+              {/* User Profile */}
+              <div 
+                className="flex items-center space-x-3 cursor-pointer hover:bg-blue-50 rounded-lg p-2 transition-colors"
+                onClick={() => setShowUserProfile(true)}
+              >
+                <img
+                  src={getUserAvatar(user, 40)}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full border-2 border-blue-600 shadow-md"
+                />
+                <div className="text-left">
+                  <div className="text-sm font-semibold text-blue-800" style={{ fontFamily: 'Cinzel, serif' }}>
+                    {user?.display_name || 'Adventurer'}
+                  </div>
+                  <div className="text-xs text-blue-600" style={{ fontFamily: 'Cinzel, serif' }}>
+                    @{user?.username || 'user'}
+                  </div>
+                </div>
+              </div>
+              
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-800" style={{ fontFamily: 'Cinzel, serif' }}>
                   {state.xp.currentXP} XP
