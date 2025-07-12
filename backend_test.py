@@ -6,6 +6,8 @@ import os
 import sys
 import statistics
 from datetime import datetime
+import random
+import string
 
 # Get the backend URL from the frontend .env file
 def get_backend_url():
@@ -28,10 +30,44 @@ class BackendTester:
             "status_post": False,
             "status_get": False,
             "performance": False,
-            "error_handling": False
+            "error_handling": False,
+            # Authentication tests
+            "user_registration": False,
+            "user_registration_validation": False,
+            "duplicate_user_rejection": False,
+            "user_login_email": False,
+            "user_login_username": False,
+            "invalid_login_rejection": False,
+            "jwt_token_validation": False,
+            "protected_route_access": False,
+            "unauthorized_access_rejection": False,
+            "invalid_token_rejection": False,
+            "get_user_profile": False,
+            "update_user_profile": False,
+            "save_quest_data": False,
+            "retrieve_quest_data": False,
+            "user_data_isolation": False,
+            "default_avatar_generation": False
         }
         self.test_client_name = f"test_client_{int(time.time())}"
         self.performance_metrics = {}
+        
+        # Test user data
+        self.test_timestamp = int(time.time())
+        self.test_user_1 = {
+            "email": f"adventurer{self.test_timestamp}@questtavern.com",
+            "username": f"hero{self.test_timestamp}",
+            "password": "QuestMaster123",
+            "display_name": "Brave Adventurer"
+        }
+        self.test_user_2 = {
+            "email": f"warrior{self.test_timestamp}@questtavern.com", 
+            "username": f"knight{self.test_timestamp}",
+            "password": "DragonSlayer456",
+            "display_name": "Noble Knight"
+        }
+        self.user_1_token = None
+        self.user_2_token = None
         
     def run_all_tests(self):
         """Run all backend tests and print results"""
