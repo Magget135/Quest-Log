@@ -111,7 +111,12 @@ user_problem_statement: "🎯 RPG-themed Quest Log UI & UX Enhancements: 1. 🧙
 - Default avatars based on username first initial
 - JWT token-based authentication
 - User-specific data isolation
-- Demo data notification for new users"
+- Demo data notification for new users
+
+📝 LATEST UPDATE: Create Account Page Modifications:
+- Remove RPG character name reference from username field ✅
+- Add X button to close popup that appears after account creation ✅
+- Ensure popup only shows for new registrations, not logins ✅"
 
 backend:
   - task: "Backend API health check and status endpoints"
