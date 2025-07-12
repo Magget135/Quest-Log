@@ -49,7 +49,8 @@ function authReducer(state, action) {
         token: null,
         isAuthenticated: false,
         isLoading: false,
-        error: null
+        error: null,
+        isNewRegistration: false
       };
     
     case 'UPDATE_USER':
