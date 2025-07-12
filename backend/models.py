@@ -27,7 +27,6 @@ class UserCreate(BaseModel):
     email: EmailStr
     username: str
     password: str
-    display_name: str
     profile_picture: Optional[str] = None
     
     @validator('password')
@@ -43,14 +42,6 @@ class UserCreate(BaseModel):
         if not re.match("^[a-zA-Z0-9_]{3,20}$", v):
             raise ValueError('Username must be 3-20 characters, alphanumeric and underscores only')
         return v
-    
-    @validator('display_name')
-    def display_name_length(cls, v):
-        if not v or len(v.strip()) < 2:
-            raise ValueError('Display name must be at least 2 characters long')
-        if len(v.strip()) > 50:
-            raise ValueError('Display name must be less than 50 characters')
-        return v.strip()
 
 
 class UserLogin(BaseModel):
