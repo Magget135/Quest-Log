@@ -5,7 +5,7 @@
  * @returns {string} Base64 encoded SVG avatar
  */
 export function generateDefaultAvatar(username, size = 100) {
-  const initial = username ? username[0].upper() : '?';
+  const initial = username ? username[0].toUpperCase() : '?';
   
   // Color variations based on the first character
   const colors = [
