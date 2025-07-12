@@ -555,10 +555,10 @@ frontend:
   - task: "Create Account Page Modifications"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/Auth/AuthPage.js, /app/frontend/src/contexts/AuthContext.js, /app/frontend/src/App.js"
+    file: "/app/frontend/src/components/Auth/AuthPage.js, /app/frontend/src/contexts/AuthContext.js, /app/frontend/src/App.js, /app/frontend/src/components/DemoDataNotification.js, /app/frontend/src/components/Layout.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
@@ -569,6 +569,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "BACKEND AUTHENTICATION TESTING COMPLETE (July 12, 2025): Comprehensive testing of authentication system after isNewRegistration changes shows ALL CORE FUNCTIONALITY WORKING PERFECTLY! ✅ User Registration: Working with proper validation, duplicate rejection, and default avatar generation. ✅ User Login: Both email and username authentication working with JWT tokens. ✅ Protected Routes: /api/me and /api/quest-data properly protected with JWT authentication. ✅ Registration Response: Includes all necessary data for frontend (access_token, user profile, default avatar). ✅ Performance: Excellent response times (avg 0.02-0.07s, 15-53 req/sec). ✅ Data Isolation: User-specific data working correctly. Minor: Display name validation (too short) not enforced but doesn't affect core functionality. 22/23 tests passed - authentication system is production-ready and isNewRegistration changes did not break any backend functionality!"
+      - working: true
+        agent: "main"
+        comment: "Additional improvements: 1) Added back the missing 'Daily Tasks' (Recurring Tasks) navigation link to Layout.js 2) Modified DemoDataNotification.js to be shorter vertically (max-h-[70vh]) and made content scrollable with proper flex layout - header and footer are fixed, middle content scrolls. These changes improve navigation accessibility and popup usability."
 
 metadata:
   created_by: "main_agent"
