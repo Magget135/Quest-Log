@@ -223,13 +223,18 @@ export function AuthProvider({ children }) {
     dispatch({ type: 'CLEAR_ERROR' });
   };
   
+  const clearNewRegistration = () => {
+    dispatch({ type: 'CLEAR_NEW_REGISTRATION' });
+  };
+  
   const contextValue = {
     ...state,
     register,
     login,
     logout,
     updateProfile,
-    clearError
+    clearError,
+    clearNewRegistration
   };
   
   return (
