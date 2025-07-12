@@ -8,7 +8,8 @@ const initialState = {
   token: null,
   isAuthenticated: false,
   isLoading: true,
-  error: null
+  error: null,
+  isNewRegistration: false
 };
 
 function authReducer(state, action) {
