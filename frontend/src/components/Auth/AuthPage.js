@@ -175,26 +175,9 @@ export default function AuthPage() {
                     {errors.username && (
                       <p className="text-red-600 text-xs mt-1">{errors.username}</p>
                     )}
-                  </div>
-                  
-                  {/* Display Name Field */}
-                  <div>
-                    <label className="block text-amber-900 text-sm font-semibold mb-2">
-                      RPG Character Name
-                    </label>
-                    <input
-                      type="text"
-                      name="display_name"
-                      value={formData.display_name}
-                      onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 ${
-                        errors.display_name ? 'border-red-500 bg-red-50' : 'border-amber-300 bg-white'
-                      }`}
-                      placeholder="Brave Adventurer"
-                    />
-                    {errors.display_name && (
-                      <p className="text-red-600 text-xs mt-1">{errors.display_name}</p>
-                    )}
+                    <p className="text-amber-700 text-xs mt-1">
+                      This will be your character name in the game
+                    </p>
                   </div>
                 </>
               )}
