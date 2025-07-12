@@ -185,6 +185,20 @@ const Layout = ({ children }) => {
               />
             </div>
             
+            {/* Recurring Tasks */}
+            <Link
+              to="/recurring"
+              className={`flex items-center space-x-2 px-4 py-4 border-b-4 transition-colors duration-200 h-16 min-w-0 flex-shrink-0 ${
+                isActive('/recurring')
+                  ? 'border-blue-600 bg-blue-50 text-blue-800'
+                  : 'border-transparent text-gray-700 hover:text-blue-700 hover:bg-blue-50'
+              }`}
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              <span className="text-lg">📅</span>
+              <span className="font-medium whitespace-nowrap">Daily Tasks</span>
+            </Link>
+            
             {/* Achievements */}
             <Link
               to="/achievements"
