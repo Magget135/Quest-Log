@@ -89,13 +89,13 @@ async def register_user(user_data: UserCreate):
     if not profile_picture:
         profile_picture = generate_default_avatar(user_data.username)
     
-    # Create user
+    # Create user (use username as display_name)
     hashed_password = get_password_hash(user_data.password)
     user = User(
         email=user_data.email,
         username=user_data.username,
         password_hash=hashed_password,
-        display_name=user_data.display_name,
+        display_name=user_data.username,  # Use username as display name
         profile_picture=profile_picture
     )
     
