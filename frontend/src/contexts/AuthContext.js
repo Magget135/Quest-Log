@@ -60,10 +60,10 @@ function authReducer(state, action) {
         error: null
       };
     
-    case 'CLEAR_ERROR':
+    case 'CLEAR_NEW_REGISTRATION':
       return {
         ...state,
-        error: null
+        isNewRegistration: false
       };
     
     default:
