@@ -11,6 +11,8 @@ import { getUserAvatar } from '../utils/avatarUtils';
 const Layout = ({ children }) => {
   const location = useLocation();
   const { state, getCurrentLevelInfo, getXPSystemInfo } = useQuest();
+  const { user } = useAuth();
+  const [showUserProfile, setShowUserProfile] = useState(false);
   
   const currentLevel = getCurrentLevelInfo();
   const xpSystem = getXPSystemInfo();
