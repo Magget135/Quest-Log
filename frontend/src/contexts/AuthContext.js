@@ -28,7 +28,8 @@ function authReducer(state, action) {
         token: action.payload.access_token,
         isAuthenticated: true,
         isLoading: false,
-        error: null
+        error: null,
+        isNewRegistration: action.payload.isNewRegistration || false
       };
     
     case 'LOGIN_ERROR':
