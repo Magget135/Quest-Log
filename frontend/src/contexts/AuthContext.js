@@ -175,10 +175,7 @@ export function AuthProvider({ children }) {
       if (response.status === 200) {
         dispatch({
           type: 'LOGIN_SUCCESS',
-          payload: {
-            ...response.data,
-            isNewRegistration: true
-          }
+          payload: response.data
         });
         return { success: true };
       }
