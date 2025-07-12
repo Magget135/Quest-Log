@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useQuest } from '../contexts/QuestContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Badge } from './ui/badge';
 import LevelTooltip from './LevelTooltip';
 import NavigationDropdown from './NavigationDropdown';
+import UserProfile from './UserProfile';
+import { getUserAvatar } from '../utils/avatarUtils';
 
 const Layout = ({ children }) => {
   const location = useLocation();
