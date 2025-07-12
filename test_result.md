@@ -138,6 +138,78 @@ backend:
         agent: "testing"
         comment: "Enhanced testing completed on July 6, 2025. Added performance testing showing excellent response times (avg ~0.065s) and throughput (~15 requests/second). All endpoints return proper status codes and correctly formatted data. Error handling was also tested and returns appropriate 4xx status codes with detailed error messages. The backend is fully ready to support all the enhanced RPG features with no performance concerns."
 
+  - task: "User Model and Authentication Schema"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/models.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to create User model with email, username, password, displayName, profilePicture fields for MongoDB"
+
+  - task: "Password Hashing and Validation"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/auth.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement password hashing with bcrypt and validation (8+ chars, 1+ number)"
+
+  - task: "JWT Token Authentication System"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/auth.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement JWT token generation, validation, and authentication middleware"
+
+  - task: "User Registration and Login Endpoints"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to create /api/register and /api/login endpoints with proper validation"
+
+  - task: "Protected Routes and User-Specific Data"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to protect existing quest/reward endpoints and make data user-specific"
+
+  - task: "Profile Management Endpoints"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to create profile update and avatar upload endpoints"
+
 frontend:
   - task: "🧙‍♂️ User Level Hover Tooltip Enhancement"
     implemented: true
