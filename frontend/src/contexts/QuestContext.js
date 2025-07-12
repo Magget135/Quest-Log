@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import axios from 'axios';
 import { 
   mockXPData, 
   mockQuests, 
