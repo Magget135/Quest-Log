@@ -577,12 +577,14 @@ test_plan:
   current_focus:
     - "🎉 ALL RPG-THEMED UI & UX ENHANCEMENTS SUCCESSFULLY IMPLEMENTED!"
     - "🔐 AUTHENTICATION SYSTEM FULLY IMPLEMENTED AND TESTED!"
+    - "📝 CREATE ACCOUNT PAGE MODIFICATIONS COMPLETED!"
     - "✅ User Registration: Email/username validation, password requirements, duplicate rejection"
     - "✅ User Login: Email and username authentication with JWT tokens"
     - "✅ Protected Routes: JWT authentication middleware working correctly"
     - "✅ Profile Management: User profile retrieval and updates with avatar support"
     - "✅ Quest Data Management: User-specific data isolation and persistence"
     - "✅ Default Avatar Generation: SVG-based avatars from username initials"
+    - "✅ Account Creation Improvements: Removed RPG character name reference, popup only shows for new registrations"
     - "🧙‍♂️ Level Tooltip: Comprehensive XP table with monthly tribute amounts ✅"
     - "📜 Chronicles Dropdown: Adventure Archive + Journey Journal with enhanced descriptions ✅"
     - "🛒 Merchant Dropdown: Enter Shop + Add Reward with proper descriptions ✅"
@@ -593,7 +595,7 @@ test_plan:
     - "⚔️ Medieval Theme: Parchment backgrounds, RPG fonts, and immersive styling maintained throughout ✅"
   stuck_tasks: []
   test_all: false
-  test_priority: "completed"
+  test_priority: "needs_testing"
 
 agent_communication:
   - agent: "main"
