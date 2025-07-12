@@ -433,24 +433,62 @@ function questReducer(state, action) {
 export function QuestProvider({ children }) {
   const [state, dispatch] = useReducer(questReducer, initialState);
   
-  // Save to localStorage whenever state changes
+  // API base URL
+  const API_URL = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+  
+  // Save to localStorage and backend whenever state changes
   useEffect(() => {
     localStorage.setItem('questLogState', JSON.stringify(state));
-  }, [state]);
-  
-  // Load from localStorage on mount
-  useEffect(() => {
-    const savedState = localStorage.getItem('questLogState');
-    if (savedState) {
+    
+    // Save to backend if user is authenticated
+    const saveToBackend = async () => {
       try {
-        const parsed = JSON.parse(savedState);
-        // Merge with current state to ensure new features are included
-        dispatch({ type: 'LOAD_STATE', payload: parsed });
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+          await axios.post(`${API_URL}/api/quest-data`, {
+            quest_data: state
+          });
+        }
       } catch (error) {
-        console.error('Error loading saved state:', error);
+        console.error('Failed to save quest data to backend:', error);
+        // Continue with local storage as fallback
       }
-    }
-  }, []);
+    };
+    
+    saveToBackend();
+  }, [state, API_URL]);
+  
+  // Load quest data from backend or localStorage on mount
+  useEffect(() => {
+    const loadQuestData = async () => {
+      try {
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+          // Try to load from backend first
+          const response = await axios.get(`${API_URL}/api/quest-data`);
+          if (response.data.quest_data) {
+            dispatch({ type: 'LOAD_STATE', payload: response.data.quest_data });
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load quest data from backend:', error);
+      }
+      
+      // Fallback to localStorage
+      const savedState = localStorage.getItem('questLogState');
+      if (savedState) {
+        try {
+          const parsed = JSON.parse(savedState);
+          dispatch({ type: 'LOAD_STATE', payload: parsed });
+        } catch (error) {
+          console.error('Error loading saved state from localStorage:', error);
+        }
+      }
+    };
+    
+    loadQuestData();
+  }, [API_URL]);
   
   // Helper functions
   const getCurrentLevelInfo = () => {
