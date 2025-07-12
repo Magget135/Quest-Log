@@ -176,7 +176,7 @@ export default function AuthPage() {
                       <p className="text-red-600 text-xs mt-1">{errors.username}</p>
                     )}
                     <p className="text-amber-700 text-xs mt-1">
-                      This will be your character name in the game
+                      This will be your unique username for the application
                     </p>
                   </div>
                 </>
