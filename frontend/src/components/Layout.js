@@ -227,6 +227,12 @@ const Layout = ({ children }) => {
       <main className="container mx-auto px-4 py-8">
         {children}
       </main>
+      
+      {/* User Profile Modal */}
+      <UserProfile 
+        isOpen={showUserProfile} 
+        onClose={() => setShowUserProfile(false)} 
+      />
     </div>
   );
 };
