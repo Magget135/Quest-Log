@@ -9,7 +9,6 @@ export default function AuthPage() {
     email: '',
     username: '',
     password: '',
-    display_name: '',
     email_or_username: ''
   });
   const [errors, setErrors] = useState({});
