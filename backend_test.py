@@ -71,24 +71,71 @@ class BackendTester:
         
     def run_all_tests(self):
         """Run all backend tests and print results"""
-        print(f"Starting backend tests against {self.api_url}")
+        print(f"Starting comprehensive backend tests against {self.api_url}")
         print(f"Test timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
+        # Basic API tests
         self.test_health_check()
         self.test_cors()
         self.test_status_post()
         self.test_status_get()
+        
+        # Authentication system tests
+        print("\n" + "="*60)
+        print("AUTHENTICATION SYSTEM TESTING")
+        print("="*60)
+        
+        self.test_user_registration()
+        self.test_user_registration_validation()
+        self.test_duplicate_user_rejection()
+        self.test_user_login()
+        self.test_invalid_login_rejection()
+        self.test_jwt_token_validation()
+        self.test_protected_routes()
+        self.test_unauthorized_access()
+        self.test_invalid_token_rejection()
+        self.test_user_profile_management()
+        self.test_quest_data_management()
+        self.test_user_data_isolation()
+        self.test_default_avatar_generation()
+        
+        # Performance and error handling
         self.test_performance()
         self.test_error_handling()
         
         # Print test results
-        print("\n=== TEST RESULTS ===")
-        all_passed = True
-        for test_name, result in self.test_results.items():
-            status = "✅ PASSED" if result else "❌ FAILED"
-            print(f"{test_name}: {status}")
-            if not result:
-                all_passed = False
+        print("\n" + "="*60)
+        print("COMPREHENSIVE TEST RESULTS")
+        print("="*60)
+        
+        # Group results by category
+        basic_tests = ["health_check", "cors", "mongodb_connection", "status_post", "status_get"]
+        auth_tests = [k for k in self.test_results.keys() if k not in basic_tests + ["performance", "error_handling"]]
+        other_tests = ["performance", "error_handling"]
+        
+        print("\n🔧 BASIC API TESTS:")
+        for test_name in basic_tests:
+            if test_name in self.test_results:
+                status = "✅ PASSED" if self.test_results[test_name] else "❌ FAILED"
+                print(f"  {test_name}: {status}")
+        
+        print("\n🔐 AUTHENTICATION TESTS:")
+        for test_name in auth_tests:
+            status = "✅ PASSED" if self.test_results[test_name] else "❌ FAILED"
+            print(f"  {test_name}: {status}")
+        
+        print("\n⚡ PERFORMANCE & ERROR HANDLING:")
+        for test_name in other_tests:
+            if test_name in self.test_results:
+                status = "✅ PASSED" if self.test_results[test_name] else "❌ FAILED"
+                print(f"  {test_name}: {status}")
+        
+        # Count results
+        total_tests = len(self.test_results)
+        passed_tests = sum(1 for result in self.test_results.values() if result)
+        failed_tests = total_tests - passed_tests
+        
+        print(f"\n📊 SUMMARY: {passed_tests}/{total_tests} tests passed ({failed_tests} failed)")
         
         # Print performance metrics
         if self.performance_metrics:
@@ -100,11 +147,12 @@ class BackendTester:
                 print(f"  Max response time: {metrics['max_time']:.4f} seconds")
                 print(f"  Requests per second: {metrics['requests_per_second']:.2f}")
         
+        all_passed = all(self.test_results.values())
         if all_passed:
             print("\n🎉 All backend tests passed successfully!")
             return True
         else:
-            print("\n❌ Some tests failed. See details above.")
+            print(f"\n❌ {failed_tests} test(s) failed. See details above.")
             return False
     
     def test_health_check(self):
