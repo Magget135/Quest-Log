@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import Layout from './components/Layout';
@@ -12,10 +12,32 @@ import Achievements from './pages/Achievements';
 import Settings from './pages/Settings';
 import TimezoneFooter from './components/TimezoneFooter';
 import { QuestProvider } from './contexts/QuestContext';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import DemoDataNotification from './components/DemoDataNotification';
 import NotificationManager from './components/NotificationManager';
 import './App.css';
 
-function App() {
+function AppContent() {
+  const [showDemoNotification, setShowDemoNotification] = useState(false);
+  
+  // Show demo notification for new users after they log in
+  useEffect(() => {
+    const hasSeenDemo = localStorage.getItem('hasSeenDemoNotification');
+    if (!hasSeenDemo) {
+      const timer = setTimeout(() => {
+        setShowDemoNotification(true);
+      }, 2000); // Show after 2 seconds of being logged in
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
+  
+  const handleCloseDemoNotification = () => {
+    setShowDemoNotification(false);
+    localStorage.setItem('hasSeenDemoNotification', 'true');
+  };
+  
   return (
     <QuestProvider>
       <Router>
@@ -38,9 +60,24 @@ function App() {
           <TimezoneFooter />
           <NotificationManager />
           <Toaster />
+          
+          {/* Demo Data Notification */}
+          {showDemoNotification && (
+            <DemoDataNotification onClose={handleCloseDemoNotification} />
+          )}
         </div>
       </Router>
     </QuestProvider>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <ProtectedRoute>
+        <AppContent />
+      </ProtectedRoute>
+    </AuthProvider>
   );
 }
 
