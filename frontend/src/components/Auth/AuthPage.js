@@ -71,8 +71,7 @@ export default function AuthPage() {
       const result = await register({
         email: formData.email,
         username: formData.username,
-        password: formData.password,
-        display_name: formData.display_name.trim()
+        password: formData.password
       });
       
       if (!result.success) {
